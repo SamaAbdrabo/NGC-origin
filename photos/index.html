@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/navbar.css">
+      <title>new-GC</title>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+  <body>
+    <section class="header">
+
+        <nav class="navbar">
+            <div class="logo">
+              <a href="index.html">
+                <img src="photos/logo.jpg" alt="Logo" class="logo-img">
+              </a>
+
+
+            </div>
+            <div class="pages">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Markets & Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+
+                </ul>
+            </div>
+            <div class="dropdown">
+              <div class="menu">
+                <div id="myNav" class="overlay">
+                    <a href="javascript:void(0)" class="closebtn" >&times;</a>
+
+                </div>
+                <div>
+                <a href="javascript:void(0)"  class="openbtn">
+                    <div class="one"></div>
+                    <div class="two"></div>
+                    <div class="three"></div>
+                </a>
+                </div>
+               <div class="dropdown-content">
+                 <ul>
+                   <li><a href="index.html">Home</a></li>
+                     <li><a href="about.html">About Us</a></li>
+                     <li><a href="services.html">Markets & Services</a></li>
+                     <li><a href="projects.html">Projects</a></li>
+                     <li><a href="contact.html">Contact Us</a></li>
+                 </ul>
+              </div>
+            </div>
+
+
+
+        </nav>
+      </section>
+      <section class="firstsec">
+          <div class='image-container'>
+            <img src="photos/stmetal.jpg" alt="metal bars" class="first-img">
+          </div>
+          <div class= 'text-container'>
+            <div class='overlay-text'>
+                <h1>WELCOME</h1>
+                <p> When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals. Some are more creative than others. Some are more practical. Some are more resilient. But… what we have in common is the passion to produce unique and distinguished work. We have the will to go the extra mile… to go the Distance.<h2>
+                </p>
+                <p><button onclick="window.location.href='about.html'" class="abtbtn">About Us</button></p>
+            </div>
+          </div>
+      </section>
+      <section class='secondsec'>
+          <div class='container2'>
+            <div class='text-container2'>
+              <div class='overlay-text2'>
+                <h1> Sample of our recent projects</h1>
+                <p>  When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals. Some are more creative than others. Some are more practical. Some are more resilient.
+                </p>
+
+                <p><button onclick="window.location.href='projects.html'" class="abtbtn"> Projects </button></p>
+
+              </div>
+          </div>
+        <div class="backprojectpic">
+          <div class='projects-container'>
+            <div class="projects-gallery">
+              <div class=projects-text>
+              <h1>Saudi Arabia, Red Sea Project</h1>
+              <p>When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals. Some are more creative than others. Some are more practical. Some are more resilient. But… what we have in common is the passion to produce unique and distinguished work. We have the will to go the extra mile… to go the Distance.</p>
+              <h4><a href=projects.html>Read More </a></h4>
+              </div>
+              <div>
+              <img src="photos\environmental.jpg" alt="market 1" class='projectpic'>
+              <br></br>
+              <br></br>
+
+              <h1 class='swipe'> 1/3 </h1>
+              </div>
+          </div>
+        </div>
+      </div>
+      </section>
+
+
+  </body>
+  <script>
+  let lastScrollTop = 0;
+  const navbar = document.querySelector('.navbar');
+  const navbarHeight = navbar.offsetHeight;
+
+  window.addEventListener('scroll', () => {
+    let scrollTop = window.scrollY || document.documentElement.scrollTop;
+    if (scrollTop>navbarHeight){
+      if (scrollTop > lastScrollTop) {
+        // Scrolling down
+        navbar.classList.add('hide');
+        navbar.style.backgroundColor = '#333';
+      } else {
+        // Scrolling up
+        navbar.classList.remove('hide');
+      }
+    }
+
+    if (scrollTop === 0) {
+        navbar.style.backgroundColor = 'transparent';
+      }
+
+    lastScrollTop = scrollTop;
+  });
+
+
+</script>
+
+  </html>

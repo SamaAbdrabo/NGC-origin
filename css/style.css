@@ -1,0 +1,481 @@
+
+:root{
+  --navy_color:#394974;
+  --hover_color:#71707D;
+  --background_color:rgb(181, 181, 181);
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--background_color);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display:flex;
+  margin:0;
+  flex-direction: column;
+ justify-content: space-between;
+
+}
+
+.firstsec{
+  display: flex;
+  flex-direction:column;
+  text-align:center;
+  position: relative;
+}
+.image-container {
+  position: relative;
+  height:100vh;
+  width:100%;
+  overflow:hidden;
+}
+  .first-img{
+    margin-top:20em ;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    position:relative;
+    margin-top: 0;
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    top:0px;
+    object-fit: cover;
+  }
+
+
+  .text-container{
+    height:auto;
+    position: absolute; /* Position it inside the image-container */
+    top:15em;
+    width: 100%;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    padding: 2em;
+}
+
+  .overlay-text {
+    display:flex;
+    flex-direction: column;
+    position: relative;
+    align-self: flex-end;
+    color:#152338;
+    padding: 20px;
+    width: 40%;
+    left: 3em;
+  }
+
+  /*optional -background-color: rgba(0, 0, 0, 0.5); translucent grey*/
+
+  .overlay-text h1 {
+    font-size: 2.25em;
+    margin-bottom:0.625em;
+  }
+
+  .overlay-text p {
+    line-height: 1.6;
+  }
+
+  .abtbtn {
+    background-color: transparent;
+    color: black;
+    font-size: 1em;
+    border-radius:15px;
+    cursor: pointer;
+    width:auto;
+  }
+
+  .secondsec{
+    display: flex;
+    flex-direction:column;
+    text-align:center;
+    position: relative;
+    width:100%;
+  }
+  .container2{
+    margin-top:0;
+    background-image: url(file:///C:/Users/user/Desktop/NGC/photos/landscape.jpg);
+    background-position: center;
+    background-size:cover;
+    width:100%;
+    /*display: flex;
+    flex-direction: column; is deleted*/ 
+    min-height:70em; /*changed from height to ensure in media query slideshow container remains in within secondsec*/
+    max-width: 100%;
+    }
+
+  .text-container2{
+    width:100%;
+    display: flex;
+    position:relative;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+    display:flex;
+    flex-direction: column;
+    background-color:#394974;
+    display:flex;
+    align-self: flex-end;
+    margin-bottom: -2em;
+  }
+  .overlay-text2{
+    margin:10em;
+    display:flex;
+    flex-direction: column;
+    text-align:center;
+    align-items: center;
+    position:relative;
+  }
+  .overlay-text2 h1 {
+    font-size: 2.25em;
+    margin-bottom:0.625em;
+  }
+
+  .overlay-text2 p {
+
+    line-height: 1.6;
+    margin-left: 10em;
+    margin-right: 10em;
+  }
+
+  .projects-container {
+    background-color: white;
+    max-width: 1200px;
+    margin: 0 auto; /* Center the container */
+    padding: 3em 5em;
+    z-index: 1000;
+    border-color: black;
+    height: auto;
+    margin-top: -4em;
+    position: relative;
+}
+
+.projects-gallery {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.projectpic {
+    height: 20em;
+    width: 30em;
+    max-height: 20em;
+    object-fit:fill;
+}
+
+.projects-text {
+    font-size: 1.1em;
+    width: 50%;
+    margin: 1em;
+    text-align: left;
+}
+
+.projects-text a {
+    text-decoration: none;
+    color: black;
+}
+
+.projects-text a:hover {
+    color: #394974;
+}
+
+.swipe {
+    font-size: 2em;
+    position: absolute;
+    right: 2em;
+    bottom: 0.1em;
+    color: black;
+    padding: 0.5em;
+}
+
+.mySlides {
+  display:none;
+  background-color: white;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the container */
+  padding: 3em 5em;
+  z-index: 1000;
+  border-color: black;
+  height: auto;
+  margin-top: -4em;
+  position: relative;
+
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.1s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+/* Responsive styling for smaller screens */
+@media (max-width: 1200px) {
+  .projects-container {
+    background-color: white;
+    align-items: center;
+    margin: 1em auto ; /* Center the container */
+    max-width: 700px; /* Set a maximum width for the container */    padding:  0; /* Adjust padding for better spacing */
+    z-index: 1000;
+    border-color: black;
+    height: auto; /* Allow height to adjust based on content */
+    margin-top: -0.5em;
+    padding: 2em 1em; /* Adjust padding if needed on smaller screens */
+
+    position: relative;
+  }
+ 
+    .projects-gallery {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align text and image */
+        width:100%;
+    }
+
+    .projects-text {
+        width: 100%; /* Full width text on small screens */
+        text-align: left; /* Center text */
+    }
+
+    .projectpic {
+        width: 25em; /* Full width image on small screens */
+        height: 15em;
+        max-width: 100%;
+        transform: translateX(0); /* Remove any left offset */
+        max-height: none; /* Allow image height to adjust */
+        object-fit:fill;
+    }
+
+}
+@media (max-width: 750px) {
+  .projects-container {
+    background-color: white;
+    align-items: center;
+    margin: 1em  ; /* Center the container */
+    z-index: 1000;
+    border-color: black;
+    height: auto; /* Allow height to adjust based on content */
+    margin-top: -0.5em;
+    position: relative;
+  }
+  .projects-container {
+        padding: 2em 1em; /* Adjust padding if needed on smaller screens */
+    }
+    .projects-gallery {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align text and image */
+    }
+
+    .projects-text {
+        width: 100%; /* Full width text on small screens */
+        text-align: left; /* Center text */
+    }
+
+    .projectpic {
+
+        max-width: 100%;
+        margin: auto;
+        object-fit: fill;
+        max-height: none; /* Allow image height to adjust */
+    }
+  }
+  .abtbtn {
+    background-color: transparent;
+    color: black;
+    font-size: 1em;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 2px solid black;
+    text-decoration: none;
+  }
+  /* Ensure styles are specific to the 'Our Services' section */
+
+
+
+/* on phones and smaller screens */
+  @media screen and (max-width: 1200px) {
+    .overlay-text {
+      width: 60%;
+      padding: 10px;
+      text-align: center;
+      font-weight:bold;
+    }
+    .overlay-text2 {
+      width: 60%;
+      margin:5em; 
+      text-align: center; 
+    }
+    .overlay-text h1{
+      font-size:1.7em;
+    }
+  
+    .overlay-text2 h1{
+      font-size:1.7em;
+    }
+    .overlay-text2 p{
+      margin: 0;
+    }
+
+
+    .services-grid {
+        gap: 10px; /* Reduce gap between cards */
+    }
+
+    .service-item {
+        flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+        max-width: calc(50% - 20px); /* 2 cards per row */
+    }
+
+    .services-title {
+        font-size: 2em; /* Smaller title for mobile */
+    }
+
+    .service-title {
+        font-size: 1.5em; /* Smaller title for mobile */
+    }
+
+    .service-description {
+        font-size: 0.9em; /* Smaller description for mobile */
+    }
+
+    .service-subtext {
+        font-size: 0.8em; /* Smaller subtext for mobile */
+        padding: 8px; /* Adjust padding for mobile */
+    }
+  }
+
+
+
+@media screen and (max-width: 600px){
+    .firstsec{
+      display: inline-block;
+      text-align: center;
+      height:100%;
+    }
+    .first-img{
+      position: absolute;
+      height:100%;
+      min-height: 100vh;
+    }
+    .text-container {
+        position: absolute;
+        transform: none;
+        z-index: 100;
+      }
+
+    .overlay-text {
+      width: 100%;
+      top: 5em;
+      padding: 10px;
+      font-weight:bold;
+      align-self: flex-end;
+      left:0;
+      text-align: left;
+      position:relative;
+      margin: 0;
+     top:auto;
+     background-color: rgba(255, 255, 255, 0.5);
+
+    }
+    .overlay-text h1{
+      font-size:1.7em;
+      width:90%;
+
+    }
+    
+    .abtbtn {
+      align-content: center;
+     }
+     .overlay-text2 h1{
+       font-size:1.7em;
+       width:90vw;
+     }
+     .overlay-text2 p{
+       width:90vw;
+     }
+     .market-gallery {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+        gap: 1em; /* Smaller gap */
+    }
+
+    .market-item {
+        width: 100%;
+        padding: 1em;
+      }
+    .market-item h3 {
+        font-size: 1.2em;
+    }
+
+    .market-item p {
+        font-size: 0.8em;
+    }
+    .ninth {
+    grid-column: span 2;
+  }
+  .projects-container{
+    padding: 3em 1.5em;
+  }
+  .services-grid {
+        flex-wrap: wrap; /* Allow wrapping for smaller screens */
+        gap: 5px; /* Further reduce gap between cards */
+    }
+
+    .service-item {
+        flex: 1 1 calc(50% - 10px); /* 2 cards per row, compact */
+        max-width: calc(50% - 10px); /* 2 cards per row, compact */
+    }
+
+    .services-title {
+        font-size: 1.5em; /* Smaller title */
+    }
+
+    .service-title {
+        font-size: 1.2em; /* Smaller title */
+    }
+
+    .service-description {
+        font-size: 0.8em; /* Smaller description */
+    }
+
+    .service-subtext {
+        font-size: 0.7em; /* Smaller subtext */
+        padding: 4px; /* Adjust padding */
+    }
+    }
+

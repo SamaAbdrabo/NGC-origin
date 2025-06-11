@@ -1,0 +1,49 @@
+.market-container {
+    background-color: #d3d3d3;
+    padding: 2em 5em;
+    text-align: center;
+    position: relative;
+}
+
+.market-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em; /* Smaller space between cards */
+    background-color: #d3d3d3;
+}
+
+.market-item {
+    width: 100%;
+    height: 20em;
+    background: white;
+    border-radius: 0.5em;
+    box-shadow: 0 0.125em 0.625em rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.market-item:hover {
+    transform: scale(1.05);
+}
+
+.market-item img {
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+}
+
+.market-item h3 {
+    font-size: 1.3em;
+    margin: 0.625em 0;
+}
+
+.market-item p {
+    padding: 0 0.625em 0.625em;
+}
+
+/* Overlap styling */
+.overlap {
+    z-index: 2;
+
+}

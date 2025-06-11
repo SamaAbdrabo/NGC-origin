@@ -1,0 +1,115 @@
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="css/about.css">
+      <link rel="stylesheet" href="css/navbar.css">
+      <link rel="stylesheet" href="css/footer.css">
+      <title>new-GC</title>
+
+  </head>
+  <body>
+ <!-- Header Section -->
+    <section class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="photos/logo.jpg" alt="Logo" class="logo-img">
+                </a>
+            </div>
+            <div class="pages">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="markets.html">Markets & Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <div class="menu">
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn">&times;</a>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" class="openbtn">
+                            <div class="one"></div>
+                            <div class="two"></div>
+                            <div class="three"></div>
+                        </a>
+                    </div>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="markets.html">Markets & Services</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+      <main></main>
+      <footer class="footer">
+        <div class="bottom-logo">
+          <img src="photos/logo.jpg" alt="logo" class="logo-img">
+       </div>
+           <div class="updates">
+               <h3>placeholder</h3>
+               <br>
+
+               <div class="form-floating mb-3">
+                   <label for="emailInput">Email:</label>
+                   <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" onkeydown="clearOnEnter(event)">
+                   <script>
+                   function clearOnEnter(event) {
+                     if (event.keyCode === 13) {
+                       event.preventDefault();
+                       document.getElementById("emailInput").value = "";
+                     }
+                   }
+                 </script>
+               </div>
+           </div>
+
+           <div class="contact">
+               <h3>Contacts</h3>
+               <ul>
+                   <li>Adress:xyz</li>
+                   <li>+20123456789</li>
+                   <li>+20123456789</li>
+               </ul>
+           </div>
+           <div> all just placeholder </div>
+
+       </footer>
+    </body>
+
+   <script>
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+    const navbarHeight = navbar.offsetHeight;
+
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.scrollY || document.documentElement.scrollTop;
+      if (scrollTop>navbarHeight){
+        if (scrollTop > lastScrollTop) {
+          // Scrolling down
+          navbar.classList.add('hide');
+          navbar.style.backgroundColor = '#333';
+        } else {
+          // Scrolling up
+          navbar.classList.remove('hide');
+        }
+      }
+
+      if (scrollTop === 0) {
+          navbar.style.backgroundColor = 'transparent';
+        }
+
+      lastScrollTop = scrollTop;
+    });
+
+  </script>
+
