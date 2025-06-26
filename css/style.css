@@ -10,7 +10,6 @@ body {
   background-color: var(--background_color);
   width: 100%;
   height: 100%;
-  text-align: center;
   display:flex;
   margin:0;
   flex-direction: column;
@@ -50,6 +49,7 @@ body {
     position: absolute; /* Position it inside the image-container */
     top:15em;
     width: 100%;
+    height: 100%;
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
     padding: 2em;
@@ -324,13 +324,12 @@ body {
     border: 2px solid black;
     text-decoration: none;
   }
-  /* Ensure styles are specific to the 'Our Services' section */
 
 
 
 /* on phones and smaller screens */
   @media screen and (max-width: 1200px) {
-    .overlay-text {
+   .overlay-text {
       width: 60%;
       padding: 10px;
       text-align: center;
@@ -353,46 +352,12 @@ body {
     }
 
 
-    .services-grid {
-        gap: 10px; /* Reduce gap between cards */
-    }
-
-    .service-item {
-        flex: 1 1 calc(50% - 20px); /* 2 cards per row */
-        max-width: calc(50% - 20px); /* 2 cards per row */
-    }
-
-    .services-title {
-        font-size: 2em; /* Smaller title for mobile */
-    }
-
-    .service-title {
-        font-size: 1.5em; /* Smaller title for mobile */
-    }
-
-    .service-description {
-        font-size: 0.9em; /* Smaller description for mobile */
-    }
-
-    .service-subtext {
-        font-size: 0.8em; /* Smaller subtext for mobile */
-        padding: 8px; /* Adjust padding for mobile */
-    }
   }
 
 
 
 @media screen and (max-width: 600px){
-    .firstsec{
-      display: inline-block;
-      text-align: center;
-      height:100%;
-    }
-    .first-img{
-      position: absolute;
-      height:100%;
-      min-height: 100vh;
-    }
+   
     .text-container {
         position: absolute;
         transform: none;
@@ -407,21 +372,20 @@ body {
       align-self: flex-end;
       left:0;
       text-align: left;
+
       position:relative;
       margin: 0;
      top:auto;
      background-color: rgba(255, 255, 255, 0.5);
 
     }
+    
     .overlay-text h1{
       font-size:1.7em;
       width:90%;
 
     }
     
-    .abtbtn {
-      align-content: center;
-     }
      .overlay-text2 h1{
        font-size:1.7em;
        width:90vw;
@@ -451,31 +415,6 @@ body {
   .projects-container{
     padding: 3em 1.5em;
   }
-  .services-grid {
-        flex-wrap: wrap; /* Allow wrapping for smaller screens */
-        gap: 5px; /* Further reduce gap between cards */
-    }
-
-    .service-item {
-        flex: 1 1 calc(50% - 10px); /* 2 cards per row, compact */
-        max-width: calc(50% - 10px); /* 2 cards per row, compact */
-    }
-
-    .services-title {
-        font-size: 1.5em; /* Smaller title */
-    }
-
-    .service-title {
-        font-size: 1.2em; /* Smaller title */
-    }
-
-    .service-description {
-        font-size: 0.8em; /* Smaller description */
-    }
-
-    .service-subtext {
-        font-size: 0.7em; /* Smaller subtext */
-        padding: 4px; /* Adjust padding */
-    }
+  
     }
 

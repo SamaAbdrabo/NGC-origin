@@ -1,15 +1,18 @@
 .footer {
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr 1fr;
-    grid-gap: 20px;
-    gap: 10%;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     width: 100%;
     background-color:grey;
     color: white;
     text-align: center;
     position: relative;
     padding:20px;
-    margin-top:50px;
+}
+
+.bottom-logo{
+  margin-left:0cm;
 }
 body {
   display: flex;
@@ -21,29 +24,3 @@ main {
   flex: 1;
 }
 
-@media screen and (max-width: 600px) {
-    .footer {
-        grid-template-columns: 1fr; /* Stack all items vertically */
-        gap: 30px; /* Smaller gap for better fit */
-    }
-    .bottom-logo{
-      text-align: left;
-    }
-}
-
-.bottom-logo img{
-  max-width: 10em;
-}
-.contact ul{
-  list-style-type: none
-}
-
-#social-buttons {
-     text-align: center;
-     margin-top: 20px;
-   }
-
-   #social-buttons img {
-     width: 30px;
-     margin: 0 10px;
-   }

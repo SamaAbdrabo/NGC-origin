@@ -92,10 +92,20 @@ meta[name="viewport"] {
   font-size: 3.75em;
 }
 
+@media screen and (min-width: 901px) { /*just to be safe dropdown wont open on deskop layout */
+  .dropdown {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 900px) {
   div.pages {
     display: none;
   }
+.dropdown:hover .dropdown-content {     
+  display: block ;
+  float:right;
+}
 
   .openbtn div{
   height: 4px;
@@ -162,7 +172,3 @@ width: 1.56em;
     color:var(--hover_color);
 }
 
-.dropdown:hover .dropdown-content {
-  display: block ;
-  float:right;
-}

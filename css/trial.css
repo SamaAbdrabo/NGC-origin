@@ -1,33 +1,30 @@
-body, html {
-  height: 100%;
-  margin: 0;
+/* external css: flickity.css */
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.bg {
-  /* The image used */
+body { font-family: sans-serif; }
 
-  /* Full height */
-height: 50%;
-width:100%;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.gallery {
+  background: #EEE;
 }
 
-.carousel-container {
-  width: 30%;
-  height:20%;
-  margin: auto;
+.gallery-cell {
+  width: 66%;
+  height: 200px;
+  margin-right: 10px;
+  background: #8C8;
+  counter-increment: gallery-cell;
 }
 
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%; /* 3 slides */
-}
-
-.slide {
-  width: 30%;
-  flex-shrink: 0;
+/* cell number */
+.gallery-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(gallery-cell);
+  line-height: 200px;
+  font-size: 80px;
+  color: white;
 }
