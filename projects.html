@@ -3,9 +3,9 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="css/projects.css">
+        <link rel="stylesheet" href="css/general.css">
       <link rel="stylesheet" href="css/navbar.css">
       <link rel="stylesheet" href="css/footer.css">
-      <link rel="stylesheet" href="css/cards.css">
 
       <title>new-GC</title>
   </head>
@@ -54,66 +54,100 @@
         </nav>
     </section>
     <main>
+    <section class="cover-section">
+        <div class="cover-text">
+            <h5>PROJECTS</h5>
+            <h1>When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals.
+            </h1>
+        </div>
+    </section>
+
       <section class="cards-section">
           <div class="cards-container">
-              <h2 class="cards-title">Our Projects</h2>
+              <div class="projects-filter-area">
+                    <div class="search-filter">
+                    <input type="text" id="searchInput" placeholder="Search projects..." />
+                    <div class="filters">
+                    <select id="sectorFilter">
+                        <option value="all">All Sectors</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                    </select>
+                    <select id="sectorFilter">
+                        <option value="all">All Sectors</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                    </select>
+                    <select id="sectorFilter">
+                        <option value="all">All Sectors</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                    </select>
+
+                    <select id="locationFilter">
+                        <option value="all">All Locations</option>
+                        <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                        <option value="uk">UK</option>
+                    </select>
+                </div>
+                <button id="resetBtn" class="reset-button">Reset all filters</button>
+
+                </div>
+              </div>
               <div class="cards-grid">
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 1</h3>
-                          <p class="card-description">data</p>
-                      </div>
-                      <div class="card-subtext">Brief Subtext 1</div>
-                  </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 2</h3>
-                          <p class="card-description">data</p>
+                    <a href="projects-sub.html" class="card-item hover-effect">
+                    <div class="card-visual" style="background-image: url('photos/landscape.jpg');"></div>
+                    <div class="card-subtext">
+                        <p>market-service</p>
+                        <h2>Title of Project</h2>
+                        <h6>06 June 2025</h6>
+                    </div>
+                    </a>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                      
                       </div>
                       <div class="card-subtext">Brief Subtext 2</div>
                   </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 3</h3>
-                          <p class="card-description">data</p>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                      
                       </div>
-                      <div class="card-subtext">Brief Subtext 3</div>
+                      <div class="card-subtext">Brief Subtext 2</div>
                   </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 3</h3>
-                          <p class="card-description">data</p>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                      
                       </div>
-                      <div class="card-subtext">Brief Subtext 3</div>
+                      <div class="card-subtext">Brief Subtext 2</div>
                   </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 3</h3>
-                          <p class="card-description">data</p>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                      
                       </div>
-                      <div class="card-subtext">Brief Subtext 3</div>
+                      <div class="card-subtext">Brief Subtext 2</div>
                   </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 3</h3>
-                          <p class="card-description">data</p>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                     
                       </div>
-                      <div class="card-subtext">Brief Subtext 3</div>
+                      <div class="card-subtext">Brief Subtext 2</div>
                   </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 3</h3>
-                          <p class="card-description">data</p>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                      
                       </div>
-                      <div class="card-subtext">Brief Subtext 3</div>
+                      <div class="card-subtext">Brief Subtext 2</div>
                   </div>
-                  <div class="card-item" style="background-image: url('photos/landscape.jpg');">
-                      <div class="card-overlay">
-                          <h3 class="card-title">card 3</h3>
-                          <p class="card-description">data</p>
+                  <div class="card-item">
+                      <div class="card-visual" style="background-image: url('photos/landscape.jpg');">
+                      
                       </div>
-                      <div class="card-subtext">Brief Subtext 3</div>
-
+                      <div class="card-subtext">Brief Subtext 2</div>
                   </div>
 
 
@@ -154,8 +188,68 @@
            </div>
        </footer>
     </body>
+        <script src="js/main.js"></script>
 
-    <script>
+
+
+
+<script> /*for the reset button*/
+    document.getElementById('resetBtn').addEventListener('click', resetFilters);
+
+function resetFilters() {
+  // Clear input
+  document.getElementById('searchInput').value = '';
+
+  // Reset all selects
+  document.querySelectorAll('.filters select').forEach(select => {
+    select.selectedIndex = 0;
+  });
+
+  // Re-display all cards/items
+  document.querySelectorAll('.card-item').forEach(item => {
+    item.style.display = 'flex';
+  });
+}
+</script>
+
+    <script> /*for the filters- not functional as filters yet */
+const searchInput = document.getElementById('searchInput');
+const sectorFilter = document.getElementById('sectorFilter');
+const locationFilter = document.getElementById('locationFilter');
+const cards = document.querySelectorAll('.card');
+
+function filterCards() {
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedSector = sectorFilter.value;
+  const selectedLocation = locationFilter.value;
+
+  cards.forEach(card => {
+    const title = card.dataset.title.toLowerCase();
+    const sector = card.dataset.sector;
+    const location = card.dataset.location;
+
+    const matchesSearch = title.includes(searchValue);
+    const matchesSector = selectedSector === 'all' || sector === selectedSector;
+    const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
+
+    if (matchesSearch && matchesSector && matchesLocation) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+    // Event listeners
+    searchInput.addEventListener('input', filterCards);
+    sectorFilter.addEventListener('change', filterCards);
+    locationFilter.addEventListener('change', filterCards);
+    </script>
+
+
+   
+    <script> /*navbar js*/
+        
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
     const navbarHeight = navbar.offsetHeight;

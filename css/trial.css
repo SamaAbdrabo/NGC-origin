@@ -1,30 +1,637 @@
-/* external css: flickity.css */
 
-* {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+:root{
+  --navy_color:#394974;
+  --hover_color:#71707D;
+  --background_color:rgb(181, 181, 181);
+}
+a:visited {
+  color: inherit; /* or any color you want */
+}
+body {
+  overflow-x: hidden;
+  background-color: var(--background_color);
+  width: 100%;
+  height: 100%;
+  display:flex;
+  margin:0;
+  flex-direction: column;
+ justify-content: space-between;
+
 }
 
-body { font-family: sans-serif; }
+.firstsec{
+  display: flex;
+  flex-direction:column;
+  text-align:center;
+  position: relative;
+}
+.image-container {
+  position: relative;
+  height:100vh;
+  width:100%;
+  overflow:hidden;
+}
+  .first-img{
+    margin-top:20em ;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    position:relative;
+    margin-top: 0;
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    top:0px;
+    object-fit: cover;
+  }
 
-.gallery {
-  background: #EEE;
+
+  .text-container{
+    height:auto;
+    position: absolute; /* Position it inside the image-container */
+    top:15em;
+    width: 100%;
+    height: 100%;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    padding: 2em;
 }
 
-.gallery-cell {
-  width: 66%;
-  height: 200px;
-  margin-right: 10px;
-  background: #8C8;
-  counter-increment: gallery-cell;
+  .overlay-text {
+    display:flex;
+    flex-direction: column;
+    position: relative;
+    align-self: flex-end;
+    color:#152338;
+    padding: 20px;
+    width: 40%;
+    left: 3em;
+  }
+
+  /*optional -background-color: rgba(0, 0, 0, 0.5); translucent grey*/
+
+  .overlay-text h1 {
+    font-size: 2.25em;
+    margin-bottom:0.625em;
+  }
+
+  .overlay-text p {
+    line-height: 1.6;
+  }
+
+  .abtbtn {
+    background-color: transparent;
+    color: black;
+    font-size: 1em;
+    border-radius:15px;
+    cursor: pointer;
+    width:auto;
+  }
+
+  .secondsec{
+    display: flex;
+    flex-direction:column;
+    text-align:center;
+    position: relative;
+    width:100%;
+  }
+  .container2{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:0;
+    background-image: url(file:///C:/Users/user/Desktop/NGC/photos/landscape.jpg);
+    background-position: center;
+    background-size:cover;
+    width:100%;
+    /*display: flex;
+    flex-direction: column; is deleted*/ 
+    min-height:70em; /*changed from height to ensure in media query slideshow container remains in within secondsec*/
+    max-width: 100%;
+    }
+
+  .text-container2{
+    width:100%;
+    display: flex;
+    position:relative;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+   flex-direction: column;
+    background-color:#394974;
+    align-self: flex-end;
+  }
+  .overlay-text2{
+    margin:10em;
+    padding-bottom:2em;
+    max-width:50em;
+    display:flex;
+    flex-direction: column;
+    text-align:center;
+    align-items: center;
+    position:relative;
+    gap:20px;
+  }
+
+  .overlay-text2 h1 {
+    font-size: 2.25em;
+  }
+
+  .overlay-text2 p {
+    min-width:30em;
+    line-height: 1.6;
+    
+  }
+  
+
+/*project slideshow */
+
+
+
+.your-class{
+  margin-bottom:10em !important;
+  background-color:white;
+  margin-top:-5em;
+  max-width:70em;
+  row-gap:10em;
+
+}
+.projects-gallery{
+  display:flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding:4em;
+
+
 }
 
-/* cell number */
-.gallery-cell:before {
-  display: block;
-  text-align: center;
-  content: counter(gallery-cell);
-  line-height: 200px;
-  font-size: 80px;
+.projectpic{
+  width:30em;
+  height:20em;
+}
+.projects-text{
+  margin-right:3em;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:20em;
+  gap:10px;
+  text-align:left;
+  font-size:larger;
+}
+.projects-text-2{
+  display:flex;
+  padding-top:2em;
+  flex-direction:row;
+  gap:20px;
+  justify-content:center;
+  align-items:center;
+}
+.projects-text-2-sub{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.projects-text a:hover {
+    color: #394974;
+}
+
+.swipe {
+    font-size: 2em;
+    position:-webkit-sticky;
+    color: black;
+}
+.slick-dots {
+  bottom:20px !important;
+}
+
+
+.slick-prev, .slick-next{
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  font-weight: lighter;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.your-class .custom-prev{
+  left:15px;
+
+}
+.your-class .custom-next {
+  right:15px;
+}
+/* Remove default dot icon */
+.slick-dots li button:before {
+  display: none !important;
+}
+
+/* All dots (default inactive state) */
+.custom-dot {
+cursor: pointer;
+  
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.1s ease;
+}
+.slick-dots button.custom-dot {
+  height: 4px;
+  width: 4px;
+  background-color:#bbb;
+}
+/* Active dot (selected slide) */
+.slick-dots li.slick-active button.custom-dot {
+  background-color: #717171;
+}
+
+
+
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
   color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.1s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+/* Responsive styling for smaller screens */
+@media (max-width: 1200px) {
+  .your-class{
+    width:45em;
+    flex-direction: column;
+    align-items:center;
+    
+    }
+     .your-class div{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .swipe{
+    display:none;
+  }
+   .projects-text {
+    padding-left:3em;
+    width:80vw;
+    max-width:35em;
+    text-align: left;
+  }
+  .projects-text-2{
+    align-items: center;
+  }
+  .projectpic{
+    padding:0;
+    margin-top:2em;
+  }
+  .projects-gallery{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    margin:0;
+    gap:20px;
+    padding:2em;
+    padding-bottom:4em;
+  }
+ .slick-dots {
+  padding-top:2em !important;
+  bottom:10px !important;
+}
+ 
+}
+
+
+@media (max-width: 780px) {
+ 
+  .your-class{
+    overflow: hide;
+    width:auto;
+    background-color: white;
+    width: 90vw;
+
+  }
+ 
+
+  
+.projects-gallery {
+  margin: 0 auto;
+  height:100%;
+  box-sizing: border-box;
+  overflow: hidden; /* THIS hides any slick overflow */
+  flex-direction: column;
+  gap: 2em;
+  padding: 3em; /* optional for spacing */
+  padding-left:0em;
+  padding-right:0em;
+
+  }
+
+  .projectpic {
+    width:75vw;
+    height:15em;
+  }
+
+  .projects-text {
+    padding-left:2em;
+    width:80vw;
+    font-size: medium;
+    text-align: left;
+  }
+
+  .your-class .custom-prev,
+  .your-class .custom-next {
+    display: none !important;
+  }
+}
+
+
+  .abtbtn {
+    background-color: transparent;
+    color: black;
+    font-size: 1em;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 2px solid black;
+    text-decoration: none;
+  }
+
+
+
+
+/* on phones and smaller screens */
+  @media screen and (max-width: 1200px) {
+   .overlay-text {
+      width: 60%;
+      padding: 10px;
+      text-align: center;
+      font-weight:bold;
+      
+    }
+    .overlay-text2 {
+      width: 60%;
+      margin:5em; 
+      text-align: center; 
+    
+    }
+    .overlay-text h1{
+      font-size:1.7em;
+    }
+  
+    .overlay-text2 h1{
+      font-size:1.7em;
+    }
+    .overlay-text2 p{
+      margin: 0;
+    }
+
+
+
+  }
+
+
+
+@media screen and (max-width: 600px){
+   
+    .text-container {
+        position: absolute;
+        transform: none;
+        z-index: 100;
+      }
+
+    .overlay-text {
+      width: 100%;
+      top: 5em;
+      padding: 10px;
+      font-weight:bold;
+      align-self: flex-end;
+      left:0;
+      text-align: left;
+
+      position:relative;
+      margin: 0;
+     top:auto;
+     background-color: rgba(255, 255, 255, 0.5);
+
+    }
+    
+    .overlay-text h1{
+      font-size:1.7em;
+      width:90%;
+
+    }
+    
+     .overlay-text2 h1{
+       font-size:1.7em;
+       width:90vw;
+     }
+     .overlay-text2 p{
+      min-width:10em;
+       width:90vw;
+     }
+     .market-gallery {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+        gap: 1em; /* Smaller gap */
+    }
+
+    .market-item {
+        width: 100%;
+        padding: 1em;
+      }
+    .market-item h3 {
+        font-size: 1.2em;
+    }
+
+    .market-item p {
+        font-size: 0.8em;
+    }
+    .ninth {
+    grid-column: span 2;
+  }
+  .projects-container{
+    padding: 3em 1.5em;
+  }
+  
+    }
+
+.services-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top:5em;
+  color:black;
+  }
+
+
+
+.services-overlay{
+   position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff; /* White text for contrast */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    padding: 1.5em;
+    box-sizing: border-box;
+    pointer-events: none; 
+}
+
+/* Title is always visible */
+.service-title {
+  font-size: 2em;
+  margin: 0.5em;
+  transform: translateY(0);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  z-index: 1;
+}
+
+/* Description hidden by default */
+.service-description {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s ease, transform 1s ease;
+  font-size: 1.1em;
+}
+.carousel{
+  margin:0;
+  margin-top:30px;
+  width:80vw;
+  width:100%;
+}
+/* Hover behavior: apply on item */
+.carousel-item:hover .service-title {
+  transform: translateY(-70px);
+}
+
+.carousel-item:hover .service-description {
+  opacity: 1;
+  transform: translateY(-50px);
+}
+
+.carousel-item {
+  height:min-content;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  max-width:50em;
+  
+}
+
+.custom-prev{
+  left:15px;
+
+}
+.custom-next {
+  right:15px;
+}
+
+.carousel-item:hover .services-overlay {
+background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 90%);
+  opacity: 1;
+}
+
+.markets-btn{
+  display: block;
+    border:  solid black;
+    border-radius: 15px;
+  border-color: black;
+  border-style:solid;
+  padding: 10px;
+}
+
+
+
+
+@media screen and (max-width: 970px ) {
+    
+   .cover-text{
+    font-size:medium;
+    width:20em;
+}
+    .cover-text-2 h1 {
+        font-size:2.5em;
+
+ }
+    .cover-section{
+  height:55vh;
+ } 
+ .cover-section-2{
+    height:55vh;
+ }
+
+}
+@media screen and (max-width: 725px) {
+    .cover-section{
+    padding-top:10vw;
+    justify-content: flex-start;
+   }
+   
+   .cover-text{
+    width:90vw;
+    padding:3vw!important;
+    padding-top:10vw !important;
+    font-size:smaller;
+    
+}
+    .cover-section-2{
+    justify-content:flex-end;
+   }
+   .cover-text-2{
+    padding-left:3vw;
+   }
+   .cover-text-2 h1 {
+        font-size:2em;
+
+ }
 }

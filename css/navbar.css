@@ -11,9 +11,6 @@ body{ /*not related to navbar but sitewise code to ensure consistency*/
   background-color: var(--background_color);
 }
 
-meta[name="viewport"] {
-  content: "width=device-width, initial-scale=1.0";
-}
 
 
 @font-face {

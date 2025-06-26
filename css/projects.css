@@ -1,0 +1,249 @@
+
+
+.cards-section {
+    background-color: transparent;
+    margin: 1em;
+    margin-top: 7em; /*to not clash with navbar as it doesnt take up section space*/
+
+}
+
+.cards-container {
+    width: 80%;
+    max-width: 2000px;
+    
+    margin: 0 auto;
+    text-align: center;
+    
+}
+.cards-title {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.cards-grid {
+    display: flex;
+    width:100%;
+    
+    flex-wrap: wrap;
+    justify-content: flex-start; /*center the grid to its parent container*/
+    column-gap: 20px; /* Space between cards */
+    row-gap:50px;
+}
+
+.card-item {
+    overflow:hidden;
+    content: '';
+    position: relative;
+    display:flex;
+    background-color:aliceblue;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height: 30em; 
+    flex: 0 1 calc(33.333% - 20px); /* 3 per row with 20px gap */
+    
+    /*box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+
+
+.card-visual {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+
+
+
+.card-visual {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+    transition: transform 0.5s ease; /* Slow and smooth */
+
+}
+.card-subtext {
+    background-color: aliceblue;
+    z-index:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align:left;
+    height:70%;
+    width: 100%;
+    color: black;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 1.2em;
+    font-weight:bold;
+    transition: opacity 0.3s ease;
+}
+
+
+
+  .search-filter{
+    display: flex;
+    flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  
+}
+#searchInput{
+    width:80%;
+    padding: 8px;
+  font-size: 1em;
+  border-color: transparent;
+}
+
+.filters {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 20px;
+  gap:5px;
+  
+}
+
+.filters select {
+    flex: 0 1 calc(25% - 5px); 
+    padding: 8px;
+    
+    font-size: 1em;
+    border-color: transparent;
+
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px 40px 10px 10px;
+  font-size: 1em;
+  background-color: white;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 20 20' fill='black' xmlns='http://www.w3.org/2000/svg'><text x='0' y='16' font-size='18'>⏷</text></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+  transition: transform 0.3s ease;
+}
+
+.reset-button {
+    color:var(--navy_color);
+  align-self: flex-end;
+  background-color: transparent;
+  border: transparent;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+
+
+
+@media screen and (min-width:720px){
+    
+.card-item:hover .card-visual {
+  transform: scale(1.2); /* Zoom effect */
+}
+
+.card-item:hover .card-overlay {
+    opacity: 1; /* Show overlay on hover */
+}
+   
+.card-item:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
+    
+}  
+.card-item:hover .card-subtext{
+    background-color: lightcyan;
+} 
+.reset-button{
+    margin-right:10%;
+}
+
+}
+/* on phones and smaller screens 3 columns -2 --> smaller 2 */
+@media screen and (max-width: 970px ) {
+    
+    .cards-container{
+        width:100%;
+    }
+    .card-item{
+    min-width:13em;
+    height:25em;
+   }
+   .card-subtext{
+    height:130%;
+   }
+   .projects-cover-text{
+    font-size:medium;
+    width:20em;
+}
+}
+
+  /*another option 4 to 2 cards but would stretch image (replace 0px by 1200px to work)*/
+ @media screen and (max-width: 0px){  
+    .cards-grid {
+        gap: 10px; /* Reduce gap between cards */
+    }
+    .card-item {
+        flex: 1 1 calc(100% - 20px); /* 2 cards per row */
+        max-width: calc(50% - 20px); /* 2 cards per row */
+    }
+
+    .cards-title {
+        font-size: 2em; 
+    }
+
+    .card-title {
+        font-size: 1.5em; 
+    }
+
+    .card-description {
+        font-size: 0.9em;
+    }
+
+    .card-subtext {
+        font-size: 0.8em; 
+        padding: 8px; 
+    }
+    
+  }
+  
+
+  @media screen and (max-width: 725px) {
+    .cards-container{
+        width:100%;
+    }
+  
+    .card-item {
+     flex: 1 1 99% !important; /* override 33% */
+    aspect-ratio: 1 / 1; /* makes height responsive to width */
+    height: auto; /* allow aspect-ratio to calculate height */
+    min-height: 30em; /* optional cap */
+    max-height:50em;
+    }
+   .card-subtext{
+    height:50%;
+   }
+   #searchInput{
+    width:100%;
+   }
+   .filters{
+    gap:10px;
+    width:100%;
+   }
+   .filters select{
+    flex: 1 1 calc(50% - 5px); 
+   }
+   
+  }

@@ -1,0 +1,110 @@
+.markets-sec{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:center;
+    overflow: hidden;
+    background-color: beige;
+}
+
+.MS-img img{
+    height:30vw;
+    width:100vw;
+}
+ .MS-box{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    margin-top:-10em;
+    width:60em;
+    height:20em;
+    gap:40px;
+    text-align:center;
+
+}
+.MS-box h1{
+    font-size: 3em;
+}
+ .MS-box p{
+    font-size:large;
+    max-width:35em;
+ }
+
+.markets-sec .MS-box {
+    background-color: pink;
+
+}
+.services-sec{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:center;
+    overflow: hidden;
+    background-color: gainsboro;
+    height:100em;
+}
+.services-sec .MS-box{
+    background-color:blue;
+}
+
+.markets-main{
+    width:100vw;
+    padding:0 3em;
+    margin:3em 0;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:flex-start;
+    height:100em;
+    flex-wrap:wrap;
+}
+
+
+
+.vertical-panel{
+    text-decoration: none;
+    background-color: burlywood;
+        flex: 0 0 25%;
+        max-width: 25%;
+
+}
+.market-info{
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    background-color: blue;
+    flex: 0 0 75%;
+    max-width: 75%;
+    
+
+}
+.market-info-sub{
+    background-color:grey;
+}
+.FP-text {
+    display:flex;
+    flex-direction:column;
+    text-align: left;
+  }
+  
+  .featured-project{
+    padding:3em;    
+   background-color: pink;
+   display:flex;
+   flex-direction:column;
+   align-items: center;
+  }
+ .FP-pic{
+    height:200px;
+    width:20em;
+ }
+  .FP-gallery{
+    width:20em;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
