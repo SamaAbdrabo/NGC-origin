@@ -2,6 +2,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Slick Carousel Local Styles -->
+<link rel="stylesheet" type="text/css" href="css/slick.css"/>
+<link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto+Condensed:wght@400;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/markets.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/footer.css">
@@ -10,6 +18,8 @@
 
 
     <title>new-GC</title>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
   </head>
   <body>
 
@@ -63,7 +73,7 @@
         </section>
         <section class="markets-sec">
           <div class="MS-img">           
-            <img src="photos/horizontal-pic.jpg" >
+            <img src="photos/skyline.jpg" >
           </div>
           <div class="MS-box">
             <h1>Our markets</h1>
@@ -71,46 +81,295 @@
               </p>
           </div>
           <div class="markets-main">
-            <div class="vertical-panel">
-              <ul>
-                <li>Geotechincal</li>
-                <li>Infrastructure</li>
-              </ul>
-            </div>
-            <div class="market-info">
-              <div class="market-info-sub">
-                HI
-              </div>
-              <div class="featured-project">
-                <div class="FP-gallery">     
-                          <div>
-                                          <img src="photos/environmental.jpg" alt="market 1" class="FP-pic">
-                          </div>
-                          <div class="FP-text">
-                                          <p>SERVICE</p>                                     
-                                          <h1>Saudi Arabia, Red Sea Project</h1>
-                                          <br>
-                                          <p>
-                                              When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals. Some are more creative than others. Some are more practical than others. Some are more resilient. But… what we have in common is the passion to produce unique and distinguished work. We have the will to go the extra mile… to go the Distance.
-                                          </p>
-                                          <h4><a href="projects.html">Read More   ❯</a></h4>
-                          </div>
-
-                        
-            </div>
-            </div>
             
+            <div class="vertical-panel">
+            
+              <ul>
+                <li data-slide="0" class="active"><a href="javascript:void(0)">Master Planning</a></li>
+                <li data-slide="1"><a href="javascript:void(0)">Landscape</a></li>
+                <li data-slide="2"><a href="javascript:void(0)">Buildings</a></li>
+                <li data-slide="3"><a href="javascript:void(0)">Infrastructure</a></li>
+                <li data-slide="4"><a href="javascript:void(0)">Industrial </a></li>
+                <li data-slide="5"><a href="javascript:void(0)">Geotechnical </a></li>
+                <li data-slide="6"><a href="javascript:void(0)">Environmental </a></li>
+              </ul>
+
+            </div>
+            <div class='markets-carousel'>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Master Planning</h1>
+                    <p>When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals.</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/masterplanning.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                              short description of the featured project
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Landscape</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/landscape.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                            short description                                          
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Buildings</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/buildings.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                              short description                                          
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Infrastructure</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/infastructure.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                              short description                                          
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Industrial Facilities</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/industrial.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                              short description                                          
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Geotechical Studies</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/geotech.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                              short description                                          
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
+              <div class="market-info ">
+                <div class="market-info-sub general">
+                    <h1>Environmental Studies</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>
+                <div class="featured-project">
+                  <div class="FP-gallery">     
+                            <div class="FP-pic-container">
+                                            <img src="photos/environmental.jpg" alt="market 1" class="FP-pic">
+                            </div>
+                            <div class="FP-text">
+                                            <p>SERVICE</p>                                     
+                                            <h1>Saudi Arabia, Red Sea Project</h1>
+                                            <br>
+                                            <p>
+                                              short description                                          
+                                            </p>
+                                            <!--direct the href to the subpage of the project-->
+                                            <h4><a href="projects.html">Read More   ❯</a></h4>
+                            </div>
+
+                          
+                  </div>
+              </div>
+
+              
+              </div>
           </div>
         </section>
         <section class="services-sec">
             <div class="MS-img">
-              <img src="photos/landscape.jpg" >
+              <img src="photos/skyline-large.jpg" >
             </div>
             <div class="MS-box">
               <h1>Our services</h1>
             <p>From designing entire cities to delivering nuclear power stations and transforming manufacturing systems, we focus our business in the areas that have the most impact on the way we all live and the resources we demand from the planet. 
               </p>
             </div>
+             <div class="services-main">
+            
+            <div class="services-vertical-panel">
+            
+              <ul>
+                <li data-slide-2="0" class="active"><a href="javascript:void(0)">Master Planning</a></li>
+                <li data-slide-2="1"><a href="javascript:void(0)">Landscape</a></li>
+                <li data-slide-2="2"><a href="javascript:void(0)">Buildings</a></li>
+                <li data-slide-2="3"><a href="javascript:void(0)">Infrastructure</a></li>
+                <li data-slide-2="4"><a href="javascript:void(0)">Industrial </a></li>
+                <li data-slide-2="5"><a href="javascript:void(0)">Geotechnical </a></li>
+                <li data-slide-2="6"><a href="javascript:void(0)">Environmental </a></li>
+              </ul>
+
+            </div>
+            <div class='services-carousel'>
+              <div class="service-info ">
+                <div class="service-info-item" >
+                  <img src="photos/buildings.jpg">
+                </div>
+                <div class="service-info-sub general " >
+
+                    <h1>Master Planning</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>    
+                          
+              </div>
+             <div class="service-info ">
+                <div class="service-info-item" >
+                  <img src="photos/landscape.jpg">
+                </div>
+                <div class="service-info-sub general " >
+
+                    <h1>Landscape</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>    
+                          
+              </div>
+             <div class="service-info ">
+                <div class="service-info-item" >
+                  <img src="photos/buildings.jpg">
+                </div>
+                <div class="service-info-sub general " >
+
+                    <h1>Master Planning</h1>
+                    <p>short description -can include subpages</p>
+                    <!--direct the button to a 'filtered' project page-->
+                    <button class=><a href="projects.html">Relevant Projects</a></button> 
+                </div>    
+                          
+              </div>
+              
+              </div>
+              
+        
+              
         </section>
 
       </main>
@@ -146,30 +405,108 @@
            </div>
        </footer>
     </body>
+    <!-- jQuery + Slick JS from CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/slick.min.js"></script>
 
-    <script>
+
+   
+    <script> 
+    
+       document.querySelectorAll('.vertical-panel li').forEach(el => {
+  el.addEventListener('click', function () {
+    const slideIndex = parseInt(this.getAttribute('data-slide'));
+    $('.markets-carousel').slick('slickGoTo', slideIndex);
+
+    // Manage active state
+    document.querySelectorAll('.vertical-panel li').forEach(item => item.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+      $(document).ready(function () {
+        $('.markets-carousel').slick({
+          dots: false,
+          arrows: false,
+          draggable: false,
+          swipe: false,
+          infinite: false,
+          speed: 0, //no sliding effect
+          slidesToShow: 1,
+          adaptiveHeight: true
+        });
+
+        $('[data-slide]').on('click', function () {
+          const slideIndex = parseInt($(this).data('slide'));
+          $('.markets-carousel').slick('slickGoTo', slideIndex);
+        });
+});
+
+
+
+    </script>
+    <script> 
+    
+       document.querySelectorAll('.services-vertical-panel li').forEach(el => {
+  el.addEventListener('click', function () {
+    const slideIndex = parseInt(this.getAttribute('data-slide-2'));
+    $('.services-carousel').slick('slickGoTo', slideIndex);
+
+    // Manage active state
+    document.querySelectorAll('.services-vertical-panel li').forEach(item => item.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+      $(document).ready(function () {
+        $('.services-carousel').slick({
+          dots: false,
+          arrows: false,
+          draggable: false,
+          swipe: false,
+          infinite: false,
+          speed: 0, //no sliding effect
+          slidesToShow: 1,
+          adaptiveHeight: true
+        });
+
+        $('[data-slide-2]').on('click', function () {
+          const slideIndex = parseInt($(this).data('slide'));
+          $('.services-carousel').slick('slickGoTo', slideIndex);
+        });
+});
+
+
+
+    </script>
+<script> 
+//navbar functions
+document.addEventListener('DOMContentLoaded', () => {
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
+
     const navbarHeight = navbar.offsetHeight;
 
     window.addEventListener('scroll', () => {
-      let scrollTop = window.scrollY || document.documentElement.scrollTop;
-      if (scrollTop>navbarHeight){
-        if (scrollTop > lastScrollTop) {
-          // Scrolling down
-          navbar.classList.add('hide');
-          navbar.style.backgroundColor = '#333';
-        } else {
-          // Scrolling up
-          navbar.classList.remove('hide');
-        }
-      }
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (scrollTop > navbarHeight) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hide');
+                navbar.style.backgroundColor = '#9dadb9';
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hide');
 
-      if (scrollTop === 0) {
-          navbar.style.backgroundColor = 'transparent';
+
+            }
         }
 
-      lastScrollTop = scrollTop;
+        if (scrollTop === 0) {
+            navbar.style.backgroundColor = 'transparent';
+        }
+
+        lastScrollTop = scrollTop;
     });
+  });
 
-  </script>
+
+</script>

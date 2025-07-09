@@ -1,0 +1,43 @@
+.location-sec{
+    padding:3em;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.location{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center ;
+    width:80em;
+    gap:10vw;
+}
+
+.address{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:30px;
+
+}
+.address div{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+@media screen and (max-width:1200px){
+    
+    .location{
+        width:auto;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap:30px;
+    }
+   
+    
+}
+@media screen and (max-width:630px){
+    .location iframe{
+        width:90vw;
+    }
+}

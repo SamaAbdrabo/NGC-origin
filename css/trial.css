@@ -4,6 +4,75 @@
   --hover_color:#71707D;
   --background_color:rgb(181, 181, 181);
 }
+
+:root {
+  --font-heading: 'Roboto Condensed', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-bold: 700;
+
+  --text-primary: #111;
+  --text-secondary: #888;
+
+  --size-xxl: 3.5rem;
+  --size-xl: 2.75rem;
+  --size-lg: 2rem;
+  --size-md: 1.5rem;
+  --size-sm: 1  rem;
+  --size-xs: 0.875rem;
+  --size-xxs: 0.75rem;
+}
+ h1 {
+  font-family: var(--font-heading);
+  font-size: var(--size-xxl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--size-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+h3{
+  font-family: var(--font-body);
+  font-size: var(--size-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  
+  font-weight: var(--weight-regular);
+  color: var(--text-primary);
+}
+
+meta {
+  font-family: var(--font-body);
+  font-size: var(--size-xxs);
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+}
+
+.general button{
+      font-size:0.9em;
+    background-color: transparent;
+    border-radius:5px 5px;
+    border:2px solid black;
+    color:black;
+    padding:0.7em 1em;
+}
+.general button:hover{
+    background-color:black ;
+    color:white;
+    transition-duration:0.4s;
+}
+
+
 a:visited {
   color: inherit; /* or any color you want */
 }

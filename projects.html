@@ -54,13 +54,11 @@
         </nav>
     </section>
     <main>
-    <section class="cover-section">
-        <div class="cover-text">
-            <h5>PROJECTS</h5>
-            <h1>When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals.
-            </h1>
-        </div>
-    </section>
+    <section class="cover-section-2">
+          <div class="cover-text-2">
+              <h1>PROJECTS</h1>
+          </div>
+      </section>
 
       <section class="cards-section">
           <div class="cards-container">
@@ -248,30 +246,36 @@ function filterCards() {
 
 
    
-    <script> /*navbar js*/
-        
+<script> 
+//navbar functions
+document.addEventListener('DOMContentLoaded', () => {
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
+
     const navbarHeight = navbar.offsetHeight;
 
     window.addEventListener('scroll', () => {
-      let scrollTop = window.scrollY || document.documentElement.scrollTop;
-      if (scrollTop>navbarHeight){
-        if (scrollTop > lastScrollTop) {
-          // Scrolling down
-          navbar.classList.add('hide');
-          navbar.style.backgroundColor = '#333';
-        } else {
-          // Scrolling up
-          navbar.classList.remove('hide');
-        }
-      }
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (scrollTop > navbarHeight) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hide');
+                navbar.style.backgroundColor = '#9dadb9';
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hide');
 
-      if (scrollTop === 0) {
-          navbar.style.backgroundColor = 'transparent';
+
+            }
         }
 
-      lastScrollTop = scrollTop;
+        if (scrollTop === 0) {
+            navbar.style.backgroundColor = 'transparent';
+        }
+
+        lastScrollTop = scrollTop;
     });
+  });
 
-  </script>
+
+</script>

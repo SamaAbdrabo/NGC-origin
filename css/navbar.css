@@ -1,11 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@500&display=swap');
 
 
-:root{
-  --navy_color:#394974;
-  --hover_color:#71707D;
-  --background_color:rgb(181, 181, 181);
-}
+
 
 body{ /*not related to navbar but sitewise code to ensure consistency*/
   background-color: var(--background_color);
@@ -63,7 +59,7 @@ body{ /*not related to navbar but sitewise code to ensure consistency*/
 
 .pages a {
   color:var(--navy_color);
-  font-size: 22px;
+  font-size: 23px;
   font-family: 'Cormorant Infant', serif;
 }
 
@@ -78,7 +74,7 @@ body{ /*not related to navbar but sitewise code to ensure consistency*/
     background-color: rgba(14, 23, 39, 0.9);
     overflow-x: hidden;
     transition: 0.5s;
-}
+} Q
 
 
 

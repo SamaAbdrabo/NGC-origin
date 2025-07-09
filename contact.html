@@ -60,7 +60,29 @@
               <h1>CONTACT US</h1>
           </div>
       </section>
+      <section class="location-sec">
+        <div class="location">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3163.402017569573!2d31.340017275058923!3d29.98250612150358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583968783f7f1b%3A0x7d29fbba7f1e0730!2sSama%20Tower%2C%20Ring%20Rd%2C%20Al%20Abageyah%2C%20El%20Mokattam%2C%20Cairo%20Governorate%204416091!5e1!3m2!1sen!2seg!4v1751992502268!5m2!1sen!2seg" 
+          width="600"
+          height="450" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"></iframe>     
+          <div class="address">
+            <div>
+              <h1>Our Office</h1>
+              <p>Egypt, Cairo, El Mokattam , Road xyz <br> Email: <br>Tel:</p>
 
+            </div>
+            <div>
+              <h1>Gulf Consult </h1>
+              <p>Saudi Arabia, Alkhobar, Road xyz</p>
+            </div>
+          </div>
+        </div>
+        </section>
+        <section class=""
       </main>
 
       <footer class="footer">
@@ -95,29 +117,36 @@
            </div>
        </footer>
   </body>
-  <script>
-  let lastScrollTop = 0;
-  const navbar = document.querySelector('.navbar');
-  const navbarHeight = navbar.offsetHeight;
+<script> 
+//navbar functions
+document.addEventListener('DOMContentLoaded', () => {
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
 
-  window.addEventListener('scroll', () => {
-    let scrollTop = window.scrollY || document.documentElement.scrollTop;
-    if (scrollTop>navbarHeight){
-      if (scrollTop > lastScrollTop) {
-        // Scrolling down
-        navbar.classList.add('hide');
-        navbar.style.backgroundColor = '#333';
-      } else {
-        // Scrolling up
-        navbar.classList.remove('hide');
-      }
-    }
+    const navbarHeight = navbar.offsetHeight;
 
-    if (scrollTop === 0) {
-        navbar.style.backgroundColor = 'transparent';
-      }
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (scrollTop > navbarHeight) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hide');
+                navbar.style.backgroundColor = '#9dadb9';//8a98a3
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hide');
 
-    lastScrollTop = scrollTop;
+
+            }
+        }
+
+        if (scrollTop === 0) {
+            navbar.style.backgroundColor = 'transparent';
+        }
+
+        lastScrollTop = scrollTop;
+    });
   });
+
 
 </script>

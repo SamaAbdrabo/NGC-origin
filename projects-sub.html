@@ -77,7 +77,11 @@
                     <p>Flexibility was key from the beginning, with the space designed to accommodate both large numbers of travelers and form a thriving community hub. This is achieved with a large ‘Boma’ style roof, and an open and accessible structure, limiting the number of areas restricted to ticketholders. The design also incorporates the original historic station building – one of the oldest stone structures in Nairobi – alongside cafes, shops, plants and greenery, flexible seating, and sports fields.</p>
                     <p>The redevelopment of Nairobi Central Station lies at the center of the Nairobi Railway City urban regeneration project.</p>
                 </div>
+              <div class="project-img-container">
+              <img src="photos/images.jpg">
+              </div>
             </div>
+            
             
            
         </div>
@@ -201,29 +205,36 @@
 
 
   </script>
-    <script> /*navbar js*/
+<script> 
+//navbar functions
+document.addEventListener('DOMContentLoaded', () => {
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
+
     const navbarHeight = navbar.offsetHeight;
 
     window.addEventListener('scroll', () => {
-      let scrollTop = window.scrollY || document.documentElement.scrollTop;
-      if (scrollTop>navbarHeight){
-        if (scrollTop > lastScrollTop) {
-          // Scrolling down
-          navbar.classList.add('hide');
-          navbar.style.backgroundColor = '#333';
-        } else {
-          // Scrolling up
-          navbar.classList.remove('hide');
-        }
-      }
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (scrollTop > navbarHeight) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hide');
+                navbar.style.backgroundColor = '#9dadb9';
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hide');
 
-      if (scrollTop === 0) {
-          navbar.style.backgroundColor = 'transparent';
+
+            }
         }
 
-      lastScrollTop = scrollTop;
-    });Whe
+        if (scrollTop === 0) {
+            navbar.style.backgroundColor = 'transparent';
+        }
 
-  </script>
+        lastScrollTop = scrollTop;
+    });
+  });
+
+
+</script>

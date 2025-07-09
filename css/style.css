@@ -1,9 +1,5 @@
 
-:root{
-  --navy_color:#394974;
-  --hover_color:#71707D;
-  --background_color:rgb(181, 181, 181);
-}
+
 a:visited {
   color: inherit; /* or any color you want */
 }
@@ -18,13 +14,61 @@ body {
  justify-content: space-between;
 
 }
+.herosec{
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content: center;
+  height:100vh;
+  width:100vw;
+  background-image: url(../photos/skyline-large.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.hero-content{
+  color:var(--white);
+  font-size:x-large;
+  flex-wrap:wrap;
+  padding:3em;
+  gap:20px; 
+  display: flex;
+  flex-direction: column;
+  text-align: flex-start;
+}
+.hero-buttons{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  
+}
+.hero-buttons button{
+  font-size:medium;
+  border-color:var(--white);
+  color:var(--white);
 
+}
+.hero-buttons button:hover{
+  background-color:var(--white);
+  color:black;
+
+
+}
+
+.hero-content a {
+  color:inherit;
+}
 .firstsec{
+  background-color:#d4d0c9;
   display: flex;
   flex-direction:column;
   text-align:center;
+  align-items: center;
   position: relative;
+   width: 100%;
+  margin:0 auto;
 }
+
+
 .image-container {
   position: relative;
   height:100vh;
@@ -32,53 +76,63 @@ body {
   overflow:hidden;
 }
   .first-img{
-    margin-top:20em ;
     height: 100vh;
     width: 100%;
     display: flex;
     position:relative;
     margin-top: 0;
-    object-fit: cover;
+    object-fit: fill;
     max-width: 100%;
     max-height: 100%;
     top:0px;
     object-fit: cover;
   }
-
-
-  .text-container{
-    height:auto;
-    position: absolute; /* Position it inside the image-container */
-    top:15em;
-    width: 100%;
-    height: 100%;
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
-    padding: 2em;
+.about-text-container{
+  position:absolute;
+  width:inherit;
+  bottom:0;
+  height:100vh;
+  width: 60em;
+  left:0;
+  z-index:100;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top:2em;
 }
 
-  .overlay-text {
-    display:flex;
-    flex-direction: column;
-    position: relative;
-    align-self: flex-end;
-    color:#152338;
-    padding: 20px;
-    width: 40%;
-    left: 3em;
-  }
+.slick-dotted.slick-slider {
+  margin-bottom:0;
+}
+.about-sec{
+   display: flex;
+   position: relative;
+  flex-direction:column;
+  text-align:center;
+  align-items: center;
+  height:100vh;
+  
+}
+ 
 
-  /*optional -background-color: rgba(0, 0, 0, 0.5); translucent grey*/
+.about-wrapper{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: start;
+      gap:20px;
+      flex: 0 0 50%;
+      max-width:50%;
+      padding:0 3em;
+      margin-left:2em;
 
-  .overlay-text h1 {
-    font-size: 2.25em;
-    margin-bottom:0.625em;
-  }
+}
+.about-wrapper h1{
+  font-size: 3em;
+}
 
-  .overlay-text p {
-    line-height: 1.6;
-  }
-
+  
   .abtbtn {
     background-color: transparent;
     color: black;
@@ -104,9 +158,6 @@ body {
     background-position: center;
     background-size:cover;
     width:100%;
-    /*display: flex;
-    flex-direction: column; is deleted*/ 
-    min-height:70em; /*changed from height to ensure in media query slideshow container remains in within secondsec*/
     max-width: 100%;
     }
 
@@ -118,7 +169,7 @@ body {
     max-width: 100%;
     max-height: 100%;
    flex-direction: column;
-    background-color:#394974;
+    background-color:var(--navy_color);
     align-self: flex-end;
   }
   .overlay-text2{
@@ -150,7 +201,7 @@ body {
 
 .your-class{
   margin-bottom:10em !important;
-  background-color:white;
+  background-color:var(--white);
   margin-top:-5em;
   max-width:70em;
   row-gap:10em;
@@ -178,7 +229,6 @@ body {
   width:20em;
   gap:10px;
   text-align:left;
-  font-size:larger;
 }
 .projects-text-2{
   display:flex;
@@ -194,7 +244,7 @@ body {
   align-items: flex-start;
 }
 .projects-text a:hover {
-    color: #394974;
+    color: var(--navy_color);
 }
 
 .swipe {
@@ -263,7 +313,7 @@ cursor: pointer;
   width: auto;
   margin-top: -22px;
   padding: 16px;
-  color: white;
+  color: var(--white);
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
@@ -298,8 +348,67 @@ cursor: pointer;
 }
 
 
+/*clients-sec*/
+.clients-sec{
+  margin:2em 0;
+  padding-top:2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:20px;
+
+}
+.clients-sec-title{
+  align-self:center;
+}
+.autoplay{
+  width:100vw;
+  padding:0 10vw;
+      background-color: var(--navy_color);
+
+}
+.autoplay-item{
+
+  margin: 1em 0;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap:20px;
+  justify-content: center;
+  height:13em;
+  padding: 1em;
+  max-width:252px;
+  
+}
+
+
+
+.autoplay-item img{
+    height:8em;
+  width:100%;
+  object-fit: fill;
+
+}
+
 /* Responsive styling for smaller screens */
 @media (max-width: 1200px) {
+    
+      .text-container{
+    
+    width:50em;
+    height:100%;
+    
+}
+
+.about-wrapper{
+
+      margin-left:2em;
+
+}
+.about-wrapper h1{
+  font-size: 2.5em;
+}
+  
   .your-class{
     width:45em;
     flex-direction: column;
@@ -345,12 +454,53 @@ cursor: pointer;
 }
 
 
-@media (max-width: 780px) {
+@media (max-width: 770px) {
+  
+    .firstsec{
+      display:flex;
+      flex-direction: column-reverse;
+    }
+    
+    .image-container{
+  height: auto;
+
+}
+.first-img{
+  height: auto;
+}
+    .about-text-container{
+      justify-content: flex-start;
+        align-items: flex-start;
+          width:100vw;
+          height:100%;
+      position:relative;
+      height:auto;
+       
+
+    }
+    
+    
+.about-wrapper{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: start;
+      gap:20px;
+      flex:0 0 100%;
+      max-width: 100%;
+      padding:2em;
+      margin-left:0;
+
+}
+.about-wrapper h1{
+  font-size: 2em;
+}
+  
  
   .your-class{
     overflow: hide;
     width:auto;
-    background-color: white;
+    background-color: var(--white);
     width: 90vw;
 
   }
@@ -389,39 +539,20 @@ cursor: pointer;
 }
 
 
-  .abtbtn {
-    background-color: transparent;
-    color: black;
-    font-size: 1em;
-    border-radius: 15px;
-    cursor: pointer;
-    padding: 10px 20px;
-    border: 2px solid black;
-    text-decoration: none;
-  }
-
+  
 
 
 
 /* on phones and smaller screens */
   @media screen and (max-width: 1200px) {
-   .overlay-text {
-      width: 60%;
-      padding: 10px;
-      text-align: center;
-      font-weight:bold;
-      
-    }
+   
     .overlay-text2 {
       width: 60%;
       margin:5em; 
       text-align: center; 
     
     }
-    .overlay-text h1{
-      font-size:1.7em;
-    }
-  
+
     .overlay-text2 h1{
       font-size:1.7em;
     }
@@ -436,35 +567,9 @@ cursor: pointer;
 
 
 @media screen and (max-width: 600px){
-   
-    .text-container {
-        position: absolute;
-        transform: none;
-        z-index: 100;
-      }
-
-    .overlay-text {
-      width: 100%;
-      top: 5em;
-      padding: 10px;
-      font-weight:bold;
-      align-self: flex-end;
-      left:0;
-      text-align: left;
-
-      position:relative;
-      margin: 0;
-     top:auto;
-     background-color: rgba(255, 255, 255, 0.5);
-
+    .hero-content{
+      padding:3em 1em;
     }
-    
-    .overlay-text h1{
-      font-size:1.7em;
-      width:90%;
-
-    }
-    
      .overlay-text2 h1{
        font-size:1.7em;
        width:90vw;
@@ -495,7 +600,12 @@ cursor: pointer;
   .projects-container{
     padding: 3em 1.5em;
   }
-  
+   .carousel-item img{
+  height:13em;
+ }
+ .services-overlay{
+  font-size:small;
+ }
     }
 
 .services-title{
@@ -515,7 +625,7 @@ cursor: pointer;
     left: 0;
     width: 100%;
     height: 100%;
-    color: #fff; /* White text for contrast */
+    color: var(--white); /* White text for contrast */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -539,9 +649,11 @@ cursor: pointer;
 /* Description hidden by default */
 .service-description {
   opacity: 0;
+  height:2em;
   transform: translateY(10px);
   transition: opacity 1s ease, transform 1s ease;
   font-size: 1.1em;
+  padding-left:1em;
 }
 .carousel{
   margin:0;
@@ -577,7 +689,7 @@ cursor: pointer;
 }
 
 .carousel-item:hover .services-overlay {
-background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 90%);
+background: linear-gradient(to top, rgba(0, 0, 0, 0.715), transparent 90%);
   opacity: 1;
 }
 
@@ -612,6 +724,7 @@ background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 90%);
 
 }
 @media screen and (max-width: 725px) {
+   
     .cover-section{
     padding-top:10vw;
     justify-content: flex-start;
@@ -621,7 +734,6 @@ background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 90%);
     width:90vw;
     padding:3vw!important;
     padding-top:10vw !important;
-    font-size:smaller;
     
 }
     .cover-section-2{
@@ -634,4 +746,7 @@ background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 90%);
         font-size:2em;
 
  }
+
+
+ 
 }

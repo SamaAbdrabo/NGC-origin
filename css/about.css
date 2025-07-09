@@ -1,0 +1,331 @@
+
+.cover-section-2{
+    background-image: url(../photos/skyline.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.quicklinks{
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    position: sticky;
+    top:0;
+    transition: transform 0.6s ease;  
+    transform: translateY(0);
+
+   }
+
+.quicklinks div{
+    display: flex;
+    flex-direction: row;
+    gap:0px;
+
+}
+.quicklinks a{
+    color:inherit;
+}
+.quicklinks button{
+    font-size:0.9em;
+    background-color: transparent;
+    background-color: var(--white);
+    border:1px solid black;
+    color:black;
+    padding:0.7em 1em;
+}
+.quicklinks button:hover{
+    color:var(--white);
+    background-color:black ;
+    transition-duration:0.4s;
+}
+
+.about-main{
+    display: flex;
+    flex-direction:column;
+    padding:2em;
+}
+#overview{
+    padding-top:100px;
+    margin-top:-50px;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+#overview div{
+    max-width:45em;
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+#history{
+    padding-top:100px;
+    display:flex;
+    flex-direction:row;
+    align-items:flex-end;
+}
+#history img{
+    height:auto;
+    width:100%;
+
+}
+.history-img-container{
+    flex: 0 0 40%;
+}
+.history-text{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background-color:var(--white);
+    flex:0 0 60%;
+    padding:2em;
+
+}
+
+#philosophy{
+    padding-top:100px;
+    display: flex;
+    flex-direction:column;
+    gap:40px;
+}
+
+.mission-vision{
+    display: flex;
+    flex-direction: column;
+    gap:0px;
+    
+}
+
+.mission{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    flex:0 0 50%;
+    background-color: var(--navy_color);
+    color:var(--white);
+    padding:1.3em 2em;
+
+}
+.vision{
+     display: flex;
+    flex-direction: column;
+    gap:20px;
+    flex:0 0 50%;
+    background-color:var(--white);
+    color:var(--navy_color);
+    padding:1.3em 2em;
+
+    
+}
+.values{
+    padding-top:1.5em;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:20px;
+    
+}
+
+
+.values-sub{
+    padding:1em 0;
+    background-color: var(--navy_color);
+    color:var(--white);
+    width:90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#certification{
+    padding-top:100px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;  
+}
+.about-certification-image-container{
+    flex:0 0 40%;
+}
+#certification img{
+    height:auto;
+    width:100%;
+
+}
+.about-certification-text{
+    flex:0 0 60%;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background-color:var(--white);
+    padding:2em;
+
+}
+.about-certification-text button{
+    width:max-content;
+}
+
+#owners{
+    padding-top:100px;
+    
+    
+}
+.owners-main{
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+    background-color: var(--navy_color);
+    padding:2em ;
+        margin:0 -2em;
+}
+.partners-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 2em 0 ;
+    gap:2em;
+    
+}
+.partner{
+    display: flex;
+    flex-direction:column;
+    align-items: flex-start;
+    gap:20px;
+    width:15em;
+    background-color: rgb(243, 240, 240);
+}
+.partner-image-container{
+  
+    width:100%;
+    height:auto;
+}
+.partner-image-container img{
+    width:100%;
+    height:auto;
+}
+
+.partner-text{
+    padding:1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.owners-title{
+    color:var(--white);
+}
+
+#organization{
+    padding-top:100px;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    align-items: center;
+}
+
+#organization img{
+    width:80vw;
+    height:auto;
+}
+@media screen and (min-width:1200px){
+    .about-main {
+        font-size:large;
+    }
+    
+    .history-text{
+    padding:3em 6em;
+}
+    .mission-vision{
+    display: flex;
+    flex-direction:row;
+    }
+    .mission{
+        padding:2em 3em;
+    }
+    .vision{
+        padding:2em 3em;
+    }
+
+    #organization img{
+        width: 60vw;
+    }
+}
+@media screen and (max-width:800px){
+
+    #history{
+    display:flex;
+    flex-direction:column;
+}
+    .history-img-container{
+        width:85%;  
+        margin-bottom:-2em;
+    }
+    #certification{
+        display:flex;
+        flex-direction:column;
+    }
+      .about-certification-image-container{
+        width:80%;  
+        margin-bottom:-2em;
+    }
+    .about-certification-text{
+        width:100%;  
+    }
+    .partner{
+        padding:0;
+    }
+    .partners-container{
+        gap:20px;
+    }
+    #organization img{
+        width: 90vw;
+    }
+    
+}
+@media screen and (max-width:680px){
+    .about-main{
+        padding:2em 1.1em;
+    }
+    #owners{
+        padding:2em;
+        margin:0 -1.1em;
+    }
+    .quicklinks button{
+    font-size:0.75em;
+    padding:0.7em 0.4em;
+}
+    #philosophy{
+        padding: 0em;
+    }
+    .values-sub{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width:20em;
+        gap:20px;
+    }
+    
+    .partners-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center ; 
+        gap:30px;
+    
+    }
+    .partner{
+        align-items: center;
+    
+    }
+    .partner-image-container{
+        width:auto;
+        height: auto;
+    }
+    
+    
+}
+@media screen and (max-width:400px){
+    .quicklinks{
+        display:none;
+    }
+}
+
+
+
