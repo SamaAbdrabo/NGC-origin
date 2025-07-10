@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS links using Flask's static URL system -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+
+    <title>new-GC</title>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <section class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="Logo" class="logo-img">
+                </a>
+            </div>
+            <div class="pages">
+                <ul>
+                    <li><a href="/about.html">About Us</a></li>
+                    <li><a href="/markets.html">Markets & Services</a></li>
+                    <li><a href="/projects">Projects</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <div class="menu">
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn">&times;</a>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" class="openbtn">
+                            <div class="one"></div>
+                            <div class="two"></div>
+                            <div class="three"></div>
+                        </a>
+                    </div>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li><a href="/index.html">Home</a></li>
+                            <li><a href="/about.html">About Us</a></li>
+                            <li><a href="/markets.html">Markets & Services</a></li>
+                            <li><a href="/projects">Projects</a></li>
+                            <li><a href="/contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <main>
+        <section class="cover-section-2">
+            <div class="cover-text-2">
+                <h1>PROJECTS</h1>
+            </div>
+        </section>
+
+        <section class="cards-section">
+            <div class="cards-container">
+                <div class="projects-filter-area">
+              <div class="projects-filter-area">
+                    <div class="search-filter">
+                    <input type="text" id="searchInput" placeholder="Search projects..." />
+                    <div class="filters">
+                    <select id="sectorFilter">
+                        <option value="all">All Sectors</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                    </select>
+                    <select id="sectorFilter">
+                        <option value="all">All Sectors</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                    </select>
+                    <select id="sectorFilter">
+                        <option value="all">All Sectors</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                    </select>
+
+                    <select id="locationFilter">
+                        <option value="all">All Locations</option>
+                        <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                        <option value="uk">UK</option>
+                    </select>
+                </div>
+                <button id="resetBtn" class="reset-button">Reset all filters</button>
+
+                </div>
+              </div>
+                </div>
+
+                <div class="cards-grid">
+                    {% for project in projects %}
+                        <a href="projects-sub.html" class="card-item hover-effect"
+                           data-title="{{ project.title | lower }}"
+                           data-sector="infrastructure" 
+                           data-location="egypt">
+                            <div class="card-visual" style="background-image: url('{{ project.image_url }}');"></div>
+                            <div class="card-subtext">
+                                
+                                {% if project.market and project.service %}
+                                <h5>{{ project.market }} <strong> • </strong> {{ project.service }}</h5>
+                                {% elif project.market %}
+                                <h5>{{ project.market }}</h5>
+                                {% elif project.service %}
+                                <h5>{{ project.service }}</h5>
+                                {% else %}
+                                <h5></h5>
+                                {% endif %}
+
+                                <h2>{{ project.title or '' }}</h2>
+                                <h6 class="project-date">{{ project.date.strftime('%d %B %Y') }}</h6> 
+                            </div>
+                        </a>
+                    {% else %}
+                        <p>No projects available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-container">
+        <div class="footer">
+            <div class="bottom-logo">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="logo" class="logo-img">
+                </a>
+            </div>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <div class="quick-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/about.html">About Us</a></li>
+                            <li><a href="/markets.html">Markets & Services</a></li>
+                            <li><a href="/projects">Projects</a></li>
+                            <li><a href="/contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="services-links">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="/markets.html#Service-1">Technical and Surveying</a></li>
+                            <li><a href="/markets.html#Service-2">Design</a></li>
+                            <li><a href="/markets.html#Service-3">Project Management</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="contact">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <a href="https://maps.app.goo.gl/1jGEXui9ujNKSs346" target="_blank"><li>New Gulf Consult, Cairo, Egypt</li></a>
+                        <li><strong>Tel:</strong> <a href="tel:+20123456789" target="_blank">+20 123 456 789</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@ngc.com" target="_blank">info@ngc.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 New Gulf Consult. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS files -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Inline Scripts (optional: can be moved to separate JS file) -->
+    <script>
+        // Reset filters
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.filters select').forEach(select => select.selectedIndex = 0);
+            document.querySelectorAll('.card-item').forEach(item => item.style.display = 'flex');
+        });
+    </script>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const sectorFilter = document.getElementById('sectorFilter');
+        const locationFilter = document.getElementById('locationFilter');
+        const cards = document.querySelectorAll('.card-item');
+
+        function filterCards() {
+            const searchValue = searchInput.value.toLowerCase();
+            const selectedSector = sectorFilter.value;
+            const selectedLocation = locationFilter.value;
+
+            cards.forEach(card => {
+                const title = card.dataset.title;
+                const sector = card.dataset.sector;
+                const location = card.dataset.location;
+
+                const matchesSearch = title.includes(searchValue);
+                const matchesSector = selectedSector === 'all' || sector === selectedSector;
+                const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
+
+                if (matchesSearch && matchesSector && matchesLocation) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterCards);
+        sectorFilter.addEventListener('change', filterCards);
+        locationFilter.addEventListener('change', filterCards);
+    </script>
+
+    <script>
+        // Navbar scroll behavior
+        document.addEventListener('DOMContentLoaded', () => {
+            let lastScrollTop = 0;
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar.offsetHeight;
+
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.scrollY || document.documentElement.scrollTop;
+                if (scrollTop > navbarHeight) {
+                    if (scrollTop > lastScrollTop) {
+                        navbar.classList.add('hide');
+                        navbar.style.backgroundColor = '#9dadb9';
+                    } else {
+                        navbar.classList.remove('hide');
+                    }
+                }
+
+                if (scrollTop === 0) {
+                    navbar.style.backgroundColor = 'transparent';
+                }
+
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-.markets-sec{
+
+.services-sec{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -30,24 +31,24 @@
     max-width:35em;
  }
 
-.markets-sec .MS-box {
-    background-color: #c8d9e6;
+.services-sec .MS-box {
+    background-color: var(--blue);
 
 }
-.services-sec{
+.markets-sec{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items:center;
     overflow: hidden;
-        overflow-y: visible;
+    overflow-y: visible;
 
 }
-.services-sec .MS-box{
-    background-color:#426bbb;
+.markets-sec .MS-box{
+    background-color:var(--blue);
 }
 
-.markets-main{
+.services-main{
     padding:3em;
     margin:3em;
     display:flex;
@@ -68,30 +69,34 @@
     border-left: 2px solid rgba(255, 255, 255, 0.151); /* ← vertical line */
     flex: 0 0 25%;
     max-width: 25%;
+
 }
 
 .vertical-panel ul {
-        padding:0 1em;
-        line-height: 2em;
+    display: flex;
+    flex-direction: column;
+        gap:1em;
+        padding:15px 1em;
+        line-height:1.3em;
         list-style-type: none;
 }
 
 .vertical-panel a {
     color: inherit;
 }
- .markets-main .vertical-panel li.active {
-  color: #0c73c2;
+ .services-main .vertical-panel li.active {
+  color: var(--navy_color);
      }
 
 
-.markets-carousel{
+.services-carousel{
     display:flex;
     flex-direction:row;
     justify-content: center;
     flex: 0 0 75%;
     max-width: 75%;
 }
-.market-info{
+.service-info{
     display:flex !important;
     flex-direction:row;
     justify-content: center;
@@ -100,14 +105,14 @@
     height:auto;
 }
 
-.market-info-sub{
+.service-info-sub{
     padding:15px;
     display:flex;
     flex-direction:column;
     align-items: flex-start;
     gap:25px;
 }
-.market-info-sub a{
+.service-info-sub a{
     color:inherit;
 }
 
@@ -138,8 +143,8 @@
   }
   
 
-/*services section*/
-.services-main{
+/*markets section*/
+.markets-main{
     margin:3em;
     margin-top:5em;
     padding-top:3em;
@@ -150,44 +155,44 @@
     flex-wrap:wrap;
 }
 
-.services-vertical-panel{
+.markets-vertical-panel{
      display:flex;
     flex-direction: column;
     align-items: flex-start;
     text-decoration: none;
     border-left: 2px solid rgba(255, 255, 255, 0.151); /* ← vertical line */
-    flex: 0 0 20%;
-    max-width: 20%;
+    flex: 0 0 30%;
+    max-width: 30%;
 }
 
-.services-vertical-panel ul {
+.markets-vertical-panel ul {
         
         padding:0 1em;
         line-height: 2em;
         list-style-type: none;
 }
 
-.services-vertical-panel a {
+.markets-vertical-panel a {
     color: inherit;
 }
- .services-vertical-panel li.active {
-  color: #426bbb;
+ .markets-vertical-panel li.active {
+  color: var(--navy_color);
      }
 
-.services-carousel{
+.markets-carousel{
     margin-top:-2em;
-    flex: 0 0 80%;
-    max-width: 80%;
+    flex: 0 0 70%;
+    max-width: 70%;
     right:0;
 }
-.service-info{  
+.market-info{  
     width:100%;
     height:45em;
     display:flex !important;
     flex-direction:column;
     align-items:flex-end;
 }
-.service-info-item{
+.market-info-item{
     display:flex !important;
     flex-direction:column;
     align-items: flex-end;
@@ -201,7 +206,7 @@
 }
 
 
-.service-info-sub{
+.market-info-sub{
     height:13em;
     min-width:40em;
     padding:3em;
@@ -209,12 +214,12 @@
     flex-direction: column;
     align-self:flex-start;
     justify-content: center;
-    background-color: #426bbb;
+    background-color: var(--blue);
     flex-direction:column;
     align-items: flex-start;
     gap:25px;
 }
-.service-info-sub a{
+.market-info-sub a{
     color:inherit;
 }
 
@@ -223,7 +228,7 @@
 
 @media screen and (min-width: 1200px){
 
-    .markets-main{
+    .services-main{
     width:80em;
   }
   
@@ -231,7 +236,7 @@
     font-size:1.5em;
   }
   
-    .market-info-sub{
+    .service-info-sub{
     flex: 0 0 57%;
     width: 57%;
 }
@@ -243,23 +248,23 @@
     height:200px;
     width:20em;
  }
- .services-main{
+ .markets-main{
     width:80em;
     padding-left:3em;
 
   }
-  .service-info-item img{
+  .market-info-item img{
     height:35em;
     width:50em;
 }
 
-  .services-vertical-panel{
+  .markets-vertical-panel{
     font-size:1.5em;
   }
   
-  .service-info-sub {
+  .market-info-sub {
         margin-top:-10em;
-        margin-left:5em;
+        margin-left:0em;
   }
 }
 @media screen and (max-width: 1200px){
@@ -284,7 +289,7 @@
     font-size:large;
     max-width:25em;
  }
-    .markets-main{
+    .services-main{
     width:45em;
     padding:0;
     flex-wrap:nowrap;
@@ -294,12 +299,12 @@
     max-width: 27%;
 }
   
-  .market-info{
+  .service-info{
     flex: 0 0 73%;
     max-width: 73%;
 }
   
-    .market-info-sub{
+    .service-info-sub{
      
     flex: 0 0 50%;
     max-width: 50%;
@@ -314,45 +319,45 @@
     width:15em;
  }
  
- .services-main{
+ .markets-main{
     width:90vw;
  }
- .services-vertical-panel{
+ .markets-vertical-panel{
     font-size:1.3em;
     flex: 0 0 40%;
     max-width: 40%;
 }
 
 
-.services-carousel{
+.markets-carousel{
     margin-top:-2em;
     flex: 0 0 60%;
     max-width: 60%;
     right:0;
 }
-.service-info{ 
+.market-info{ 
     height:30em;
     width:54vw;
  
 }
-.service-info-item{
+.market-info-item{
     height:20em;
     width:54vw;
 
    }
- .service-info-item img{
+ .market-info-item img{
     height:20em;
     width:54vw;
 }
 
 
-.service-info-sub{
+.market-info-sub{
     max-height:15em;
     min-width:40em;
     padding:1em;
    
 }
-.service-info-sub a{
+.market-info-sub a{
     color:inherit;
 }
 
@@ -378,7 +383,7 @@
     font-size:large;
     max-width:85vw;
  }
-    .markets-main{
+    .services-main{
         width:100vw;
         padding:0em;
         margin:3em;
@@ -393,7 +398,7 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
-     .markets-carousel{
+     .services-carousel{
         display:flex;
         flex-direction:row;
         justify-content: center;
@@ -402,7 +407,7 @@
 }
 
 
-    .market-info{
+    .service-info{
             display:flex;
             flex-direction:column;
             flex-wrap:wrap;
@@ -411,7 +416,7 @@
             max-width: 100%;
             
     }
-    .market-info-sub{
+    .service-info-sub{
         width:100%;
         flex: 0 0 100%;
         max-width: 100%;  
@@ -442,7 +447,7 @@
         display: block;
     }
 
-  .services-main{
+  .markets-main{
         width:100vw;
         padding:0em;
         display:flex;
@@ -450,30 +455,30 @@
         justify-content: center;
         gap:5em;
 }
-.services-vertical-panel{
+.markets-vertical-panel{
     flex: 0 0 100%;
     max-width:95%;
 }
-.services-carousel {
+.markets-carousel {
     flex: 0 0 100%;
     max-width: 95%;
   }
 
  
 
-  .service-info-item {
+  .market-info-item {
     height: 15em;
     width: 100%;
     background-size: cover;
     background-position: center;
   }
 
-   .service-info-item img{
+   .market-info-item img{
     height:15em;
     width:100%;
 }
 
-  .service-info-sub {
+  .market-info-sub {
     width: 100%;
     margin-top:-2em;
     margin-left: 2em;
