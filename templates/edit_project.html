@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Project</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/projects-sub.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+
+  <style>
+    .editable-input, .editable-textarea {
+      all: unset;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      width: 100%;
+      display: block;
+    }
+
+    .editable-input:focus,
+    .editable-textarea:focus {
+      outline: none;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .image-upload-label {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      background: #eee;
+      text-align: center;
+      padding: 2em;
+      font-size: 1.2em;
+      color: #888;
+    }
+
+    .image-upload-label:hover {
+      background-color: var(--accent);
+      color: #fff;
+    }
+
+    .project-img-container img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <form action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
+      <section class="cover-section-2">
+        <div class="cover-text-2">
+          <p><a href="/">Home</a> ❯ <a href="/projects">Projects</a></p>
+          <h1><input name="title"style="text-transform: capitalize; " class="editable-input" value="{{ project.title }}"></h1>
+        </div>
+      </section>
+
+      <section class="project-info-section">
+        <div class="project-info-main">
+          <div class="project-info-description">
+            <h1><input name="subtitle" class="editable-input" placeholder="Project subtitle..." value="{{ project.subtitle }}"></h1>
+            <div class="project-info-description-p">
+              <textarea name="description" class="editable-textarea"   oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';"placeholder="Project description">{{ project.description }}</textarea>
+            </div>
+
+            <div class="project-img-container">
+              {% if project.cover_image_url %}
+                <img src="{{ project.cover_image_url }}" alt="cover image">
+              {% endif %}
+              <label class="image-upload-label">
+                Click to upload cover image
+                <input type="file" name="cover_image" accept="image/*" style="display:none">
+              </label>
+            </div>
+          </div>
+        </div>
+
+            
+              <div class="project-info-panel">
+                {% if project.market or True %}
+                <div class="project-info-panel-div">
+                    <h3>Market</h3>
+                    <div class="project-info-panel-div-p">
+                    <input name="market" value="{{ project.market or '' }}">
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if project.service or True %}
+                <div class="project-info-panel-div">
+                    <h3>Service</h3>
+                    <div class="project-info-panel-div-p">
+                    <input name="service" value="{{ project.service or '' }}">
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="project-info-panel-div">
+                    <h3>Location</h3>
+                    <div class="project-info-panel-div-p">
+                    <input name="location" value="{{ project.location or '' }}">
+                    </div>
+                </div>
+
+                <div class="project-info-panel-div">
+                    <h3>Client</h3>
+                    <div class="project-info-panel-div-p">
+                    <input name="client" value="{{ project.client or '' }}">
+                    </div>
+                </div>
+
+                <div class="project-info-panel-div">
+                    <h3>Collaboration</h3>
+                    <div class="project-info-panel-div-p">
+                    <input name="collaboration" value="{{ project.collaboration or '' }}">
+                    </div>
+                </div>
+
+                <div class="project-info-panel-div">
+                    <h3>Completion Date</h3>
+                    <div class="project-info-panel-div-p">
+                    <input name="completion_date" value="{{ project.completion_date or '' }}">
+                    </div>
+                </div>
+
+          <div style="margin-top: 2em;">
+            <button type="button" onclick="addPanelField()">+ Add Info Section</button>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 2em 5vw;">
+        <h3>Gallery</h3>
+        <div id="gallery-preview">
+          {% for img in project.gallery_images %}
+            <div>
+              <img src="{{ img.url }}" style="width: 200px;">
+              <button type="button" onclick="this.parentElement.remove()">Remove</button>
+            </div>
+          {% endfor %}
+        </div>
+        <input type="file" name="gallery_images" multiple accept="image/*">
+      </section>
+
+      <div style="text-align:center; margin-top:2em;">
+        <button type="submit">Save Changes</button>
+      </div>
+    </form>
+  </main>
+  <script>
+  function addPanelField() {
+    const panel = document.querySelector('.project-info-panel');
+    
+    const fieldWrapper = document.createElement('div');
+    fieldWrapper.className = 'project-info-panel-div';
+
+    const heading = prompt("Enter field label (e.g., ARCHITECT, SUPERVISOR):");
+    const name = heading.toLowerCase().replace(/\s+/g, "_"); // e.g., "Completion Date" -> "completion_date"
+
+    if (!heading) return;
+
+    fieldWrapper.innerHTML = `
+      <h3>${heading}</h3>
+      <div class="project-info-panel-div-p">
+        <input name="${name}" class="editable-input" placeholder="${heading}">
+        <button type="button" onclick="this.closest('.project-info-panel-div').remove()">Remove</button>
+      </div>
+    `;
+    
+    // Insert before the "+ Add Info Section" button container
+    const addBtnWrapper = panel.querySelector('div[style*="margin-top"]');
+    panel.insertBefore(fieldWrapper, addBtnWrapper);
+  }
+</script>
+
+</body>
+</html>

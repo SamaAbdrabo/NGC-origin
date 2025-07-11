@@ -68,11 +68,12 @@
 
 }
 .card-subtext {
-    background-color: aliceblue;
+    background-color: var(--white);
     z-index:1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap:20px;
     align-items: flex-start;
     text-align:left;
     height:70%;
@@ -84,7 +85,9 @@
     font-weight:bold;
     transition: opacity 0.3s ease;
 }
-
+.project-date{
+    margin-top:auto;
+}
 
 
   .search-filter{

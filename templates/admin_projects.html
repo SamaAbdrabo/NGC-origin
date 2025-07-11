@@ -4,164 +4,65 @@
     <meta charset="UTF-8">
     <title>Add Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_projects.css') }}">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
 
 
-
 </head>
-<body class="general">
-    <section class="header">
-        <nav class="navbar">
-            <div class="logo">
-                <a href="{{ url_for('home') }}">
-                    <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="Logo" class="logo-img">
-                </a>
-            </div>
-            <div class="pages">
-                <ul>
-                    <li><a href="/about.html">About Us</a></li>
-                    <li><a href="/markets.html">Markets & Services</a></li>
-                    <li><a href="/projects">Projects</a></li>
-                    <li><a href="/contact.html">Contact Us</a></li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <div class="menu">
-                    <div id="myNav" class="overlay">
-                        <a href="javascript:void(0)" class="closebtn">&times;</a>
-                    </div>
-                    <div>
-                        <a href="javascript:void(0)" class="openbtn">
-                            <div class="one"></div>
-                            <div class="two"></div>
-                            <div class="three"></div>
-                        </a>
-                    </div>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li><a href="/index.html">Home</a></li>
-                            <li><a href="/about.html">About Us</a></li>
-                            <li><a href="/markets.html">Markets & Services</a></li>
-                            <li><a href="/projects">Projects</a></li>
-                            <li><a href="/contact.html">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </section>
-    <main>
-        <section class="cover-section-2">
-            <div class="cover-text-2">
-                <h1>ADMIN</h1>
-            </div>
-        </section>
-        <section id="add-projects">
-            <h1>Add New Project</h1>
-            <form method="POST">
-                <label>Title:</label><br>
-                <input type="text" name="title" required><br><br>
+<body>
+  <main class="cards-section">
+    <div class="cards-container">
+      <div class="cards-grid">
 
-                <label>Description:</label><br>
-                <textarea name="description"></textarea><br><br>
-                <label>Market:</label><br>
-                <textarea name="market"></textarea><br><br>
-                <label>Service:</label><br>
-                <textarea name="service"></textarea><br><br>
-                <label>Date: </label><br>
-                <input type="text" name="date" placeholder="e.g. 06 June 2025"><br><br>
-                <label>Image URL:</label><br>
-                <input type="text" name="image_url"><br><br>             
-                <button type="submit">Add Project</button>
-            </form>
-        </section>
-        <hr>
+        <!-- Add New Project Card -->
+        <div class="card-item add-card" onclick="window.location.href='/admin/projects/new'">
+          <span>＋<br>Add Project</span>
+        </div>
 
-<section class="edit-projects">
-    <h2>All Projects</h2>
-    <div class="project-header">
-        <span>Title</span>
-        <span>Description</span>
-        <span>Market</span>
-        <span>Service</span>
-        <span>Date</span>
-        <span>Image URL</span>
-    </div>
-    <div class="projects-list">
+        <!-- Dynamic Project Cards -->
         {% for project in projects %}
-            <div class="project-row" data-id="{{ project.id }}">
-                <input type="text" value="{{ project.title }}" class="editable" data-field="title">
-                <input type="text" value="{{ project.description }}" class="editable" data-field="description">
-                <input type="text" value="{{ project.market or '' }}" class="editable" data-field="market">
-                <input type="text" value="{{ project.service or '' }}" class="editable" data-field="service">
-                <input type="text" value="{{ project.date.strftime('%d %B %Y') if project.date else '' }}" class="editable" data-field="date">
-                <input type="text" value="{{ project.image_url }}" class="editable" data-field="image_url">
-                <button class="delete-btn">🗑</button>
+          <div class="card-item admin">
+            <div class="card-visual" style="background-image: url('{{ project.image_url }}');"></div>
+            <div class="card-subtext">
+              {% if project.market and project.service %}
+                <h5>{{ project.market }} <strong> • </strong> {{ project.service }}</h5>
+              {% elif project.market %}
+                <h5>{{ project.market }}</h5>
+              {% elif project.service %}
+                <h5>{{ project.service }}</h5>
+              {% else %}
+                <h5></h5>
+              {% endif %}
+              <h2 style="text-transform: capitalize ;">{{ project.title or '' }}</h2>
+        {% if project.date %}
+        <h6 class="project-date">{{ project.date.strftime('%d %B %Y') }}</h6>
+        {% endif %}
             </div>
-        {% else %}
-            <p>No projects found.</p>
+
+            <!-- Edit / Delete Icons -->
+            <div class="card-actions">
+            <i onclick="window.location.href='/admin/projects/{{ project.id }}'">✏️</i>
+              <i onclick="deleteProject('{{ project.id }}')">🗑</i>
+            </div>
+          </div>
         {% endfor %}
+
+      </div>
     </div>
-</section>
-    </main>
+  </main>
 
-
-
-<script>
-document.querySelectorAll('.editable').forEach(input => {
-    input.addEventListener('change', async (e) => {
-        const field = e.target.dataset.field;
-        const value = e.target.value;
-        const id = e.target.closest('.project-row').dataset.id;
-
-        await fetch(`/admin/projects/${id}/edit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ field, value })
+  <script>
+    function deleteProject(id) {
+      if (confirm("Are you sure you want to delete this project?")) {
+        fetch(`/admin/projects/${id}/delete`, {
+          method: 'POST'
+        }).then(() => {
+          location.reload();
         });
-    });
-});
-
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', async (e) => {
-        const id = e.target.closest('.project-row').dataset.id;
-
-        await fetch(`/admin/projects/${id}/delete`, {
-            method: 'POST'
-        });
-        e.target.closest('.project-row').remove(); // remove from DOM
-    });
-});
-</script>
-
-        <script>
-        // Navbar scroll behavior
-        document.addEventListener('DOMContentLoaded', () => {
-            let lastScrollTop = 0;
-            const navbar = document.querySelector('.navbar');
-            const navbarHeight = navbar.offsetHeight;
-
-            window.addEventListener('scroll', () => {
-                let scrollTop = window.scrollY || document.documentElement.scrollTop;
-                if (scrollTop > navbarHeight) {
-                    if (scrollTop > lastScrollTop) {
-                        navbar.classList.add('hide');
-                        navbar.style.backgroundColor = '#9dadb9';
-                    } else {
-                        navbar.classList.remove('hide');
-                    }
-                }
-
-                if (scrollTop === 0) {
-                    navbar.style.backgroundColor = 'transparent';
-                }
-
-                lastScrollTop = scrollTop;
-            });
-        });
-    </script>
+      }
+    }
+  </script>
 </body>
 </html>

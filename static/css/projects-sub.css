@@ -1,0 +1,155 @@
+p a {
+  text-decoration: none;
+  color: inherit; 
+}
+
+p a:hover {
+    color:var(--navy_color)
+}
+
+.project-info-section{
+    background-color:var(--beige);
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+.project-info-main{
+    max-width:70em; 
+    padding:5em;
+    padding-left:13em;
+    padding-right:11em;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+}
+.project-info-description{
+    min-width:40em;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:2em;
+}
+
+.project-info-description h1{
+    font-size:2.5em;
+}
+
+.project-info-description-p{
+    font-size:1.1em;
+    display:flex;
+    flex-direction:column;
+    gap:1em;
+}
+
+
+.project-info-panel{
+    background-color:var(--accent);
+    margin:0;
+    margin-top:-5em;
+    height:auto;
+    min-width:17em;
+    padding:1.5em;
+  
+    display:flex;
+    margin-left:auto;
+    margin-right:10vw;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+}
+.project-info-panel-div{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.project-info-panel-div-p{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+.project-img-container{
+    align-self: flex-start;
+    width:100%;
+}
+.project-img-container img {
+    width:100%;
+    height:auto;
+}
+ 
+@media screen and (max-width: 1200px ) {
+    .project-info-section{
+    width:100%;
+    margin:0;
+    display:flex;
+    flex-direction:column-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-info-main{
+    margin:0;
+    width:100%;
+    padding-left:13vw;
+    padding-right:13vw;
+    padding-top:3em;
+
+}
+
+.project-info-description{
+    min-width:0;
+    font-size: small;
+}
+.project-info-description p{
+    font-size:medium;
+}
+.project-info-panel{
+    padding-top:3em;
+    padding-bottom:3em;
+    width:90%;
+    margin:2em;
+    gap:20px;
+    flex-direction:column;
+    flex: 1 1 calc(50% - 10px); 
+    flex-wrap:wrap;
+    max-height: 25em;
+    
+}
+
+.project-info-panel-div-p{
+    gap:10px;
+}
+ 
+
+ }
+  @media screen and (max-width: 725px) {
+    .project-info-panel{
+    
+    flex-direction:column;
+    max-height:none;
+    
+}
+    .project-info-main{
+        padding:2em;
+    }
+  }
+
+
+
+
+
+.project-carousel{
+    margin-top:6em;
+    background:navy;    
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    overflow:hidden;
+}
+.carousel-item{
+    width:max-content;
+}

@@ -121,8 +121,11 @@
                                 <h5></h5>
                                 {% endif %}
 
-                                <h2>{{ project.title or '' }}</h2>
+                                <h2 style="text-transform: capitalize ;">{{ project.title or '' }}</h2>
+
+                                {% if project.date %}
                                 <h6 class="project-date">{{ project.date.strftime('%d %B %Y') }}</h6> 
+                                {% endif %}
                             </div>
                         </a>
                     {% else %}
