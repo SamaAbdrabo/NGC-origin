@@ -86,6 +86,9 @@ main {
   flex: 1;
 }
 
+.footer h4{
+  font-size:1.1em;
+}
 @media screen and (max-width:1200px) {
   .footer{
     justify-content: center;
@@ -98,10 +101,7 @@ main {
   .footer-content{
     flex-wrap:wrap;
     justify-content: flex-start;
-
-
   }
-
 
   .footer-links{
     flex-wrap:wrap;

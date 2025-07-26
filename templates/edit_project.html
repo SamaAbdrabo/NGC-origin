@@ -19,12 +19,15 @@
       line-height: inherit;
       width: 100%;
       display: block;
+
+
     }
 
     .editable-input:focus,
     .editable-textarea:focus {
       outline: none;
       background-color: rgba(0, 0, 0, 0.05);
+
     }
 
     .image-upload-label {
@@ -48,6 +51,89 @@
       max-width: 100%;
       height: auto;
     }
+      .floating-card {
+    position: fixed;
+    top: 200px;
+    left: 50px;
+    z-index: 9999;
+    cursor: move;
+    transition: all 0.3s ease;
+  }
+.card-item {
+    pointer-events: auto;
+    width: 25em;
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+
+  }
+  .auto-resize {
+    min-height: 44px; /* ~1 line */
+    resize: none; /* Disable manual resize */
+    overflow-y: hidden; /* Hide scrollbar */
+}
+/* Add to your CSS */
+.image-gallery-editor {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.image-editor-item {
+    border: 1px solid #eee;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+}
+
+.image-editor-item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.image-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.image-controls select, 
+.image-controls input {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.set-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.remove-image {
+    background-color: #f44336;
+    color: white;
+}
+
+.hint {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+}
+.cover-upload-label {
+  transition: all 0.3s ease;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.cover-upload-label:hover {
+  background: rgba(0,0,0,0.5) !important;
+}
+
+.card-visual {
+  transition: background-image 0.3s ease;
+}
   </style>
 </head>
 <body>
@@ -55,7 +141,7 @@
     <form action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
       <section class="cover-section-2">
         <div class="cover-text-2">
-          <p><a href="/">Home</a> ❯ <a href="/projects">Projects</a></p>
+          <p><a href="/">Home</a> ❯ <a href="/admin/projects">Projects</a></p>
           <h1><input name="title"style="text-transform: capitalize; " class="editable-input" value="{{ project.title }}"></h1>
         </div>
       </section>
@@ -63,68 +149,103 @@
       <section class="project-info-section">
         <div class="project-info-main">
           <div class="project-info-description">
-            <h1><input name="subtitle" class="editable-input" placeholder="Project subtitle..." value="{{ project.subtitle }}"></h1>
+            <h1><textarea name="subtitle" class="editable-textarea auto-resize "  
+ placeholder="Project subtitle...">{{project.subtitle or ''}}</textarea></h1>
             <div class="project-info-description-p">
-              <textarea name="description" class="editable-textarea"   oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';"placeholder="Project description">{{ project.description }}</textarea>
+              <textarea name="description" class="editable-textarea auto-resize" 
+ placeholder="Project description">{{ project.description }}</textarea>
             </div>
 
-            <div class="project-img-container">
-              {% if project.cover_image_url %}
-                <img src="{{ project.cover_image_url }}" alt="cover image">
-              {% endif %}
-              <label class="image-upload-label">
-                Click to upload cover image
-                <input type="file" name="cover_image" accept="image/*" style="display:none">
-              </label>
+
+
+            <!-- Project Images Section (for main content) -->
+            <div class="project-images-section">
+                <h3>Project Images</h3>
+                
+                <!-- Existing Images -->
+                <div class="image-gallery-editor">
+                    {% for img in project.images %}
+                    <div class="image-editor-item" data-id="{{ img.id }}">
+                        <img src="{{ img.url }}">
+                        <div class="image-controls">
+                            <select name="image_layout_{{ img.id }}">
+                                <option value="full-width" {% if img.layout_type=='full-width' %}selected{% endif %}>Full Width</option>
+                                <option value="half-left" {% if img.layout_type=='half-left' %}selected{% endif %}>Half Left</option>
+                                <option value="half-right" {% if img.layout_type=='half-right' %}selected{% endif %}>Half Right</option>
+                                <option value="gallery" {% if img.layout_type=='gallery' %}selected{% endif %}>Gallery Style</option>
+                            </select>
+                            <input type="text" name="image_caption_{{ img.id }}" value="{{ img.caption }}" placeholder="Caption">
+                            <input type="number" name="image_order_{{ img.id }}" value="{{ img.display_order }}" placeholder="Order">
+                            <button type="button" class="set-primary" data-id="{{ img.id }}">Make Primary</button>
+                            <button type="button" class="remove-image" data-id="{{ img.id }}">Remove</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- New Image Upload -->
+                <div class="new-image-upload">
+                    <h4>Add New Project Images</h4>
+                    <input type="file" name="project_images" multiple accept="image/*">
+                    <div class="layout-options">
+                        <label>Default Layout for New Images:</label>
+                        <select name="default_layout">
+                            <option value="full-width">Full Width</option>
+                            <option value="half-left">Half Left</option>
+                            <option value="half-right">Half Right</option>
+                            <option value="gallery">Gallery Style</option>
+                        </select>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
 
             
               <div class="project-info-panel">
-                {% if project.market or True %}
-                <div class="project-info-panel-div">
-                    <h3>Market</h3>
-                    <div class="project-info-panel-div-p">
-                    <input name="market" value="{{ project.market or '' }}">
-                    </div>
-                </div>
-                {% endif %}
-
+                
                 {% if project.service or True %}
                 <div class="project-info-panel-div">
-                    <h3>Service</h3>
-                    <div class="project-info-panel-div-p">
-                    <input name="service" value="{{ project.service or '' }}">
-                    </div>
+                  <h5><input name="service"  class= "editable-input" style="text-transform: uppercase;" placeholder="SERVICE" value="{{ project.service or '' }}"></h5>
                 </div>
                 {% endif %}
 
+                {% if project.market or True %}
                 <div class="project-info-panel-div">
-                    <h3>Location</h3>
+                    <h4>MARKET</h4>
                     <div class="project-info-panel-div-p">
-                    <input name="location" value="{{ project.location or '' }}">
+                    <input name="market" class= "editable-input" value="{{ project.market or '' }}">
+                    </div>
+                </div>
+                {% endif %}
+                <div class="project-info-panel-div">
+                    <h4>LOCATION</h4>
+                    <div class="project-info-panel-div-p">
+                    <input name="location" class= "editable-input" value="{{ project.location or '' }}">
                     </div>
                 </div>
 
                 <div class="project-info-panel-div">
-                    <h3>Client</h3>
+                    <h4>CLIENT</h4>
                     <div class="project-info-panel-div-p">
-                    <input name="client" value="{{ project.client or '' }}">
+                    <input name="client" class= "editable-input" value="{{ project.client or '' }}">
                     </div>
                 </div>
 
                 <div class="project-info-panel-div">
-                    <h3>Collaboration</h3>
+                    <h4>COLLABORATION</h4>
                     <div class="project-info-panel-div-p">
-                    <input name="collaboration" value="{{ project.collaboration or '' }}">
+                    <input name="collaboration" class= "editable-input" value="{{ project.collaboration or '' }}">
                     </div>
                 </div>
-
+                <div class="project-info-panel-div" style="display:none">
+                  <h4>Project Date</h4>
+                  <input name="date" type="date" placeholder="Date" class= "editable-input" value="{{project.date.strftime('%Y-%m-%d') if project.date else '' }}" />
+                </div>
                 <div class="project-info-panel-div">
-                    <h3>Completion Date</h3>
+                    <h4>COMPLETION DATE</h4>
                     <div class="project-info-panel-div-p">
-                    <input name="completion_date" value="{{ project.completion_date or '' }}">
+                    <input name="completion_date" type="date" class= "editable-input" value="{{ project.completion_date.strftime('%Y-%m-%d') if project.completion_date else ''  }}">
                     </div>
                 </div>
 
@@ -134,23 +255,37 @@
         </div>
       </section>
 
-      <section style="padding: 2em 5vw;">
-        <h3>Gallery</h3>
-        <div id="gallery-preview">
-          {% for img in project.gallery_images %}
-            <div>
-              <img src="{{ img.url }}" style="width: 200px;">
-              <button type="button" onclick="this.parentElement.remove()">Remove</button>
-            </div>
-          {% endfor %}
-        </div>
-        <input type="file" name="gallery_images" multiple accept="image/*">
-      </section>
+      
 
-      <div style="text-align:center; margin-top:2em;">
+      <div class="general" style="text-align:center; margin:2em;">
         <button type="submit">Save Changes</button>
       </div>
     </form>
+    <!-- FLOATING PREVIEW CARD -->
+<div id="floating-card" class="card-item hover-effect" style="position: fixed; top: 2em; right: 2em; z-index: 9999; cursor: move;">
+ <!-- Cover Image Upload Area -->
+  <div class="card-visual" id="preview-image" style="background-image: url('{{ project.cover_image_url }}'); position: relative;">
+    <label class="cover-upload-label" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.3); color: white; cursor: pointer;" {% if project.cover_image_url %} style ="display: none;"{% endif %}
+      Upload Cover Image></label>
+      <input type="file" id="cover-upload" name="cover_image" accept="image/*" style="display: none;">
+    </label>
+  </div>
+  <div class="card-subtext">
+<h5 style="display: flex; align-items: center; ">
+  <input id="preview-market" value="{{ project.market }}" style="text-transform: uppercase;" placeholder="Market" class="editable-input" />
+             {% if project.market and project.service %}  {% endif %}
+  <input  id="preview-service" value="{{ project.service or '' }}" style="text-transform: uppercase;" placeholder="Service" class="editable-input" />
+</h5>
+
+<h2 style="text-transform: capitalize;"><input  id="preview-title" value="{{ project.title }}" class="editable-input"/></h2>
+
+<h6 class="project-date">
+  <input name="date" id="preview-date" type="date" placeholder="Date" class="editable-input" value="{{ project.date.strftime('%Y-%m-%d') if project.date else '' }}" />
+</h6>
+
+  </div>
+  <button id="collapse-btn" style="position:absolute; top:5px; right:5px;background-color: white; border:none;width:1em;height:1em; font-size:2em; cursor:pointer;">-</button>
+</div>
   </main>
   <script>
   function addPanelField() {
@@ -176,6 +311,175 @@
     const addBtnWrapper = panel.querySelector('div[style*="margin-top"]');
     panel.insertBefore(fieldWrapper, addBtnWrapper);
   }
+</script>
+<script>
+// Make the floating card draggable
+const floatingCard = document.getElementById("floating-card");
+let isDragging = false, offsetX = 0, offsetY = 0;
+
+floatingCard.addEventListener("mousedown", e => {
+  isDragging = true;
+  offsetX = e.clientX - floatingCard.getBoundingClientRect().left;
+  offsetY = e.clientY - floatingCard.getBoundingClientRect().top;
+});
+
+document.addEventListener("mousemove", e => {
+  if (isDragging) {
+    floatingCard.style.left = `${e.clientX - offsetX}px`;
+    floatingCard.style.top = `${e.clientY - offsetY}px`;
+    floatingCard.style.bottom = 'unset';
+    floatingCard.style.right = 'unset';
+  }
+});
+
+document.addEventListener("mouseup", () => isDragging = false);
+
+// Collapse functionality
+const collapseBtn = document.getElementById("collapse-btn");
+let collapsed = false;
+collapseBtn.addEventListener("click", () => {
+  collapsed = !collapsed;
+  floatingCard.style.height = collapsed ? "4em" : "30em";
+  floatingCard.querySelector(".card-subtext").style.display = collapsed ? "none" : "flex";
+  floatingCard.querySelector(".card-visual").style.height = collapsed ? "100%" : "100%";
+  collapseBtn.textContent = collapsed ? "+" : "-";
+});
+
+// Sync input values to preview
+const sync = (selector, targetId) => {
+  const input = document.querySelector(`input[name='${selector}']`);
+  if (input) {
+    input.addEventListener('input', () => {
+      document.getElementById(targetId).textContent = input.value;
+    });
+  }
+};
+sync('title', 'preview-title');
+sync('market', 'preview-market');
+sync('service', 'preview-service');
+sync('date', 'preview-date');
+
+
+// Bi-directional input sync
+function syncInputs(mainName, previewId) {
+  const mainInput = document.querySelector(`input[name='${mainName}']`);
+  const previewInput = document.getElementById(previewId);
+
+  if (!mainInput || !previewInput) return;
+
+  // Main input → preview input
+  mainInput.addEventListener('input', () => {
+    previewInput.value = mainInput.value;
+  });
+
+  // Preview input → main input
+  previewInput.addEventListener('input', () => {
+    mainInput.value = previewInput.value;
+    
+  });
+  previewInput.value = mainInput.value;
+}
+
+syncInputs('title', 'preview-title');
+syncInputs('market', 'preview-market');
+syncInputs('service', 'preview-service');
+syncInputs('date', 'preview-date');
+
+
+</script>
+<script>
+  function resizeTextarea(textarea) {
+    textarea.style.height = 'auto'; // Reset height
+    textarea.style.height = `${textarea.scrollHeight}px`; // Set to content height
+}
+
+// Apply on page load AND on input
+document.addEventListener("DOMContentLoaded", () => {
+    const textareas = document.querySelectorAll('.auto-resize');
+    
+    textareas.forEach(ta => {
+        // Initialize on load
+        resizeTextarea(ta);
+        
+        // Update while typing
+        ta.addEventListener('input', () => resizeTextarea(ta));
+    });
+}); 
+</script>
+<script>
+  // Make images sortable
+$(function() {
+    $(".image-gallery-editor").sortable({
+        update: function(event, ui) {
+            // Update order numbers when dragged
+            $('.image-editor-item').each(function(index) {
+                $(this).find('input[type="number"]').val(index + 1);
+            });
+        }
+    });
+    
+    // Set primary image
+    $('.set-primary').click(function() {
+        const imgId = $(this).data('id');
+        $('.set-primary').text('Make Primary');
+        $(this).text('✓ Primary');
+        // You might want to add a hidden input to track primary image
+        $('input[name="primary_image"]').val(imgId);
+    });
+    
+    // Remove image
+    $('.remove-image').click(function() {
+        if(confirm('Are you sure you want to remove this image?')) {
+            const imgId = $(this).data('id');
+            $(this).closest('.image-editor-item').remove();
+            // Add to hidden field for deletion on server
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'deleted_images[]',
+                value: imgId
+            }).appendTo('form');
+        }
+    });
+    
+    // Preview image before upload
+    $('input[name="project_images"]').change(function(e) {
+        const files = e.target.files;
+        for(let i = 0; i < files.length; i++) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = $('<div class="image-editor-item new-image"><img src="' + e.target.result + '"><div class="image-controls">' +
+                    '<select name="new_image_layout[]"><option value="full-width">Full Width</option>' +
+                    '<option value="half-left">Half Left</option><option value="half-right">Half Right</option>' +
+                    '<option value="gallery">Gallery Style</option></select>' +
+                    '<input type="text" name="new_image_caption[]" placeholder="Caption">' +
+                    '<input type="number" name="new_image_order[]" value="' + ($('.image-editor-item').length + 1) + '" placeholder="Order">' +
+                    '<button type="button" class="remove-new-image">Remove</button></div></div>');
+                $('.image-gallery-editor').append(preview);
+            }
+            reader.readAsDataURL(files[i]);
+        }
+    });
+    
+    // Remove new images before upload
+    $(document).on('click', '.remove-new-image', function() {
+        $(this).closest('.image-editor-item').remove();
+    });
+});
+</script>
+<script>
+  // Cover image upload with instant preview
+document.getElementById('cover-upload').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('preview-image');
+      preview.style.backgroundImage = `url('${e.target.result}')`;
+      preview.querySelector('.cover-upload-label').style.display = 'none';
+    }
+    reader.readAsDataURL(file);
+  }
+});
 </script>
 
 </body>

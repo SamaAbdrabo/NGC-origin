@@ -51,7 +51,7 @@ p a:hover {
     margin:0;
     margin-top:-5em;
     height:auto;
-    min-width:17em;
+    width:17em;
     padding:1.5em;
   
     display:flex;
@@ -64,11 +64,14 @@ p a:hover {
 .project-info-panel-div{
     display:flex;
     flex-direction:column;
+    flex-wrap:wrap;
     gap:10px;
 }
 .project-info-panel-div-p{
     display:flex;
     flex-direction:column;
+    flex-wrap:wrap;
+
     gap:15px;
 }
 .project-img-container{

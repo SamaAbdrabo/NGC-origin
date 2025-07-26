@@ -16,6 +16,8 @@
    }
 
 .quicklinks div{
+        margin-right:15px;
+
     display: flex;
     flex-direction: row;
     gap:0px;

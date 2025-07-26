@@ -1,4 +1,12 @@
 /* certification sub-page */
+p a {
+  text-decoration: none;
+  color: inherit; 
+}
+
+p a:hover {
+    color:var(--navy_color)
+}
 .certificates{
     display: flex;
     flex-direction: column;

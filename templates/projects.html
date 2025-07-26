@@ -71,30 +71,30 @@
                     <input type="text" id="searchInput" placeholder="Search projects..." />
                     <div class="filters">
                     <select id="sectorFilter">
-                        <option value="all">All Sectors</option>
+                        <option value="all">All Services</option>
                         <option value="infrastructure">Infrastructure</option>
                         <option value="energy">Energy</option>
                         <option value="transport">Transport</option>
                     </select>
                     <select id="sectorFilter">
-                        <option value="all">All Sectors</option>
+                        <option value="all">All Markets</option>
                         <option value="infrastructure">Infrastructure</option>
                         <option value="energy">Energy</option>
                         <option value="transport">Transport</option>
                     </select>
+                    
+                    <select id="locationFilter">
+                        <option value="all">All Locations</option>
+                        <option value="egypt">Egypt</option>
+                        <option value="ksa">Saudi Arabia</option>
+                    </select>
                     <select id="sectorFilter">
-                        <option value="all">All Sectors</option>
+                        <option value="all">Date</option>
                         <option value="infrastructure">Infrastructure</option>
                         <option value="energy">Energy</option>
                         <option value="transport">Transport</option>
                     </select>
 
-                    <select id="locationFilter">
-                        <option value="all">All Locations</option>
-                        <option value="canada">Canada</option>
-                        <option value="usa">USA</option>
-                        <option value="uk">UK</option>
-                    </select>
                 </div>
                 <button id="resetBtn" class="reset-button">Reset all filters</button>
 
@@ -104,7 +104,7 @@
 
                 <div class="cards-grid">
                     {% for project in projects %}
-                        <a href="projects-sub.html" class="card-item hover-effect"
+                        <a href="/projects/{{project.id}}" class="card-item hover-effect"
                            data-title="{{ project.title | lower }}"
                            data-sector="infrastructure" 
                            data-location="egypt">
@@ -124,9 +124,9 @@
                                 <h2 style="text-transform: capitalize ;">{{ project.title or '' }}</h2>
 
                                 {% if project.date %}
-                                <h6 class="project-date">{{ project.date.strftime('%d %B %Y') }}</h6> 
+                                <h6 class="project-date">{{project.formatted_date if project.date else ''}}</h6> 
                                 {% endif %}
-                            </div>
+                            </div> 
                         </a>
                     {% else %}
                         <p>No projects available.</p>

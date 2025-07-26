@@ -27,7 +27,7 @@
             <div class="card-visual" style="background-image: url('{{ project.image_url }}');"></div>
             <div class="card-subtext">
               {% if project.market and project.service %}
-                <h5>{{ project.market }} <strong> • </strong> {{ project.service }}</h5>
+                <h5>{{ project.market }} . {{ project.service }}</h5>
               {% elif project.market %}
                 <h5>{{ project.market }}</h5>
               {% elif project.service %}
@@ -37,7 +37,7 @@
               {% endif %}
               <h2 style="text-transform: capitalize ;">{{ project.title or '' }}</h2>
         {% if project.date %}
-        <h6 class="project-date">{{ project.date.strftime('%d %B %Y') }}</h6>
+        <h6 class="project-date">{{ project.formatted_date if project.date else ''}}</h6>
         {% endif %}
             </div>
 

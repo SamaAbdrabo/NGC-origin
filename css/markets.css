@@ -140,9 +140,18 @@
     align-items: center;
     flex-wrap:wrap;
     gap:20px;
+   /* background-color: var(--blue);*/
   }
+  /*.FP-text{
+    padding:1.5em ;
+  }*/
   
-
+.FP-pic-container{
+    width:100%;
+}
+.FP-pic{
+    width:100%;
+}
 /*markets section*/
 .markets-main{
     margin:3em;
@@ -246,7 +255,6 @@
   }
    .FP-pic{
     height:200px;
-    width:20em;
  }
  .markets-main{
     width:80em;
