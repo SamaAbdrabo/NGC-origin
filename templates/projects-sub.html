@@ -1,0 +1,294 @@
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Slick Carousel Local Styles -->
+        <link rel="stylesheet" type="text/css" href="css/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/projects-sub.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+
+
+      
+
+      <title>new-GC</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  </head>
+   <!-- Header Section -->
+    <section class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="Logo" class="logo-img">
+                </a>
+            </div>
+            <div class="pages">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="markets.html">Markets & Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <div class="menu">
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn">&times;</a>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" class="openbtn">
+                            <div class="one"></div>
+                            <div class="two"></div>
+                            <div class="three"></div>
+                        </a>
+                    </div>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="markets.html">Markets & Services</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+
+    <main>
+        <section class="cover-section-2">
+        <div class="cover-text-2">
+            <p>
+            <a href="/">Home</a> ❯ <a href="/projects">Projects</a>
+            </p>
+            <h1>{{project.title or ''}} </h1>
+        </div>
+    </section>
+    <section class="project-info-section">
+        <div class="project-info-main">
+            <div class="project-info-description">
+              {% if project.subtitle %}
+                <h1>{{project.subtitle if project.subtitle else ''}}</h1>
+              {% endif %}
+                <div class="project-info-description-p">
+                {% if project.description %}
+                  <p>{{project.description if project.description else ''}}</p>
+                {% endif %}
+                </div>
+              <div class="project-img-container">
+              {% for img in project.images %}
+    {% if img.layout_type == 'full-width' %}
+        <div class="project-image-full">
+            <img src="{{ img.url }}" alt="{{ img.caption }}">
+            {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
+        </div>
+    {% elif img.layout_type == 'half-left' %}
+        <div class="project-image-half left">
+            <img src="{{ img.url }}" alt="{{ img.caption }}">
+            {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
+        </div>
+    {% elif img.layout_type == 'half-right' %}
+        <div class="project-image-half right">
+            <img src="{{ img.url }}" alt="{{ img.caption }}">
+            {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
+        </div>
+    {% elif img.layout_type == 'gallery' %}
+        <div class="project-image-gallery">
+            <img src="{{ img.url }}" alt="{{ img.caption }}">
+            {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
+        </div>
+    {% endif %}
+{% endfor %}
+              </div>
+            </div>
+            
+            
+           
+        </div>
+        <div class="project-info-panel"> 
+
+            {% if project.service %}
+             <div class="project-info-panel-div">
+                <h5 style="text-transform: uppercase;">{{project.service if project.service else ''}}</h5>
+            </div>
+          {% endif %}
+
+            {% if project.market %}
+            <div class="project-info-panel-div">
+                <h4>MARKET</h4>
+                <div class="project-info-panel-div-p">
+                    <p>{{project.market}}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if project.location %}
+            <div class="project-info-panel-div">
+                <h4>LOCATION</h4>
+                <div class="project-info-panel-div-p">
+                    <p>{{project.location if project.location else ''}}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if project.client %}
+            <div class="project-info-panel-div">
+                <h4>CLIENT</h4>
+                <div class="project-info-panel-div-p">
+                    <p>{{project.client if project.client else ''}}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if project.collaboration %}
+            <div class="project-info-panel-div">
+                <h4>COLLABORATION</h4>
+                <div class="project-info-panel-div-p">
+                    <p>{{project.collaboration if project.collaboration else ''}}</p>
+                </div>
+            </div>
+            {% endif %}
+
+        {% if project.completion_date %}
+            <div class="project-info-panel-div">
+                <h3>COMPLETION DATE</h3>
+                <div class="project-info-panel-div-p">
+                    <p>{{ project.formatted_completion_date if project.completion_date else ''}}</p>
+                </div>
+            </div>
+                  {% endif %}
+
+        </div>
+    </section>
+    </main>
+
+
+
+    <footer class="footer-container">
+      <div class="footer">
+        <div class="bottom-logo">
+          <a href="index.html">
+            <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="logo" class="logo-img">
+          </a>
+        </div>
+
+      <div class="footer-content">
+          <div class="footer-links">
+          <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="markets.html">Markets & Services</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="services-links">
+            <h4>Services </h4>
+            <ul>
+              <li><a href="markets.html#Service-1" >Technical and Surveying  </a></li>
+              <li><a href="markets.html#Service-2" >Design</a></li>
+              <li><a href="markets.html#Service-3" >Project Management</a></li>
+
+            </ul>
+        </div>
+      </div>
+          <div class="contact">
+              <h4>Contact Us</h4>
+              <ul>
+                <a href="https://maps.app.goo.gl/1jGEXui9ujNKSs346" target="_blank"><li>New Gulf Consult, Cairo, Egypt</li></a>
+                <li><strong>Tel:</strong> <a  href="tel:+20123456789" target="_blank">+20 123 456 789</a></li>
+                <li><strong>Email:</strong><a href="mailto:info@ngc.com" target="_blank">info@ngc.com</a> </li>
+              </ul>
+          </div>
+          
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 New Gulf Consult. All rights reserved.</p>
+        </div>
+
+      </div>
+    </footer>
+
+    </body>
+    <!-- jQuery + Slick JS from CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/slick.min.js"></script>
+  <!-- Slick Init -->
+  <script>
+    $(document).ready(function () {
+
+   $('.center').slick({
+  centerMode: true,
+  centerPadding: '60px',
+  slidesToShow: 2, 
+  dots:false,
+  arrows:true,
+  prevArrow: '<button type="button" class="custom-prev">❮</button>',
+  nextArrow: '<button type="button" class="custom-next">❯</button>',
+  responsive: [
+    {
+      breakpoint: 1000,
+      settings: {
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 2 ,// also 2 here
+        dots:true
+      }
+    },
+    {
+      breakpoint: 800,
+      settings: {
+        dots:true,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 1 // still 1 on phones
+      }
+    }
+  ]
+  
+})
+    });
+
+
+  </script>
+<script> 
+//navbar functions
+document.addEventListener('DOMContentLoaded', () => {
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+
+    const navbarHeight = navbar.offsetHeight;
+
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (scrollTop > navbarHeight) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hide');
+                navbar.style.backgroundColor = '#9dadb9';
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hide');
+
+
+            }
+        }
+
+        if (scrollTop === 0) {
+            navbar.style.backgroundColor = 'transparent';
+        }
+
+        lastScrollTop = scrollTop;
+    });
+  });
+
+
+</script>
