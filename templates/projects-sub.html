@@ -22,7 +22,7 @@
     <section class="header">
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html">
+                <a href="{{url_for ('home')}}.html">
                     <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="Logo" class="logo-img">
                 </a>
             </div>
@@ -48,11 +48,11 @@
                     </div>
                     <div class="dropdown-content">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="markets.html">Markets & Services</a></li>
-                            <li><a href="projects.html">Projects</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="{{url_for ('home')}}">Home</a></li>
+                            <li><a href="{{ url_for ('about') }}">About Us</a></li>
+                            <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
+                            <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
     <footer class="footer-container">
       <div class="footer">
         <div class="bottom-logo">
-          <a href="index.html">
+          <a href="{{url_for ('home')}}">
             <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="logo" class="logo-img">
           </a>
         </div>
@@ -183,11 +183,11 @@
           <div class="quick-links">
             <h4>Quick Links</h4>
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="markets.html">Markets & Services</a></li>
-              <li><a href="projects.html">Projects</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="{{url_for ('home')}}">Home</a></li>
+                            <li><a href="{{ url_for ('about') }}">About Us</a></li>
+                            <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
+                            <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
             </ul>
         </div>
         <div class="services-links">
@@ -220,7 +220,7 @@
     </body>
     <!-- jQuery + Slick JS from CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/slick.min.js"></script>
+    <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
   <!-- Slick Init -->
   <script>
     $(document).ready(function () {

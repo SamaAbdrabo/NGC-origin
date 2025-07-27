@@ -1,0 +1,271 @@
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+
+      <title>new-GC</title>
+
+  </head>
+  <body>
+ <!-- Header Section -->
+    <section class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{{ url_for ('home')}}">
+                    <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="Logo" class="logo-img">
+                </a>
+            </div>
+            <div class="pages">
+                <ul>
+                    <li><a href="{{ url_for ('about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
+                    <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <div class="menu">
+                    <div id="myNav" class="overlay">
+                        <a href="javascript:void(0)" class="closebtn">&times;</a>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" class="openbtn">
+                            <div class="one"></div>
+                            <div class="two"></div>
+                            <div class="three"></div>
+                        </a>
+                    </div>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li><a href="{{ url_for ('home') }}">Home</a></li>
+                            <li><a href="{{ url_for ('about') }}">About Us</a></li>
+                            <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
+                            <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+      <main>
+        <section class="cover-section-2">
+          <div class="cover-text-2">
+              <h1>ABOUT US</h1>
+          </div>
+    </section>
+    <section class="quicklinks">
+      <div>
+        <button onclick="location.href='#overview'">Overview</button>
+        <button onclick="location.href='#history'">History</button>
+        <button onclick="location.href='#philosophy'">Philosophy</button>
+        <button onclick="location.href='#owners'">Owners</button>
+        <button onclick="location.href='#certification'">Accreditation</button>
+        <button onclick="location.href='#organization'">Organization Chart</button>
+
+      </div>
+    </section>
+    <section class="about-main general">
+      <div  id="overview">
+        <div>
+          <h1>WHO WE ARE</h1>
+          <p>
+              When we started to think about identifying ourselves and to find our true nature, we found that we are different individuals. Some are more creative than others. Some are more practical. Some are more resilient. But… what we have in common is the passion to produce unique and distinguished work. We have the will to go the extra mile… to go the Distance.
+          </p>
+          
+        </div>
+      </div>
+      <div id="history">
+        <div class="history-img-container">
+          <img src="{{ url_for('static', filename='photos/construction.jpg') }}">
+        </div>
+        <div class="history-text">
+          <h1>HISTORY </h1>
+          <p><strong>Gulf consult</strong> Architects and Engineers was established in 1980 and professionally managed organization steered under the dynamic leadership of a long experience businessman, Engr. Ali K Al-Harbi.
+GULF CONSULT as part of Ali K AL-Harbi group, which include AH Environmental, ETLCO and Gulf Consult Geotechnical are experienced multidisciplinary engineering consultancy firm, with more than 250 Permanent engineers in all engineering disciplines, Environmental studies, Geotechnical, Material Testing and Topographic survey services.</p>
+          <p><strong>New Gulf Consult</strong> was founded in Cairo, Egypt in 2022 as a professional multidisciplinary engineering consultancy firm, with more than<strong> 60</strong> Permanent engineers and as extension for Gulf Consult (A&E) in order to support the potential growth in infrastructure and building projects in KSA.
+          New Gulf Consult in short time was able to be recognized as an important player in Infrastructure & BIM projects in Saudi Giga projects like Red Sea, Neom, King Salman Park and Diriyah Projects.
+          </p>
+        </div>
+        
+      </div>
+      <div id="philosophy">
+        <div class="mission-vision">
+          <div class="mission">
+            <h1>OUR MISSION</h1>
+            <p>
+              <strong>New Gulf Consult</strong> was founded in Cairo, Egypt in 2022 as a professional multidisciplinary engineering consultancy firm, with more than<strong> 60</strong> Permanent engineers and as extension for Gulf Consult (A&E) in order to support the potential growth in infrastructure and building projects in KSA.
+            </p>
+          </div>
+          <div class="vision">
+            <h1>OUR VISION</h1>
+            <p>
+              <strong>New Gulf Consult</strong> was founded in Cairo, Egypt in 2022 as a professional multidisciplinary engineering consultancy firm, with more than<strong> 60</strong> Permanent engineers and as extension for Gulf Consult (A&E) in order to support the potential growth in infrastructure and building projects in KSA.
+            </p>
+          </div>
+        </div>
+        <div class="values">
+          <h1>OUR CORE VALUES</h1>
+          <div class="values-sub">
+            <p>Respect</p>
+            <p>Discipline</p>
+            <p>Innovation</p>
+            <p>Teamwork</p>
+            <p>Excellence</p>
+          </div>
+
+
+        </div>
+      </div>
+      <div id="owners">
+        <div class="owners-main">
+          <h1 class="owners-title">FOUNDERS</h1>
+          <div class="partners-container">
+            <div class="partner">
+              <div class="partner-image-container">
+                <img src="{{ url_for('static', filename='photos/pfp.jpg') }}">
+              </div>
+              <div class="partner-text">
+                <h4>CEO and Co-founder</h4>
+                <h2>Ahmed Abdelhady</h2>
+              </div>
+          </div>
+          <div class="partner">
+              <div class="partner-image-container">
+                <img src="{{ url_for('static', filename='photos/pfp.jpg') }}">
+              </div>
+              <div class="partner-text">
+                <h4>Co-founder</h4>
+                <h2>Company name</h2>
+              </div>
+          </div>
+          <div class="partner">
+              <div class="partner-image-container">
+                <img src="{{ url_for('static', filename='photos/pfp.jpg') }}">
+              </div>
+              <div class="partner-text">
+                <h4>Co-founder</h4>
+                <h2>Company name</h2>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div id="certification">
+        <div class="about-certification-image-container">
+          <img src="{{ url_for('static', filename='photos/construction.jpg') }}">
+        </div>
+        <div class="about-certification-text general">
+          <h1>Accreditation</h1>
+          <p>
+            Short line
+          </p>
+          <button onclick="location.href='{{ url_for('certification') }}'">View Here</button>
+        </div>
+        
+      </div>
+      <div id="organization">
+        <h1>ORGANIZATION CHART</h1>
+        <img src="{{ url_for('static', filename='photos/organization-chart.webp') }}">
+
+      </div>
+      
+    </section>
+
+      </main>
+    <footer class="footer-container">
+      <div class="footer">
+        <div class="bottom-logo">
+          <a href="{{url_for ('home')}}">
+            <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="logo" class="logo-img">
+          </a>
+        </div>
+
+      <div class="footer-content">
+          <div class="footer-links">
+          <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                    <li><a href="{{url_for ('home')}}">Home</a></li>
+                    <li><a href="{{ url_for ('about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
+                    <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="services-links">
+            <h4>Services </h4>
+            <ul>
+              <li><a href="markets.html#Service-1" >Technical and Surveying  </a></li>
+              <li><a href="markets.html#Service-2" >Design</a></li>
+              <li><a href="markets.html#Service-3" >Project Management</a></li>
+
+            </ul>
+        </div>
+      </div>
+          <div class="contact">
+              <h4>Contact Us</h4>
+              <ul>
+                <a href="https://maps.app.goo.gl/1jGEXui9ujNKSs346" target="_blank"><li>New Gulf Consult, Cairo, Egypt</li></a>
+                <li><strong>Tel:</strong> <a  href="tel:+20123456789" target="_blank">+20 123 456 789</a></li>
+                <li><strong>Email:</strong><a href="mailto:info@ngc.com" target="_blank">info@ngc.com</a> </li>
+              </ul>
+          </div>
+          
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 New Gulf Consult. All rights reserved.</p>
+        </div>
+
+      </div>
+    </footer>
+
+    </body>
+
+   <script>
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+    const navbarHeight = navbar.offsetHeight;
+    const quicklinks = document.querySelector('.quicklinks');
+    const cover = document.querySelector('.cover-section-2');
+    const coverHeight = cover.offsetHeight;
+
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollTop > navbarHeight) {
+        if (scrollTop > lastScrollTop) {
+          // Scrolling down
+          navbar.classList.add('hide');
+          navbar.style.backgroundColor = '#a9bbc8';
+          quicklinks.style.transform = "translateY(0)";
+        } else {
+          // Scrolling up
+          navbar.classList.remove('hide');
+          quicklinks.style.transform = "translateY(100px)";
+        }
+      }
+
+      // When at the top (literally zero), make nav transparent
+      if (scrollTop === 0) {
+        navbar.style.backgroundColor = 'transparent';
+      }
+
+      // When we pass the cover section, reset quicklinks to top
+      if (scrollTop < coverHeight) {
+        quicklinks.style.transform = "translateY(0)";
+      }
+
+      lastScrollTop = scrollTop;
+    });
+
+
+        
+
+  </script>
+

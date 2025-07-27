@@ -33,9 +33,7 @@ p a:hover {
     align-items: flex-start;
     padding:2em;
 }
-.certificate-description{
-    
-}
+
 .certificate-img-container{
     flex:0 0 50%;
     display: flex;

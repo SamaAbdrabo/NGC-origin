@@ -77,6 +77,9 @@ p a:hover {
 .project-img-container{
     align-self: flex-start;
     width:100%;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
 }
 .project-img-container img {
     width:100%;

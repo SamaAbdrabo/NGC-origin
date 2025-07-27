@@ -4,7 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 import os
+from werkzeug.utils import secure_filename
 
+allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
 
 # ─── Flask App Setup ──────────────────────────────────────────────────────────
 app = Flask(__name__)
@@ -12,10 +14,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projects.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # File upload configuration
+
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
-
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # ─── Database Setup ────────────────────────────────────────────────────────────
 db = SQLAlchemy(app)
@@ -23,6 +26,11 @@ migrate = Migrate(app, db)
 
 
 # ─── Models ────────────────────────────────────────────────────────────────────
+class FeaturedProject(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+
+
 class ProjectImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(255), nullable=False)
@@ -37,7 +45,7 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     subtitle = db.Column(db.String(100))
-    service = db.Column(db.String(100))
+    service = db.Column(db.String(100)) 
     market = db.Column(db.String(100))
     location = db.Column(db.String(100))
     client = db.Column(db.String(100))
@@ -61,7 +69,6 @@ class Project(db.Model):
         return None
 # ─── Helper Functions ──────────────────────────────────────────────────────────
 def handle_date_input(date_str):
-    """Helper function to parse date strings safely"""
     if date_str:
         try:
             return datetime.strptime(date_str, "%Y-%m-%d").date()
@@ -75,10 +82,28 @@ def handle_date_input(date_str):
 # ─── Main Pages ────────────────────────────────────────────────────────────────
 @app.route("/")
 def home():
-    return render_template("index2.html")
+    # Get some featured projects to show on the home page
+    featured_projects = Project.query.order_by(Project.date.desc()).limit(3).all()
+    return render_template("index.html", projects=featured_projects)
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/markets")
+def markets():
+    return render_template("markets.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/certification")
+def certification():
+    return render_template("certification.html")
 
 @app.route("/projects")
+
 def show_projects():
         # Order by date descending (newest first)
     all_projects = Project.query.order_by(Project.date.desc()).all()
@@ -152,7 +177,11 @@ def add_project():
         cover_file = request.files.get("cover_image")
         cover_path = None
         if cover_file and cover_file.filename:
-            filename = f"cover_{datetime.now().timestamp()}_{cover_file.filename}"
+            if not allowed_file(cover_file.filename):
+                flash('Invalid file type - only images allowed')
+                return redirect(request.url)
+            
+            filename = secure_filename(f"cover_{datetime.now().timestamp()}_{cover_file.filename}")            
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             cover_file.save(filepath)
             cover_path = f"/{filepath}"
@@ -174,6 +203,7 @@ def add_project():
 
 @app.route("/admin/projects/<int:id>")
 def edit_project_page(id):
+    
     project = Project.query.get_or_404(id)
 
     panel_fields = {
@@ -215,16 +245,20 @@ def edit_project_full(id):
     if 'cover_image' in request.files:
         cover_file = request.files['cover_image']
         if cover_file.filename != '':
+            if not allowed_file(cover_file.filename):
+                flash('Invalid file type - only images allowed')
+                return redirect(f"/admin/projects/{project.id}")
+            
             filename = secure_filename(f"cover_{project.id}_{cover_file.filename}")
             cover_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            cover_file.save(cover_path)
+            cover_file.save(cover_path.replace("\\", "/"))
             project.cover_image_url = f"/static/uploads/{filename}"
     
     # Handle project images
     if 'project_images' in request.files:
         for img_file in request.files.getlist('project_images'):
             if img_file.filename != '':
-                filename = secure_filename(f"project_{project.id}_{datetime.now().timestamp()}_{img_file.filename}")
+                filename = secure_filename(f"project_{project.id}_{datetime.now().timestamp()}_{img_file.filename}")                
                 img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 img_file.save(img_path)
                 
