@@ -1,7 +1,7 @@
 
 
-a:visited {
-  color: inherit; /* or any color you want */
+a {
+  color: inherit;
 }
 body {
   overflow-x: hidden;

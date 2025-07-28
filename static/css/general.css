@@ -1,4 +1,6 @@
-
+a{
+  color:inherit;
+}
 html{
     scroll-behavior: smooth;
     scrollbar-color:var(--navy_color) var(--background_color);
@@ -34,19 +36,19 @@ p{
 }
 
 
-.general button{
-    font-size:0.9em;
-    background-color: transparent;
-    border-radius:5px 5px;
-    border:2px solid black;
-    color:black;
-    padding:0.7em 1em;
-}
-.general button:hover{
-    background-color:black ;
-    color:var(--white);
-    transition-duration:0.4s;
-}
+  .general button{
+      font-size:0.9em;
+      background-color: transparent;
+      border-radius:5px 5px;
+      border:2px solid black;
+      color:black;
+      padding:0.7em 1em;
+  }
+  .general button:hover{
+      background-color:black ;
+      color:var(--white);
+      transition-duration:0.4s;
+  }
 
 
 /*Cover sections of all main pages-beside home*/

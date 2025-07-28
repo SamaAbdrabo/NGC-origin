@@ -1,8 +1,6 @@
 
 
-a:visited {
-  color: inherit; /* or any color you want */
-}
+
 body {
   overflow-x: hidden;
   background-color: var(--background_color);

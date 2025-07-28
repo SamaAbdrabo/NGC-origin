@@ -8,6 +8,10 @@ from werkzeug.utils import secure_filename
 
 allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
 # ─── Flask App Setup ──────────────────────────────────────────────────────────
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projects.db'
@@ -29,6 +33,7 @@ migrate = Migrate(app, db)
 class FeaturedProject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    project = db.relationship('Project', backref='featured_entries')
 
 
 class ProjectImage(db.Model):
@@ -53,6 +58,8 @@ class Project(db.Model):
     date = db.Column(db.Date) 
     completion_date = db.Column(db.Date)
     description = db.Column(db.Text)
+    feature = db.Column(db.Boolean, default=False)
+
     cover_image_url = db.Column(db.String(255))  # For card thumbnails
     images = db.relationship('ProjectImage', backref='project', cascade="all, delete-orphan")
     
@@ -82,9 +89,13 @@ def handle_date_input(date_str):
 # ─── Main Pages ────────────────────────────────────────────────────────────────
 @app.route("/")
 def home():
-    # Get some featured projects to show on the home page
-    featured_projects = Project.query.order_by(Project.date.desc()).limit(3).all()
+       # Get featured projects
+    featured_projects = Project.query.filter_by(feature=True).all()
+
+
+    
     return render_template("index.html", projects=featured_projects)
+
 
 @app.route("/about")
 def about():
@@ -113,7 +124,58 @@ def show_projects():
 def project_details(project_id):
     project = Project.query.get_or_404(project_id)
     return render_template("projects-sub.html", project=project)
+
+@app.route("/admin/featured")
+def featured_projects():
+    featured = FeaturedProject.query.join(Project).order_by(Project.date.desc()).all()
+    return render_template("admin_featured.html", featured_projects=featured)
+
 # ─── Admin Routes ──────────────────────────────────────────────────────────────
+
+@app.route("/admin/projects/<int:id>/feature", methods=["POST"])
+def feature_project(id):
+    try:
+        project = Project.query.get_or_404(id)
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({"status": "error", "message": "No data provided"}), 400
+            
+        action = data.get('action')  # 'feature' or 'unfeature'
+        
+        if action == 'feature':
+            project.feature = True
+            if not FeaturedProject.query.filter_by(project_id=id).first():
+                db.session.add(FeaturedProject(project_id=id))
+        elif action == 'unfeature':
+            project.feature = False
+            FeaturedProject.query.filter_by(project_id=id).delete()
+        else:
+            return jsonify({"status": "error", "message": "Invalid action"}), 400
+        
+        db.session.commit()
+        return jsonify({
+            "status": "success",
+            "featured": project.feature,
+            "project_id": project.id
+        })
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+    
+@app.route("/admin/featured/<int:id>/remove", methods=["POST"])
+def remove_featured(id):
+    featured = FeaturedProject.query.get_or_404(id)
+    project = featured.project
+    project.feature = False
+    db.session.delete(featured)
+    db.session.commit()
+    return redirect(url_for('featured_projects'))
+
 @app.route("/admin/projects", methods=["GET", "POST"])
 def admin_projects():
     if request.method == "POST":
@@ -134,7 +196,8 @@ def admin_projects():
             client=request.form.get("client"),
             collaboration=request.form.get("collaboration"),
             completion_date=request.form.get("completion_date"),
-            cover_image_url=image_url
+            cover_image_url=image_url,
+                
         )
 
         db.session.add(new_project)
@@ -159,7 +222,9 @@ def add_project():
             "location": request.form.get("location"),
             "client": request.form.get("client"),
             "collaboration": request.form.get("collaboration")
+
         }
+        feature = bool(request.form.get('feature'))
 
         # Handle dates
         date = handle_date_input(request.form.get("date"))
@@ -184,14 +249,14 @@ def add_project():
             filename = secure_filename(f"cover_{datetime.now().timestamp()}_{cover_file.filename}")            
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             cover_file.save(filepath)
-            cover_path = f"/{filepath}"
-
+            cover_path = f"/static/uploads/{filename}"
         # Create project
         project = Project(
             **form_data,
             date=date,
             completion_date=completion_date,
-            cover_image_url=cover_path
+            cover_image_url=cover_path,
+            feature=feature
         )
         
         db.session.add(project)
@@ -241,19 +306,19 @@ def edit_project_full(id):
     project.date = date
     project.completion_date = completion_date
 
-    # Handle cover image
-    if 'cover_image' in request.files:
-        cover_file = request.files['cover_image']
-        if cover_file.filename != '':
-            if not allowed_file(cover_file.filename):
-                flash('Invalid file type - only images allowed')
-                return redirect(f"/admin/projects/{project.id}")
+    cover_file = request.files.get("cover_image")
+    cover_path = None
+    if cover_file and cover_file.filename:
+        if not allowed_file(cover_file.filename):
+            flash('Invalid file type - only images allowed')
+            return redirect(request.url)
             
-            filename = secure_filename(f"cover_{project.id}_{cover_file.filename}")
-            cover_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            cover_file.save(cover_path.replace("\\", "/"))
-            project.cover_image_url = f"/static/uploads/{filename}"
-    
+        filename = secure_filename(f"cover_{datetime.now().timestamp()}_{cover_file.filename}")            
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        cover_file.save(filepath)
+        cover_path = f"/static/uploads/{filename}"
+        project.cover_image_url = cover_path
+
     # Handle project images
     if 'project_images' in request.files:
         for img_file in request.files.getlist('project_images'):
@@ -285,6 +350,9 @@ def edit_project_full(id):
                 pass
             db.session.delete(img)
     
+     # Handle feature status (this is the key addition)
+    feature_status = request.form.get('feature') == 'true'
+    project.feature = feature_status
 
     # Update other fields
     fields = ["title", "subtitle", "description", "service", "market", 
@@ -296,6 +364,8 @@ def edit_project_full(id):
 
     db.session.commit()
     return redirect(f"/admin/projects/{project.id}")
+
+
 
 
 @app.route("/admin/projects/<int:id>/delete", methods=["POST"])

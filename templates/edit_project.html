@@ -6,11 +6,18 @@
   <title>Edit Project</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/projects-sub.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_project.css') }}">
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
 
   <style>
+
+        a:hover{
+          color:var(--navy_color);
+        }
+       
     .editable-input, .editable-textarea {
       all: unset;
       font-family: inherit;
@@ -65,6 +72,7 @@
     height: 30em;
     display: flex;
     flex-direction: column;
+    background-color: var(--white);
 
   }
   .auto-resize {
@@ -72,7 +80,7 @@
     resize: none; /* Disable manual resize */
     overflow-y: hidden; /* Hide scrollbar */
 }
-/* Add to your CSS */
+
 .image-gallery-editor {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -83,7 +91,7 @@
 .image-editor-item {
     border: 1px solid #eee;
     padding: 10px;
-    background: white;
+    background: var(--white);
     border-radius: 5px;
 }
 
@@ -108,12 +116,12 @@
 
 .set-primary {
     background-color: #4CAF50;
-    color: white;
+    color: var(--white);
 }
 
 .remove-image {
     background-color: #f44336;
-    color: white;
+    color: var(--white);
 }
 
 .hint {
@@ -121,23 +129,94 @@
     color: #666;
     font-style: italic;
 }
-.cover-upload-label {
+.cover_image-label {
   transition: all 0.3s ease;
   font-size: 1.2em;
   text-align: center;
 }
 
-.cover-upload-label:hover {
+.cover_image-label:hover {
   background: rgba(0,0,0,0.5) !important;
 }
 
 .card-visual {
-  transition: background-image 0.3s ease;
+  display:flex;
+  justify-content: center;
 }
+.cover-button{ 
+  align-self: center;
+
+}
+
+.cover-button input[type="file"]{
+  display:none;
+}
+.cover-button button{
+    background-color: rgba(186, 185, 185, 0.482);
+    border-radius:5px 5px;
+    border:2px solid black;
+    color:black;
+    padding:0.7em 1em;
+}
+
+    .card-actions {
+      position: absolute;
+      z-index: 1;
+      align-self: flex-end;
+      background-color: var(--white);
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      gap: 20px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 1.2em;
+    }
+        .card-actions i {
+      cursor: pointer;
+      font-size:1.2em;
+    }
+
+        .featured {
+            color: var(--accent);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+    .plain_label { display: block; margin-top: 1.2em; font-weight: bold; }
+    .plain_input[type="text"], .plain_input[type="date"], textarea {
+      width: 100%;
+      padding: 0.7em;
+      margin-top: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .plain_input[type="file"] { margin-top: 0.5em; }
+    .admin_button{
+    font-size:0.9em;
+    background-color: var(--navy_color);
+    border-radius:5px 5px;
+    border:none;
+    color:var(--white);
+    padding:0.7em 1em;
+}
+
+    .admin_button:hover {
+      background-color: var(--accent);
+      transition-duration:0.4s;
+
+    }
   </style>
 </head>
+
 <body>
-  <main>
+
+    <button class="admin_button" id="toggleViewBtn"  style="
+    position: fixed;
+    top: 1em;
+    left: 1em;
+    z-index: 999;
+    ">Plain View</button>
+
+<main  id="styled-view">
     <form action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
       <section class="cover-section-2">
         <div class="cover-text-2">
@@ -255,7 +334,8 @@
         </div>
       </section>
 
-      
+        <input type="file" class="editable-input" name="cover_image" id="cover_image" accept="image/*" style="display:none">
+
 
       <div class="general" style="text-align:center; margin:2em;">
         <button type="submit">Save Changes</button>
@@ -265,10 +345,22 @@
 <div id="floating-card" class="card-item hover-effect" style="position: fixed; top: 2em; right: 2em; z-index: 9999; cursor: move;">
  <!-- Cover Image Upload Area -->
   <div class="card-visual" id="preview-image" style="background-image: url('{{ project.cover_image_url }}'); position: relative;">
-    <label class="cover-upload-label" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.3); color: white; cursor: pointer;" {% if project.cover_image_url %} style ="display: none;"{% endif %}
-      Upload Cover Image></label>
-      <input type="file" id="cover-upload" name="cover_image" accept="image/*" style="display: none;">
-    </label>
+    {% if project.cover_image_url %} 
+    <div class="cover-button general">
+      <button>
+        <label for="cover_image">change cover</label>
+      <input type="file" class="editable-input" name="cover_image" id="cover_image" accept="image/*">
+      </button>
+    </div>
+    {% else %}
+
+    <div class="cover-button general">
+      <button>
+        <label for="cover_image">upload an image</label>
+          <input type="file" class="editable-input" name="cover_image" id="cover_image" accept="image/*">
+      </button>
+    </div>
+    {% endif %}
   </div>
   <div class="card-subtext">
 <h5 style="display: flex; align-items: center; ">
@@ -282,11 +374,74 @@
 <h6 class="project-date">
   <input name="date" id="preview-date" type="date" placeholder="Date" class="editable-input" value="{{ project.date.strftime('%Y-%m-%d') if project.date else '' }}" />
 </h6>
-
+<div class="card-actions">
+  <i class="feature-star {% if project.feature %}featured{% endif %}"                       
+    onclick="toggleFeature('{{ project.id }}', this)">
+    {% if project.feature %}★{% else %}☆{% endif %}
+  </i>
+</div>
   </div>
-  <button id="collapse-btn" style="position:absolute; top:5px; right:5px;background-color: white; border:none;width:1em;height:1em; font-size:2em; cursor:pointer;">-</button>
+
+  <button id="collapse-btn" style="position:absolute; top:5px; right:5px;background-color: var(--white); border:none;width:1em;height:1em; font-size:2em; cursor:pointer;">-</button>
 </div>
   </main>
+  <form id="plain-view" action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data" style="display:none; max-width: 900px; margin: auto; padding: 3em; background: #f7f7f7; border-radius: 10px;">
+  <h1>Edit Project (Plain View)</h1>
+
+  <label class="plain_label" for="title">Project Title</label>
+  <input class="plain_input" type="text" name="title" value="{{ project.title or '' }}" required>
+
+  <label class="plain_label" for="subtitle">Subtitle</label>
+  <input class="plain_input" type="text" name="subtitle" value="{{ project.subtitle or '' }}">
+
+  <label class="plain_label" for="description">Description</label>
+  <textarea class="plain_input" name="description" >{{ project.description or '' }}</textarea>
+
+  <label class="plain_label" for="service">Service</label>
+  <input  class="plain_input" type="text" name="service" value="{{ project.service or '' }}">
+
+  <label class="plain_label" for="market">Market</label>
+  <input class="plain_input" type="text" name="market" value="{{ project.market or '' }}">
+
+  <label class="plain_label" for="location">Location</label>
+  <input class="plain_input" type="text" name="location" value="{{ project.location or '' }}">
+
+  <label class="plain_label" for="client">Client</label>
+  <input class="plain_input" type="text" name="client" value="{{ project.client or '' }}">
+
+  <label class="plain_label" for="collaboration">Collaboration</label>
+  <input class="plain_input" type="text" name="collaboration" value="{{ project.collaboration or '' }}">
+
+  <label class="plain_label" for="date">Project Date</label>
+  <input class="plain_input" type="date" name="date" value="{{ project.date.strftime('%Y-%m-%d') if project.date else '' }}">
+
+  <label class="plain_label" for="completion_date">Completion Date</label>
+  <input class="plain_input" type="date" name="completion_date" value="{{ project.completion_date.strftime('%Y-%m-%d') if project.completion_date else '' }}">
+
+  <label class="plain_label" for="cover_image">Change Cover Image</label>
+  <input class="plain_input" type="file" name="cover_image" accept="image/*">
+
+  <label class="plain_label" for="feature">
+    Feature Project
+  <input class="plain_input" type="checkbox" name="feature" value="true" {% if project.feature %}checked{% endif %}>
+  </label>
+
+  <button class="admin_button" style="margin-top:2em" type="submit">Save Changes</button>
+</form>
+<script>
+  const toggleBtn = document.getElementById('toggleViewBtn');
+  const styledView = document.getElementById('styled-view');
+  const plainView = document.getElementById('plain-view');
+
+  toggleBtn.addEventListener('click', () => {
+    const isPlain = plainView.style.display === 'block';
+    styledView.style.display = isPlain ? 'block' : 'none';
+    plainView.style.display = isPlain ? 'none' : 'block';
+    toggleBtn.textContent = isPlain ? 'Plain View' : 'Styled View';
+  });
+</script>
+
+
   <script>
   function addPanelField() {
     const panel = document.querySelector('.project-info-panel');
@@ -312,6 +467,111 @@
     panel.insertBefore(fieldWrapper, addBtnWrapper);
   }
 </script>
+<script>
+// --- Three-way input sync for text/date fields ---
+function syncTriple(fieldName) {
+  const styled = document.querySelector(`#styled-view [name="${fieldName}"]`);
+  const plain = document.querySelector(`#plain-view [name="${fieldName}"]`);
+  const preview = document.getElementById(`preview-${fieldName}`);
+
+  const updateAll = (sourceEl) => {
+    const val = sourceEl.value;
+
+    [styled, plain, preview].forEach(el => {
+      if (el && el !== sourceEl) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.value = val;
+        } else {
+          el.textContent = val;
+        }
+      }
+    });
+  };
+
+  [styled, plain, preview].forEach(el => {
+    if (el) el.addEventListener('input', () => updateAll(el));
+  });
+
+  // Init values
+  if (styled && plain) plain.value = styled.value;
+  if (styled && preview) {
+    if (preview.tagName === 'INPUT') preview.value = styled.value;
+    else preview.textContent = styled.value;
+  }
+}
+
+// Sync fields
+[
+  'title', 'subtitle', 'description',
+  'service', 'market', 'location',
+  'client', 'collaboration', 'date',
+  'completion_date'
+].forEach(syncTriple);
+</script>
+
+<script>
+// --- Cover image sync (live preview) ---
+const styledCover = document.querySelector(`#styled-view input[name="cover_image"]`);
+const plainCover = document.querySelector(`#plain-view input[name="cover_image"]`);
+const previewImage = document.getElementById('preview-image');
+
+function updateCoverImagePreview(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    previewImage.style.backgroundImage = `url('${e.target.result}')`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function syncCoverImage(input, source) {
+  input.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Update preview
+    updateCoverImagePreview(file);
+
+    // Update other input if needed
+    const other = input === styledCover ? plainCover : styledCover;
+    if (other) other.files = e.target.files;
+  });
+}
+
+if (styledCover) syncCoverImage(styledCover);
+if (plainCover) syncCoverImage(plainCover);
+</script>
+
+<script>
+// --- Feature checkbox sync ---
+const styledFeature = document.querySelector('#styled-view input[name="feature"]');
+const plainFeature = document.querySelector('#plain-view input[name="feature"]');
+const previewStar = document.querySelector('.feature-star');
+
+function setFeatureState(checked) {
+  if (styledFeature) styledFeature.checked = checked;
+  if (plainFeature) plainFeature.checked = checked;
+
+  if (previewStar) {
+    previewStar.classList.toggle('featured', checked);
+    previewStar.textContent = checked ? '★' : '☆';
+  }
+}
+
+// Checkbox changes
+if (styledFeature) styledFeature.addEventListener('change', () => setFeatureState(styledFeature.checked));
+if (plainFeature) plainFeature.addEventListener('change', () => setFeatureState(plainFeature.checked));
+
+// Preview star toggle
+if (previewStar) {
+  previewStar.addEventListener('click', () => {
+    const newState = !previewStar.classList.contains('featured');
+    setFeatureState(newState);
+  });
+}
+</script>
+
+
+
 <script>
 // Make the floating card draggable
 const floatingCard = document.getElementById("floating-card");
@@ -344,47 +604,6 @@ collapseBtn.addEventListener("click", () => {
   floatingCard.querySelector(".card-visual").style.height = collapsed ? "100%" : "100%";
   collapseBtn.textContent = collapsed ? "+" : "-";
 });
-
-// Sync input values to preview
-const sync = (selector, targetId) => {
-  const input = document.querySelector(`input[name='${selector}']`);
-  if (input) {
-    input.addEventListener('input', () => {
-      document.getElementById(targetId).textContent = input.value;
-    });
-  }
-};
-sync('title', 'preview-title');
-sync('market', 'preview-market');
-sync('service', 'preview-service');
-sync('date', 'preview-date');
-
-
-// Bi-directional input sync
-function syncInputs(mainName, previewId) {
-  const mainInput = document.querySelector(`input[name='${mainName}']`);
-  const previewInput = document.getElementById(previewId);
-
-  if (!mainInput || !previewInput) return;
-
-  // Main input → preview input
-  mainInput.addEventListener('input', () => {
-    previewInput.value = mainInput.value;
-  });
-
-  // Preview input → main input
-  previewInput.addEventListener('input', () => {
-    mainInput.value = previewInput.value;
-    
-  });
-  previewInput.value = mainInput.value;
-}
-
-syncInputs('title', 'preview-title');
-syncInputs('market', 'preview-market');
-syncInputs('service', 'preview-service');
-syncInputs('date', 'preview-date');
-
 
 </script>
 <script>
@@ -466,19 +685,56 @@ $(function() {
 });
 </script>
 <script>
-  // Cover image upload with instant preview
-document.getElementById('cover-upload').addEventListener('change', function(e) {
+document.getElementById('cover_image').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = function(e) {
       const preview = document.getElementById('preview-image');
       preview.style.backgroundImage = `url('${e.target.result}')`;
-      preview.querySelector('.cover-upload-label').style.display = 'none';
+
+      const label = preview.querySelector('.cover_image-label');
+      if (label) {
+        label.style.display = 'none';
+      }
     }
     reader.readAsDataURL(file);
   }
 });
+
+
+</script>
+<script>
+  function toggleFeature(projectId, starElement) {
+    const isCurrentlyFeatured = starElement.textContent === '★';
+    const action = isCurrentlyFeatured ? 'unfeature' : 'feature';
+    
+    starElement.style.pointerEvents = 'none';  // prevent double click
+  
+    fetch(`/admin/projects/${projectId}/feature`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: action })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            starElement.textContent = action === 'feature' ? '★' : '☆';
+            starElement.classList.toggle('featured', action === 'feature');
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(err => {
+        alert('Error: ' + err.message);
+    })
+    .finally(() => {
+        starElement.style.pointerEvents = 'auto';
+    });
+}
+      
 </script>
 
 </body>
