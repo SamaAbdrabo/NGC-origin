@@ -81,31 +81,53 @@
                     <p>{{project.description if project.description else ''}}</p>
                   {% endif %}
                   </div>
-                <div class="project-img-container">
-                {% for img in project.images %}
-      {% if img.layout_type == 'full-width' %}
-          <div class="project-image-full">
-              <img src="{{ img.url }}" alt="{{ img.caption }}">
-              {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
-          </div>
-      {% elif img.layout_type == 'half-left' %}
-          <div class="project-image-half left">
-              <img src="{{ img.url }}" alt="{{ img.caption }}">
-              {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
-          </div>
-      {% elif img.layout_type == 'half-right' %}
-          <div class="project-image-half right">
-              <img src="{{ img.url }}" alt="{{ img.caption }}">
-              {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
-          </div>
-      {% elif img.layout_type == 'gallery' %}
-          <div class="project-image-gallery">
-              <img src="{{ img.url }}" alt="{{ img.caption }}">
-              {% if img.caption %}<p class="image-caption">{{ img.caption }}</p>{% endif %}
-          </div>
-      {% endif %}
-  {% endfor %}
-                </div>
+                  <!-- Featured description at top if it exists -->
+
+   <div class="statistics-grid">
+        
+        {% for stat in project.statistics %}
+        <div class="statistic">
+            <div class="stat-value"><h1>{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</h1></div>
+            <div class="stat-title"><p>{{ stat.title }}</p></div>
+        </div>
+        {% endfor %}
+    </div>    
+<!-- Main content sections -->
+{% for section in project.sections %}
+<div class="content-section layout-{{ section.layout_type }}">
+    {% if section.layout_type == 'full-text' %}
+    
+        <div class="project-info-description">
+        {% if section.title %}<h1>{{ section.title }}</h1 >{% endif %}
+        </div>
+        <div class="project-info-description-p">
+
+        <p>{{ section.description }}</p>
+        </div>
+    </div>
+    
+    {% elif section.layout_type == 'text-image' %}
+    <div class="text-part">
+        {% if section.title %}<h1>{{ section.title }}</h1>{% endif %}
+        <p>{{ section.description }}</p>
+    </div>
+    <div class="image-part">
+        <img src="{{ section.image_url }}" alt="{{ section.title }}">
+    </div>
+    
+    {% elif section.layout_type == 'stats' %}
+    <div class="statistics-grid">
+        {% for stat in project.statistics %}
+        <div class="statistic">
+            <div class="stat-value">{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</div>
+            <div class="stat-title">{{ stat.title }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
               </div>
               
               
@@ -155,6 +177,14 @@
               </div>
               {% endif %}
 
+          {% if project.date %}
+              <div class="project-info-panel-div">
+                  <h3>PROJECT DATE</h3>
+                  <div class="project-info-panel-div-p">
+                      <p>{{ project.formatted_date if project.date else ''}}</p>
+                  </div>
+              </div>
+                    {% endif %}
           {% if project.completion_date %}
               <div class="project-info-panel-div">
                   <h3>COMPLETION DATE</h3>

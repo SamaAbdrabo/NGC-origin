@@ -133,15 +133,17 @@
                                           <h1 style="text-transform: capitalize;">{{project.title}}</h1>
                                           <br>
                                           <p>
-                                            {{project.description}}                                          
+                                            {{project.featured_description or ''}}                                          
                                           </p>
                                                 <h4><a href="/projects/{{project.id}}">Read More ❯</a></h4>
-                                          <div class="projects-text-2">                  
+                                          <div class="projects-text-2">
+                                          {% for stat in project.statistics %}
                                             <div class="projects-text-2-sub">
-                                              <h1 >{{project.stat_no}}</h1>
-                                              <p class>{{project.stat_text}}</p>
+                  
+                                              <h1>{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</h1>
+                                              <p class>{{stat.title or ''}}</p>
                                             </div>
-                                            
+                                              {% endfor %}
 
                                           </div>
 

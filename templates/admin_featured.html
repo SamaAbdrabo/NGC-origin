@@ -1,6 +1,4 @@
-{% extends "base.html" %}
 
-{% block content %}
 <h1>Featured Projects</h1>
 <table>
     <thead>
@@ -14,7 +12,7 @@
         {% for featured in featured_projects %}
         <tr>
             <td>{{ featured.project.title }}</td>
-            <td>{{ featured.project.date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ featured.project.date }}</td>
             <td>
                 <a href="{{ url_for('edit_project_page', id=featured.project.id) }}">Edit</a>
                 <form action="{{ url_for('remove_featured', id=featured.id) }}" method="POST" style="display:inline;">
@@ -25,4 +23,3 @@
         {% endfor %}
     </tbody>
 </table>
-{% endblock %}

@@ -35,16 +35,24 @@ class FeaturedProject(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     project = db.relationship('Project', backref='featured_entries')
 
-
-class ProjectImage(db.Model):
+class ProjectStatistic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(255), nullable=False)
-    is_cover = db.Column(db.Boolean, default=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
-    is_primary = db.Column(db.Boolean, default=False)
-    layout_type = db.Column(db.String(20))  # 'full-width', 'half-left', 'half-right', 'gallery'
-    caption = db.Column(db.String(255))
-    display_order = db.Column(db.Integer, default=0)
+    title = db.Column(db.String(100))
+    value = db.Column(db.String(100))
+    unit = db.Column(db.String(20))
+    order = db.Column(db.Integer)
+
+class ProjectSection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    layout_type = db.Column(db.String(20))  # 'full-text', 'text-image', 'image-text', 'stats', etc.
+    order = db.Column(db.Integer)
+    image_url = db.Column(db.String(255)) 
+
+
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,10 +67,10 @@ class Project(db.Model):
     completion_date = db.Column(db.Date)
     description = db.Column(db.Text)
     feature = db.Column(db.Boolean, default=False)
-
+    featured_description = db.Column(db.Text)
     cover_image_url = db.Column(db.String(255))  # For card thumbnails
-    images = db.relationship('ProjectImage', backref='project', cascade="all, delete-orphan")
-    
+    sections = db.relationship('ProjectSection', backref='project', cascade="all, delete-orphan")
+    statistics = db.relationship('ProjectStatistic', backref='project', cascade="all, delete-orphan")
     @property
     def formatted_date(self):
         if self.date:
@@ -131,7 +139,9 @@ def featured_projects():
     return render_template("admin_featured.html", featured_projects=featured)
 
 # ─── Admin Routes ──────────────────────────────────────────────────────────────
-
+@app.route("/admin/home")
+def admin_home():
+    return render_template("admin_home.html")
 @app.route("/admin/projects/<int:id>/feature", methods=["POST"])
 def feature_project(id):
     try:
@@ -306,8 +316,8 @@ def edit_project_full(id):
     project.date = date
     project.completion_date = completion_date
 
+    # Handle cover image
     cover_file = request.files.get("cover_image")
-    cover_path = None
     if cover_file and cover_file.filename:
         if not allowed_file(cover_file.filename):
             flash('Invalid file type - only images allowed')
@@ -316,57 +326,116 @@ def edit_project_full(id):
         filename = secure_filename(f"cover_{datetime.now().timestamp()}_{cover_file.filename}")            
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         cover_file.save(filepath)
-        cover_path = f"/static/uploads/{filename}"
-        project.cover_image_url = cover_path
+        project.cover_image_url = f"/static/uploads/{filename}"
 
-    # Handle project images
-    if 'project_images' in request.files:
-        for img_file in request.files.getlist('project_images'):
-            if img_file.filename != '':
-                filename = secure_filename(f"project_{project.id}_{datetime.now().timestamp()}_{img_file.filename}")                
-                img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                img_file.save(img_path)
-                
-                # Get corresponding layout from form data
-                layout = request.form.get('default_layout', 'full-width')
-                
-                new_image = ProjectImage(
-                    url=f"/static/uploads/{filename}",
-                    project_id=project.id,
-                    layout_type=layout,
-                    display_order=len(project.images) + 1
-                )
-                db.session.add(new_image)
-    
-    # Handle deleted images
-    deleted_ids = request.form.getlist('deleted_images[]')
-    for img_id in deleted_ids:
-        img = ProjectImage.query.get(img_id)
-        if img:
-            # Optional: Delete the actual file
-            try:
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], img.url.split('/')[-1]))
-            except:
-                pass
-            db.session.delete(img)
-    
-     # Handle feature status (this is the key addition)
+    # Handle feature status 
     feature_status = request.form.get('feature') == 'true'
     project.feature = feature_status
 
     # Update other fields
     fields = ["title", "subtitle", "description", "service", "market", 
-             "location", "client", "collaboration"]
+             "location", "client", "collaboration", "featured_description"]
     
     for field in fields:
         value = request.form.get(field)
         setattr(project, field, value if value else None)
 
+    # Handle statistics
+    existing_stat_ids = [s.id for s in project.statistics]
+    new_stats = []
+    
+    stat_titles = request.form.getlist('stat_title[]')
+    stat_values = request.form.getlist('stat_value[]')
+    stat_units = request.form.getlist('stat_unit[]')
+    stat_orders = request.form.getlist('stat_order[]')
+    
+    for i in range(len(stat_titles)):
+        if stat_titles[i]:  # Only add if there's a title
+            new_stats.append(ProjectStatistic(
+                title=stat_titles[i],
+                value=stat_values[i],
+                unit=stat_units[i],
+                order=int(stat_orders[i]) if stat_orders[i] else 0,
+                project_id=project.id
+            ))
+    
+    # Replace all statistics
+    ProjectStatistic.query.filter_by(project_id=project.id).delete()
+    db.session.add_all(new_stats)
+
+    # Handle sections - FIRST create all new sections
+    existing_section_ids = [s.id for s in project.sections]
+    new_sections = []
+    
+    section_layouts = request.form.getlist('section_layout[]')
+    section_titles = request.form.getlist('section_title[]')
+    section_descriptions = request.form.getlist('section_description[]')
+    section_orders = request.form.getlist('section_order[]')
+    
+    for i in range(len(section_titles)):
+        if section_titles[i] or section_descriptions[i]:  # Only add if there's content
+            new_section = ProjectSection(
+                layout_type=section_layouts[i],
+                title=section_titles[i],
+                description=section_descriptions[i],
+                order=int(section_orders[i]) if section_orders[i] else 0,
+                project_id=project.id
+            )
+            new_sections.append(new_section)
+    
+    # Replace all sections
+    ProjectSection.query.filter_by(project_id=project.id).delete()
+    db.session.add_all(new_sections)
+    db.session.flush()  # This ensures the new sections get IDs
+    
+    # NOW handle section images for existing sections
+    for section in project.sections:
+        if section.layout_type in ['text-image', 'image-text']:
+            file_key = f'section_image_{section.id}'
+            if file_key in request.files:
+                img_file = request.files[file_key]
+                if img_file and img_file.filename:
+                    if not allowed_file(img_file.filename):
+                        flash('Invalid file type for section image - only images allowed')
+                        continue
+                    
+                    # Delete old image if exists
+                    if section.image_url:
+                        try:
+                            old_path = os.path.join('static', section.image_url.lstrip('/static/'))
+                            if os.path.exists(old_path):
+                                os.remove(old_path)
+                        except Exception as e:
+                            app.logger.error(f"Error deleting old section image: {e}")
+                    
+                    # Save new image
+                    filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    img_file.save(filepath)
+                    section.image_url = f"/static/uploads/{filename}"
+
+    # Handle new sections with images
+    section_images = [f for f in request.files if f.startswith('new_section_image_')]
+    for file_key in section_images:
+        img_file = request.files[file_key]
+        if img_file and img_file.filename:
+            if not allowed_file(img_file.filename):
+                flash('Invalid file type for new section image - only images allowed')
+                continue
+            
+            # Get the section index from the file key
+            try:
+                section_idx = int(file_key.split('_')[-1])
+                if section_idx < len(new_sections):
+                    filename = secure_filename(f"section_new_{section_idx}_{datetime.now().timestamp()}_{img_file.filename}")
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    img_file.save(filepath)
+                    new_sections[section_idx].image_url = f"/static/uploads/{filename}"
+            except (IndexError, ValueError):
+                app.logger.error(f"Invalid section image key: {file_key}")
+    
     db.session.commit()
     return redirect(f"/admin/projects/{project.id}")
-
-
-
 
 @app.route("/admin/projects/<int:id>/delete", methods=["POST"])
 def delete_project(id):

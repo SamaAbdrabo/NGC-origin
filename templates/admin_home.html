@@ -1,0 +1,141 @@
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Slick Carousel Local Styles -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick-theme.css') }}">
+
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_home.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_general.css') }}">
+
+      
+
+      <title>new-GC</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  </head>
+   <!-- Header Section -->
+
+
+    <main>
+
+    <section class="admin-sec">
+        <div class="admin-main">
+            <div class="admin-title">
+                <h1>ADMIN PANEL</h1>
+            </div>
+            <div class="admin-menu">
+                <button class="admin-menu-part admin_button"  onclick="window.location.href='/admin/projects'">
+                    <h1>EDIT PROJECTS</h1>
+                <img src="{{ url_for('static', filename='photos/LOGO-03.png') }}" alt="logo" class="logo-img">
+                </button>
+
+                <button class="admin-menu-part admin_button"  onclick="window.location.href='/admin/projects/new'">
+                    <h1>ADD NEW PROJECT</h1>
+                <img src="{{ url_for('static', filename='photos/LOGO-03.png') }}" alt="logo" class="logo-img">
+                </button>
+
+                <button class="admin-menu-part admin_button">
+                    <h1>HOME FEATURED PROJECTS</h1>
+                <img src="{{ url_for('static', filename='photos/LOGO-03.png') }}" alt="logo" class="logo-img">
+                </button>
+
+                <button class="admin-menu-part admin_button">
+                    <h1>EDIT CLIENTS</h1>
+                <img src="{{ url_for('static', filename='photos/LOGO-03.png') }}" alt="logo" class="logo-img">
+                </button>
+            </div>
+
+        </div>
+        
+    </section>
+
+
+
+
+
+
+    </main>
+
+
+
+    </body>
+    <!-- jQuery + Slick JS from CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+  <!-- Slick Init -->
+  <script>
+    $(document).ready(function () {
+
+   $('.center').slick({
+  centerMode: true,
+  centerPadding: '60px',
+  slidesToShow: 2, 
+  dots:false,
+  arrows:true,
+  prevArrow: '<button type="button" class="custom-prev">❮</button>',
+  nextArrow: '<button type="button" class="custom-next">❯</button>',
+  responsive: [
+    {
+      breakpoint: 1000,
+      settings: {
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 2 ,// also 2 here
+        dots:true
+      }
+    },
+    {
+      breakpoint: 800,
+      settings: {
+        dots:true,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 1 // still 1 on phones
+      }
+    }
+  ]
+  
+})
+    });
+
+
+  </script>
+<script> 
+//navbar functions
+document.addEventListener('DOMContentLoaded', () => {
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+
+    const navbarHeight = navbar.offsetHeight;
+
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        if (scrollTop > navbarHeight) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hide');
+                navbar.style.backgroundColor = '#9dadb9';
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hide');
+
+
+            }
+        }
+
+        if (scrollTop === 0) {
+            navbar.style.backgroundColor = 'transparent';
+        }
+
+        lastScrollTop = scrollTop;
+    });
+  });
+
+
+</script>
+

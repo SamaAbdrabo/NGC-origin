@@ -17,6 +17,7 @@ p a:hover {
 }
 
 .project-info-main{
+    
     max-width:70em; 
     padding:5em;
     padding-left:13em;
@@ -159,3 +160,79 @@ p a:hover {
 .carousel-item{
     width:max-content;
 }
+/* Featured description */
+.featured-description {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 2em;
+    padding: 1em;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+/* Content sections */
+.content-section {
+    margin: 2em 0;
+}
+
+.layout-full-text {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.layout-text-image, .layout-image-text {
+    display: flex;
+    gap: 2em;
+    align-items: center;
+}
+
+.layout-text-image .text-part {
+    flex: 1;
+}
+
+.layout-text-image .image-part {
+    flex: 1;
+}
+
+.layout-image-text .text-part {
+    flex: 1;
+    order: 2;
+}
+
+.layout-image-text .image-part {
+    flex: 1;
+    order: 1;
+}
+
+/* Statistics */
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5em;
+}
+
+
+
+.statistics-grid{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width:100%;
+  gap: 20px 15px;
+}
+
+.statistic{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap:wrap;
+  flex:0 0 30%;
+  max-width:30%;
+  gap:8px;
+}
+.statistic div{
+  display: flex;
+  flex-direction: row;
+}
+

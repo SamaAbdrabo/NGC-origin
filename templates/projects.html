@@ -70,17 +70,22 @@
                     <div class="search-filter">
                     <input type="text" id="searchInput" placeholder="Search projects..." />
                     <div class="filters">
-                    <select id="sectorFilter">
+                    <select id="serviceFilter">
                         <option value="all">All Services</option>
                         <option value="infrastructure">Infrastructure</option>
                         <option value="energy">Energy</option>
                         <option value="transport">Transport</option>
                     </select>
-                    <select id="sectorFilter">
+                    <select id="marketFilter">
                         <option value="all">All Markets</option>
+                        <option value="masterplanning">Masterplanning</option>
+                        <option value="Landscape">Landscape</option>
+                        <option value="buildings">Buildings</option>
                         <option value="infrastructure">Infrastructure</option>
-                        <option value="energy">Energy</option>
-                        <option value="transport">Transport</option>
+                        <option value="industrial">Industrial</option>
+                        <option value="geotechnical">Geotechical</option>
+                        <option value="environmental">Environmental</option>
+
                     </select>
                     
                     <select id="locationFilter">
@@ -88,11 +93,10 @@
                         <option value="egypt">Egypt</option>
                         <option value="ksa">Saudi Arabia</option>
                     </select>
-                    <select id="sectorFilter">
+                    <select id="dateFilter">
                         <option value="all">Date</option>
-                        <option value="infrastructure">Infrastructure</option>
-                        <option value="energy">Energy</option>
-                        <option value="transport">Transport</option>
+                        <option value="descending">Descending</option>
+                        <option value="ascending">Ascending</option>
                     </select>
 
                 </div>
@@ -106,13 +110,15 @@
                     {% for project in projects %}
                         <a href="/projects/{{project.id}}" class="card-item hover-effect"
                            data-title="{{ project.title | lower }}"
-                           data-sector="infrastructure" 
-                           data-location="egypt">
-                            <div class="card-visual" style="background-image: url('{{ project.image_url }}');"></div>
+                           data-service="{{ project.service | lower if project.service else '' }}" 
+                           data-market="{{ project.market | lower if project.market else '' }}"
+                           data-location="{{ project.location | lower if project.location else '' }}"
+                           data-date="{{ project.date if project.date else '' }}">
+                            <div class="card-visual" style="background-image: url('{{ project.cover_image_url }}');"></div>
                             <div class="card-subtext">
                                 
                                 {% if project.market and project.service %}
-                                <h5>{{ project.market }} <strong> • </strong> {{ project.service }}</h5>
+                                <h5 style="text-transform: uppercase;">{{ project.market }} <strong> • </strong> {{ project.service }}</h5>
                                 {% elif project.market %}
                                 <h5>{{ project.market }}</h5>
                                 {% elif project.service %}
@@ -187,42 +193,82 @@
         // Reset filters
         document.getElementById('resetBtn').addEventListener('click', () => {
             document.getElementById('searchInput').value = '';
-            document.querySelectorAll('.filters select').forEach(select => select.selectedIndex = 0);
-            document.querySelectorAll('.card-item').forEach(item => item.style.display = 'flex');
+            document.getElementById('serviceFilter').value = 'all';
+            document.getElementById('marketFilter').value = 'all';
+            document.getElementById('locationFilter').value = 'all';
+            document.getElementById('dateFilter').value = 'all';
+            
+            // Show all cards
+            document.querySelectorAll('.card-item').forEach(item => {
+                item.style.display = 'flex';
+            });
+            
+            // Reset any sorting if applied
+            const cardsGrid = document.querySelector('.cards-grid');
+            const cards = Array.from(document.querySelectorAll('.card-item'));
+            cards.sort((a, b) => {
+                return Array.from(cardsGrid.children).indexOf(a) - Array.from(cardsGrid.children).indexOf(b);
+            });
+            cards.forEach(card => cardsGrid.appendChild(card));
         });
-    </script>
 
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const sectorFilter = document.getElementById('sectorFilter');
-        const locationFilter = document.getElementById('locationFilter');
-        const cards = document.querySelectorAll('.card-item');
+        // Filter and sort functionality
+        function filterAndSortCards() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const selectedService = document.getElementById('serviceFilter').value;
+            const selectedMarket = document.getElementById('marketFilter').value;
+            const selectedLocation = document.getElementById('locationFilter').value;
+            const selectedDateOrder = document.getElementById('dateFilter').value;
 
-        function filterCards() {
-            const searchValue = searchInput.value.toLowerCase();
-            const selectedSector = sectorFilter.value;
-            const selectedLocation = locationFilter.value;
+            const cards = Array.from(document.querySelectorAll('.card-item'));
+            const cardsGrid = document.querySelector('.cards-grid');
 
+            // Filter cards
             cards.forEach(card => {
-                const title = card.dataset.title;
-                const sector = card.dataset.sector;
-                const location = card.dataset.location;
+                const title = card.dataset.title || '';
+                const service = card.dataset.service || '';
+                const market = card.dataset.market || '';
+                const location = card.dataset.location || '';
+                const date = card.dataset.date || '';
 
                 const matchesSearch = title.includes(searchValue);
-                const matchesSector = selectedSector === 'all' || sector === selectedSector;
-                const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
+                const matchesService = selectedService === 'all' || service.includes(selectedService);
+                const matchesMarket = selectedMarket === 'all' || market.includes(selectedMarket);
+                const matchesLocation = selectedLocation === 'all' || location.includes(selectedLocation);
 
-                if (matchesSearch && matchesSector && matchesLocation) {
+                if (matchesSearch && matchesService && matchesMarket && matchesLocation) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            // Sort cards by date if needed
+            if (selectedDateOrder !== 'all') {
+                const visibleCards = cards.filter(card => card.style.display !== 'none');
+                
+                visibleCards.sort((a, b) => {
+                    const dateA = new Date(a.dataset.date || 0);
+                    const dateB = new Date(b.dataset.date || 0);
+                    
+                    if (selectedDateOrder === 'ascending') {
+                        return dateA - dateB;
+                    } else {
+                        return dateB - dateA;
+                    }
+                });
+
+                // Reorder cards in DOM
+                visibleCards.forEach(card => cardsGrid.appendChild(card));
+            }
         }
 
-        searchInput.addEventListener('input', filterCards);
-        sectorFilter.addEventListener('change', filterCards);
-        locationFilter.addEventListener('change', filterCards);
+        // Add event listeners to all filter controls
+        document.getElementById('searchInput').addEventListener('input', filterAndSortCards);
+        document.getElementById('serviceFilter').addEventListener('change', filterAndSortCards);
+        document.getElementById('marketFilter').addEventListener('change', filterAndSortCards);
+        document.getElementById('locationFilter').addEventListener('change', filterAndSortCards);
+        document.getElementById('dateFilter').addEventListener('change', filterAndSortCards);
     </script>
 
     <script>

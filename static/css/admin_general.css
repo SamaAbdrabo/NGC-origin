@@ -1,0 +1,27 @@
+    .admin_button{
+    font-size:0.9em;
+    background-color: var(--navy_color);
+    border-radius:5px 5px;
+    border:none;
+    color:var(--white);
+    padding:0.7em 1em;
+}
+
+    .admin_button:hover {
+      background-color: var(--accent);
+      transition-duration:0.4s;
+
+    }
+    .admin button{
+      font-size:0.9em;
+    background-color: var(--navy_color);
+    border-radius:5px 5px;
+    border:none;
+    color:var(--white);
+    padding:0.7em 1em;
+    }
+    .admin button:hover{
+            background-color: var(--accent);
+      transition-duration:0.4s;
+
+    }

@@ -14,50 +14,11 @@
     </style>
 </head>
 <body>
-   <section class="header">
-        <nav class="navbar">
-            <div class="logo">
-                <a href="{{url_for ('home')}}">
-                    <img src="{{ url_for('static', filename='photos/logo.jpg') }}" alt="Logo" class="logo-img">
-                </a>
-            </div>
-            <div class="pages">
-                <ul>
-                          <li><a href="{{ url_for ('about') }}">About Us</a></li>
-                          <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
-                          <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
-                          <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <div class="menu">
-                    <div id="myNav" class="overlay">
-                        <a href="javascript:void(0)" class="closebtn">&times;</a>
-                    </div>
-                    <div>
-                        <a href="javascript:void(0)" class="openbtn">
-                            <div class="one"></div>
-                            <div class="two"></div>
-                            <div class="three"></div>
-                        </a>
-                    </div>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li><a href="{{url_for ('home')}}">Home</a></li>
-                            <li><a href="{{ url_for ('about') }}">About Us</a></li>
-                            <li><a href="{{ url_for('markets') }}">Markets & Services</a></li>
-                            <li><a href="{{ url_for('show_projects') }}">Projects</a></li>
-                            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </section>
+
     <section class="cover-section-2">
         <div class="cover-text-2">
             <p>
-            <a href="/">Admin</a> ❯
+            <a href="{{ url_for ('admin_home') }}">Admin</a> ❯
             </p>
             <h1> PROJECTS </h1>
 
