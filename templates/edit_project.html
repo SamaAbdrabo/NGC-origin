@@ -64,7 +64,6 @@
                 <input type="hidden" name="section_id[]" value="{{ section.id }}">
 
                 <div class="section-item" data-id="{{ section.id }}">
-                  <input type="hidden" name="section_id[]" value="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
                     <option value="full-text" {% if section.layout_type=='full-text' %}selected{% endif %}>Full Text</option>
                     <option value="text-image" {% if section.layout_type=='text-image' %}selected{% endif %}>Text + Image</option>
@@ -594,11 +593,11 @@ document.addEventListener('click', (e) => {
               newSection.innerHTML =
 
  `
-      <input type="hidden" name="section_id[]" value="">
 
 
         <input type="hidden" name="section_id[]" value="">
         <select  name="section_layout[]">
+          
           <option value="full-text">Full Text</option>
           <option value="text-image">Text + Image</option>
           <option value="image-text">Image + Text</option>
@@ -622,9 +621,9 @@ document.addEventListener('click', (e) => {
       // Styled view section template
       newSection.innerHTML = `
 
-      <input type="hidden" name="section_id[]" value=""
-
-        <select name="section_layout[]">
+      <input type="hidden" name="section_id[]" value="">
+        <select  name="section_layout[]">
+          
           <option value="full-text">Full Text</option>
           <option value="text-image">Text + Image</option>
           <option value="image-text">Image + Text</option>

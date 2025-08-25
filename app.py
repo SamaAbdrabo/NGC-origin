@@ -429,7 +429,8 @@ def edit_project_full(id):
     if to_delete:
         ProjectSection.query.filter(ProjectSection.id.in_(to_delete)).delete(synchronize_session=False)
         
-    
+    db.session.commit()
+    return redirect(f"/admin/projects/{project.id}")
 
 @app.route("/admin/projects/<int:id>/delete", methods=["POST"])
 def delete_project(id):
