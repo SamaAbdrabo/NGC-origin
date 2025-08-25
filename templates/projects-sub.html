@@ -72,26 +72,10 @@
       </section>
       <section class="project-info-section">
           <div class="project-info-main">
-              <div class="project-info-description">
-                {% if project.subtitle %}
-                  <h1>{{project.subtitle if project.subtitle else ''}}</h1>
-                {% endif %}
-                  <div class="project-info-description-p">
-                  {% if project.description %}
-                    <p>{{project.description if project.description else ''}}</p>
-                  {% endif %}
-                  </div>
+
                   <!-- Featured description at top if it exists -->
 
-   <div class="statistics-grid">
-        
-        {% for stat in project.statistics %}
-        <div class="statistic">
-            <div class="stat-value"><h1>{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</h1></div>
-            <div class="stat-title"><p>{{ stat.title }}</p></div>
-        </div>
-        {% endfor %}
-    </div>    
+  
 <!-- Main content sections -->
 {% for section in project.sections %}
 <div class="content-section layout-{{ section.layout_type }}">
@@ -104,31 +88,48 @@
 
         <p>{{ section.description }}</p>
         </div>
-    </div>
     
     {% elif section.layout_type == 'text-image' %}
     <div class="text-part">
-        {% if section.title %}<h1>{{ section.title }}</h1>{% endif %}
+        {% if section.title %}<h1 style="font-size: 2.5em;">{{ section.title }}</h1>{% endif %}
         <p>{{ section.description }}</p>
     </div>
     <div class="image-part">
         <img src="{{ section.image_url }}" alt="{{ section.title }}">
     </div>
-    
+    {% elif section.layout_type == 'image-text' %}
+    <div class="image-part">
+        <img src="{{ section.image_url }}" alt="{{ section.title }}">
+    </div>
+    <div class="text-part">
+        {% if section.title %}<h1 style="font-size: 2.5em;">{{ section.title }}</h1>{% endif %}
+        <p>{{ section.description }}</p>
+    </div>
     {% elif section.layout_type == 'stats' %}
-    <div class="statistics-grid">
+   <div class="statistics-grid">
+        
         {% for stat in project.statistics %}
-        <div class="statistic">
-            <div class="stat-value">{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</div>
-            <div class="stat-title">{{ stat.title }}</div>
+        <div class="statistic" style="font-size: x-large;">
+            <div class="stat-value"><h1 >{{ stat.value }}</h1>{% if stat.unit %}
+              <h4 class="unit" >{{ stat.unit }}</h4>{% endif %}</div>
+            <div class="stat-title"><h4 style="font-size: x-large;">{{ stat.title }}</h4></div>
         </div>
         {% endfor %}
-    </div>
+    </div>  
     {% endif %}
 </div>
 {% endfor %}
+   <div class="statistics-grid">
+        
+        {% for stat in project.statistics %}
+        <div class="statistic" style="font-size: x-large;">
+            <div class="stat-value"><h1 style="font-size: 2.5em;" >{{ stat.value }}</h1>{% if stat.unit %}
+              <h4 class="unit" >{{ stat.unit }}</h4>{% endif %}</div>
+            <div class="stat-title"><h4 style="font-size: x-large;">{{ stat.title }}</h4></div>
+        </div>
+        {% endfor %}
+    </div>  
 
-              </div>
               
               
             
@@ -185,14 +186,12 @@
                   </div>
               </div>
                     {% endif %}
-          {% if project.completion_date %}
               <div class="project-info-panel-div">
                   <h3>COMPLETION DATE</h3>
                   <div class="project-info-panel-div-p">
-                      <p>{{ project.formatted_completion_date if project.completion_date else ''}}</p>
+                      <p>{{ project.formatted_completion_date if project.completion_date else 'Ongoing'}}</p>
                   </div>
               </div>
-                    {% endif %}
 
           </div>
       </section>

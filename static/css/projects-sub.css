@@ -44,6 +44,7 @@ p a:hover {
     display:flex;
     flex-direction:column;
     gap:1em;
+
 }
 
 
@@ -72,7 +73,7 @@ p a:hover {
     display:flex;
     flex-direction:column;
     flex-wrap:wrap;
-
+    text-transform: capitalize;
     gap:15px;
 }
 .project-img-container{
@@ -86,7 +87,22 @@ p a:hover {
     width:100%;
     height:auto;
 }
- 
+ .stat-value{
+    display: flex;
+    align-items: baseline;
+    gap:5px;
+ }
+
+.layout-full-text{
+    display: flex;
+    flex-direction: column;
+    gap:2em;
+ }
+ .text-part{
+     display: flex;
+    flex-direction: column;
+    gap:2em;
+ }
 @media screen and (max-width: 1200px ) {
     .project-info-section{
     width:100%;
@@ -208,6 +224,7 @@ p a:hover {
 /* Statistics */
 .statistics-grid {
     display: grid;
+    margin:2em 0;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5em;
 }

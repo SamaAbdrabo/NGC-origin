@@ -49,10 +49,7 @@
       <section class="project-info-section">
         <div class="project-info-main">
           <div class="project-info-description">
-            <h1><textarea name="subtitle" class="editable-textarea auto-resize"  placeholder="Project subtitle...">{{project.subtitle or ''}}</textarea></h1>
-            <div class="project-info-description-p">
-              <textarea name="description" class="editable-textarea auto-resize" placeholder="Project description">{{ project.description or ''}}</textarea>
-            </div>
+            
 
             <!-- Content Sections -->
             <div class="form-section">
@@ -242,13 +239,8 @@
     <label class="plain_label" for="title">Project Title</label>
     <input class="plain_input" type="text" name="title" value="{{ project.title or '' }}" required>
 
-    <label class="plain_label" for="subtitle">Subtitle</label>
-    <input class="plain_input" type="text" name="subtitle" value="{{ project.subtitle or '' }}">
 
-    <label class="plain_label" for="description">Description</label>
-    <textarea class="plain_input" name="description">{{ project.description or '' }}</textarea>
-
-    <label class="plain_label" style="font-size: 1.5em;">Extra Content</label>
+    <label class="plain_label" style="font-size: 1.5em;">Content</label>
               <div id="sections-container">
                 {% for section in project.sections %}
                 <div class="section-item" style="gap:0" data-id="{{ section.id }}">
@@ -262,7 +254,7 @@
                     <input type="text" class="plain_input" name="section_title[]"  value="{{ section.title }}" >
 
                   <label class="plain_label" for="description">Description</label>
-                  <textarea class="plain_input" name="section_description[]" >{{ section.description or '' }}</textarea>
+                  <textarea class="plain_input" name="section_description[]" rows="8">{{ section.description or '' }}</textarea>
 
                   {% if section.layout_type in ['text-image', 'image-text'] %}
                   <div class="card-visual section-img-visual" style="background-image: url('{{ section.image_url }}'); position: relative;">

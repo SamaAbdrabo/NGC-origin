@@ -140,7 +140,7 @@
                                           {% for stat in project.statistics %}
                                             <div class="projects-text-2-sub">
                   
-                                              <h1>{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</h1>
+                                <h1>{{ stat.value }}{% if stat.unit %}<span class="unit">{{ stat.unit }}</span>{% endif %}</h1>
                                               <p class>{{stat.title or ''}}</p>
                                             </div>
                                               {% endfor %}
