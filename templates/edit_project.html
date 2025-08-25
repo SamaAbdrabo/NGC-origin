@@ -50,12 +50,19 @@
         <div class="project-info-main">
           <div class="project-info-description">
             
-
+            <div class="section-image-upload" style="display:none;">
+            <div class="section-image-upload-controls">
+              <label>Section Image:</label>
+              <input type="file" name="new_section_image[]" accept="image/*">
+            </div>
+          </div>    
             <!-- Content Sections -->
             <div class="form-section">
               <h3>Content Sections</h3>
               <div id="sections-container">
                 {% for section in project.sections %}
+                <input type="hidden" name="section_id[]" value="{{ section.id }}">
+
                 <div class="section-item" data-id="{{ section.id }}">
                   <input type="hidden" name="section_id[]" value="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
@@ -244,6 +251,8 @@
     <label class="plain_label" style="font-size: 1.5em;">Content</label>
               <div id="sections-container">
                 {% for section in project.sections %}
+                <input type="hidden" name="section_id[]" value="{{ section.id }}">
+
                 <div class="section-item" style="gap:0" data-id="{{ section.id }}">
                   <input type="hidden" name="section_id[]" value="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
@@ -580,11 +589,12 @@ document.addEventListener('click', (e) => {
     
     if (e.target.closest('#plain-view')) {
       // Plain view section template
-      
+        
         newSection.className = 'section-item plain-section-item' ;
               newSection.innerHTML =
 
  `
+      <input type="hidden" name="section_id[]" value="">
 
 
         <input type="hidden" name="section_id[]" value="">
@@ -611,7 +621,9 @@ document.addEventListener('click', (e) => {
     } else {
       // Styled view section template
       newSection.innerHTML = `
-        <input type="hidden" name="section_id[]" value="">
+
+      <input type="hidden" name="section_id[]" value=""
+
         <select name="section_layout[]">
           <option value="full-text">Full Text</option>
           <option value="text-image">Text + Image</option>
