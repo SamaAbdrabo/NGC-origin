@@ -34,6 +34,7 @@
 
   <!-- Styled View -->
   <main id="styled-view">
+
     <form action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="feature" id="feature-input" value="{{ 'true' if project.feature else 'false' }}">
       
@@ -44,6 +45,7 @@
           <h1><input name="title" style="text-transform: capitalize;" class="editable-input" value="{{ project.title }}"></h1>
         </div>
       </section>
+<input type="hidden" name="section_id[]" value="{{ section.id }}">
 
       <!-- Project Info Section -->
       <section class="project-info-section">
@@ -74,7 +76,7 @@
                     <div class="cover-button general">
                       <button>
                         <label for="section_image_{{ section.id }}">{% if section.image_url %}Change image{% else %}Upload image{% endif %}</label>
-                        <input type="file" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
+                          <input type="file" name="new_section_image[]" accept="image/*">
                       </button>
                     </div>
                   </div>
@@ -239,6 +241,7 @@
     <label class="plain_label" for="title">Project Title</label>
     <input class="plain_input" type="text" name="title" value="{{ project.title or '' }}" required>
 
+    <input type="hidden" name="section_id[]" value="{{ section.id }}">
 
     <label class="plain_label" style="font-size: 1.5em;">Content</label>
               <div id="sections-container">
@@ -261,7 +264,7 @@
                     <div class="cover-button general">
                       <button>
                         <label for="section_image_{{ section.id }}">{% if section.image_url %}Change image{% else %}Upload image{% endif %}</label>
-                        <input type="file" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
+                          <input type="file" name="new_section_image[]" accept="image/*">
                       </button>
 
                     </div>
