@@ -1,5 +1,5 @@
 # ─── Imports ───────────────────────────────────────────────────────────────────
-from flask import Flask, render_template, request, jsonify, redirect, flash
+from flask import Flask, render_template, request, jsonify, redirect, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
@@ -366,7 +366,8 @@ def edit_project_full(id):
     db.session.add_all(new_stats)
 
     # Handle sections (update in-place, create new, delete removed)
-section_ids = request.form.getlist('section_id[]')               # '' for new rows
+# Handle sections (update in-place, create new, delete removed)
+section_ids = request.form.getlist('section_id[]')  # '' for new rows
 section_layouts = request.form.getlist('section_layout[]')
 section_titles = request.form.getlist('section_title[]')
 section_descriptions = request.form.getlist('section_description[]')
