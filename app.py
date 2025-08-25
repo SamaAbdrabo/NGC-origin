@@ -5,7 +5,6 @@ from flask_migrate import Migrate
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
-from flask import url_for
 
 
 allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
@@ -366,72 +365,71 @@ def edit_project_full(id):
     db.session.add_all(new_stats)
 
     # Handle sections (update in-place, create new, delete removed)
-# Handle sections (update in-place, create new, delete removed)
-section_ids = request.form.getlist('section_id[]')  # '' for new rows
-section_layouts = request.form.getlist('section_layout[]')
-section_titles = request.form.getlist('section_title[]')
-section_descriptions = request.form.getlist('section_description[]')
-section_orders = request.form.getlist('section_order[]')
+    section_ids = request.form.getlist('section_id[]')  # '' for new rows
+    section_layouts = request.form.getlist('section_layout[]')
+    section_titles = request.form.getlist('section_title[]')
+    section_descriptions = request.form.getlist('section_description[]')
+    section_orders = request.form.getlist('section_order[]')
 
-kept_section_ids = set()
-new_sections_uncommitted = []
+    kept_section_ids = set()
+    new_sections_uncommitted = []
 
-for i in range(len(section_titles)):
-    title = section_titles[i] if i < len(section_titles) else None
-    desc = section_descriptions[i] if i < len(section_descriptions) else None
-    layout = section_layouts[i] if i < len(section_layouts) else 'full-text'
-    order_val = int(section_orders[i]) if i < len(section_orders) and section_orders[i] else 0
-    sec_id_raw = section_ids[i].strip() if i < len(section_ids) else ''
+    for i in range(len(section_titles)):
+        title = section_titles[i] if i < len(section_titles) else None
+        desc = section_descriptions[i] if i < len(section_descriptions) else None
+        layout = section_layouts[i] if i < len(section_layouts) else 'full-text'
+        order_val = int(section_orders[i]) if i < len(section_orders) and section_orders[i] else 0
+        sec_id_raw = section_ids[i].strip() if i < len(section_ids) else ''
 
-    if sec_id_raw:
-        section = ProjectSection.query.get(int(sec_id_raw))
-        if section and section.project_id == project.id:
-            section.title = title
-            section.description = desc
-            section.layout_type = layout
-            section.order = order_val
-            kept_section_ids.add(section.id)
+        if sec_id_raw:
+            section = ProjectSection.query.get(int(sec_id_raw))
+            if section and section.project_id == project.id:
+                section.title = title
+                section.description = desc
+                section.layout_type = layout
+                section.order = order_val
+                kept_section_ids.add(section.id)
 
-            if layout in ['text-image', 'image-text']:
-                file_key = f'section_image_{section.id}'
-                img_file = request.files.get(file_key)
-                if img_file and img_file.filename and allowed_file(img_file.filename):
-                    filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
-                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                    img_file.save(filepath)
-                    section.image_url = f"/static/uploads/{filename}"
-    else:
-        new_section = ProjectSection(
-            layout_type=layout,
-            title=title,
-            description=desc,
-            order=order_val,
-            project_id=project.id
-        )
-        db.session.add(new_section)
-        new_sections_uncommitted.append(new_section)
+                if layout in ['text-image', 'image-text']:
+                    file_key = f'section_image_{section.id}'
+                    img_file = request.files.get(file_key)
+                    if img_file and img_file.filename and allowed_file(img_file.filename):
+                        filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
+                        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                        img_file.save(filepath)
+                        section.image_url = f"/static/uploads/{filename}"
+        else:
+            new_section = ProjectSection(
+                layout_type=layout,
+                title=title,
+                description=desc,
+                order=order_val,
+                project_id=project.id
+            )
+            db.session.add(new_section)
+            new_sections_uncommitted.append(new_section)
 
-db.session.flush()  # assign IDs to new sections
+    db.session.flush()  # assign IDs to new sections
 
-# Attach images to new sections in order
-new_images = request.files.getlist('new_section_image[]')
-for idx, section in enumerate(new_sections_uncommitted):
-    if idx < len(new_images):
-        img_file = new_images[idx]
-        if img_file and img_file.filename and allowed_file(img_file.filename):
-            filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            img_file.save(filepath)
-            section.image_url = f"/static/uploads/{filename}"
+    # Attach images to new sections in order
+    new_images = request.files.getlist('new_section_image[]')
+    for idx, section in enumerate(new_sections_uncommitted):
+        if idx < len(new_images):
+            img_file = new_images[idx]
+            if img_file and img_file.filename and allowed_file(img_file.filename):
+                filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                img_file.save(filepath)
+                section.image_url = f"/static/uploads/{filename}"
 
-# Delete sections removed from the form
-existing_ids = {s.id for s in project.sections}
-new_ids = {s.id for s in new_sections_uncommitted}
-to_delete = existing_ids - kept_section_ids - new_ids
-if to_delete:
-    ProjectSection.query.filter(ProjectSection.id.in_(to_delete)).delete(synchronize_session=False)
+    # Delete sections removed from the form
+    existing_ids = {s.id for s in project.sections}
+    new_ids = {s.id for s in new_sections_uncommitted}
+    to_delete = existing_ids - kept_section_ids - new_ids
+    if to_delete:
+        ProjectSection.query.filter(ProjectSection.id.in_(to_delete)).delete(synchronize_session=False)
+        
     
-  
 
 @app.route("/admin/projects/<int:id>/delete", methods=["POST"])
 def delete_project(id):
