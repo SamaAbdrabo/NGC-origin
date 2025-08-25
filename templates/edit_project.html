@@ -57,6 +57,7 @@
               <div id="sections-container">
                 {% for section in project.sections %}
                 <div class="section-item" data-id="{{ section.id }}">
+                  <input type="hidden" name="section_id[]" value="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
                     <option value="full-text" {% if section.layout_type=='full-text' %}selected{% endif %}>Full Text</option>
                     <option value="text-image" {% if section.layout_type=='text-image' %}selected{% endif %}>Text + Image</option>
@@ -244,6 +245,7 @@
               <div id="sections-container">
                 {% for section in project.sections %}
                 <div class="section-item" style="gap:0" data-id="{{ section.id }}">
+                  <input type="hidden" name="section_id[]" value="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
                     <option value="full-text" {% if section.layout_type=='full-text' %}selected{% endif %}>Full Text</option>
                     <option value="text-image" {% if section.layout_type=='text-image' %}selected{% endif %}>Text + Image</option>
@@ -585,6 +587,7 @@ document.addEventListener('click', (e) => {
  `
 
 
+        <input type="hidden" name="section_id[]" value="">
         <select  name="section_layout[]">
           <option value="full-text">Full Text</option>
           <option value="text-image">Text + Image</option>
@@ -608,6 +611,7 @@ document.addEventListener('click', (e) => {
     } else {
       // Styled view section template
       newSection.innerHTML = `
+        <input type="hidden" name="section_id[]" value="">
         <select name="section_layout[]">
           <option value="full-text">Full Text</option>
           <option value="text-image">Text + Image</option>
@@ -619,6 +623,12 @@ document.addEventListener('click', (e) => {
         </div>
         <div class="project-info-description-p">
           <textarea name="section_description[]" class="editable-textarea" placeholder="description"></textarea>
+        </div>
+        <div class="section-image-upload" style="display:none;">
+          <div class="section-image-upload-controls">
+            <label>Section Image:</label>
+            <input type="file" name="new_section_image[]" accept="image/*">
+          </div>
         </div>
         <input type="number" name="section_order[]" placeholder="Order">
         <button type="button" class="remove-section admin_button">Remove</button>
