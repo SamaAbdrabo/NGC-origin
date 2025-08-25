@@ -5,6 +5,8 @@ from flask_migrate import Migrate
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
+from flask import url_for
+
 
 allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -363,79 +365,72 @@ def edit_project_full(id):
     ProjectStatistic.query.filter_by(project_id=project.id).delete()
     db.session.add_all(new_stats)
 
-    # Handle sections - FIRST create all new sections
-    existing_section_ids = [s.id for s in project.sections]
-    new_sections = []
-    
-    section_layouts = request.form.getlist('section_layout[]')
-    section_titles = request.form.getlist('section_title[]')
-    section_descriptions = request.form.getlist('section_description[]')
-    section_orders = request.form.getlist('section_order[]')
-    
-    for i in range(len(section_titles)):
-        if section_titles[i] or section_descriptions[i]:  # Only add if there's content
-            new_section = ProjectSection(
-                layout_type=section_layouts[i],
-                title=section_titles[i],
-                description=section_descriptions[i],
-                order=int(section_orders[i]) if section_orders[i] else 0,
-                project_id=project.id
-            )
-            new_sections.append(new_section)
-    
-    # Replace all sections
-    ProjectSection.query.filter_by(project_id=project.id).delete()
-    db.session.add_all(new_sections)
-    db.session.flush()  # This ensures the new sections get IDs
-    
-    # NOW handle section images for existing sections
-    for section in project.sections:
-        if section.layout_type in ['text-image', 'image-text']:
-            file_key = f'section_image_{section.id}'
-            if file_key in request.files:
-                img_file = request.files[file_key]
-                if img_file and img_file.filename:
-                    if not allowed_file(img_file.filename):
-                        flash('Invalid file type for section image - only images allowed')
-                        continue
-                    
-                    # Delete old image if exists
-                    if section.image_url:
-                        try:
-                            old_path = os.path.join('static', section.image_url.lstrip('/static/'))
-                            if os.path.exists(old_path):
-                                os.remove(old_path)
-                        except Exception as e:
-                            app.logger.error(f"Error deleting old section image: {e}")
-                    
-                    # Save new image
+    # Handle sections (update in-place, create new, delete removed)
+section_ids = request.form.getlist('section_id[]')               # '' for new rows
+section_layouts = request.form.getlist('section_layout[]')
+section_titles = request.form.getlist('section_title[]')
+section_descriptions = request.form.getlist('section_description[]')
+section_orders = request.form.getlist('section_order[]')
+
+kept_section_ids = set()
+new_sections_uncommitted = []
+
+for i in range(len(section_titles)):
+    title = section_titles[i] if i < len(section_titles) else None
+    desc = section_descriptions[i] if i < len(section_descriptions) else None
+    layout = section_layouts[i] if i < len(section_layouts) else 'full-text'
+    order_val = int(section_orders[i]) if i < len(section_orders) and section_orders[i] else 0
+    sec_id_raw = section_ids[i].strip() if i < len(section_ids) else ''
+
+    if sec_id_raw:
+        section = ProjectSection.query.get(int(sec_id_raw))
+        if section and section.project_id == project.id:
+            section.title = title
+            section.description = desc
+            section.layout_type = layout
+            section.order = order_val
+            kept_section_ids.add(section.id)
+
+            if layout in ['text-image', 'image-text']:
+                file_key = f'section_image_{section.id}'
+                img_file = request.files.get(file_key)
+                if img_file and img_file.filename and allowed_file(img_file.filename):
                     filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
                     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     img_file.save(filepath)
                     section.image_url = f"/static/uploads/{filename}"
+    else:
+        new_section = ProjectSection(
+            layout_type=layout,
+            title=title,
+            description=desc,
+            order=order_val,
+            project_id=project.id
+        )
+        db.session.add(new_section)
+        new_sections_uncommitted.append(new_section)
 
-    # Handle new sections with images
-    section_images = [f for f in request.files if f.startswith('new_section_image_')]
-    for file_key in section_images:
-        img_file = request.files[file_key]
-        if img_file and img_file.filename:
-            if not allowed_file(img_file.filename):
-                flash('Invalid file type for new section image - only images allowed')
-                continue
-            
-            # Get the section index from the file key
-            try:
-                section_idx = int(file_key.split('_')[-1])
-                if section_idx < len(new_sections):
-                    filename = secure_filename(f"section_new_{section_idx}_{datetime.now().timestamp()}_{img_file.filename}")
-                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                    img_file.save(filepath)
-                    new_sections[section_idx].image_url = f"/static/uploads/{filename}"
-            except (IndexError, ValueError):
-                app.logger.error(f"Invalid section image key: {file_key}")
+db.session.flush()  # assign IDs to new sections
+
+# Attach images to new sections in order
+new_images = request.files.getlist('new_section_image[]')
+for idx, section in enumerate(new_sections_uncommitted):
+    if idx < len(new_images):
+        img_file = new_images[idx]
+        if img_file and img_file.filename and allowed_file(img_file.filename):
+            filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            img_file.save(filepath)
+            section.image_url = f"/static/uploads/{filename}"
+
+# Delete sections removed from the form
+existing_ids = {s.id for s in project.sections}
+new_ids = {s.id for s in new_sections_uncommitted}
+to_delete = existing_ids - kept_section_ids - new_ids
+if to_delete:
+    ProjectSection.query.filter(ProjectSection.id.in_(to_delete)).delete(synchronize_session=False)
     
-    db.session.commit()
-    return redirect(f"/admin/projects/{project.id}")
+  
 
 @app.route("/admin/projects/<int:id>/delete", methods=["POST"])
 def delete_project(id):

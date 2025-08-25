@@ -34,7 +34,6 @@
 
   <!-- Styled View -->
   <main id="styled-view">
-
     <form action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="feature" id="feature-input" value="{{ 'true' if project.feature else 'false' }}">
       
@@ -45,19 +44,25 @@
           <h1><input name="title" style="text-transform: capitalize;" class="editable-input" value="{{ project.title }}"></h1>
         </div>
       </section>
-<input type="hidden" name="section_id[]" value="{{ section.id }}">
 
       <!-- Project Info Section -->
       <section class="project-info-section">
         <div class="project-info-main">
           <div class="project-info-description">
             
-
+            <div class="section-image-upload" style="display:none;">
+            <div class="section-image-upload-controls">
+              <label>Section Image:</label>
+              <input type="file" name="new_section_image[]" accept="image/*">
+            </div>
+          </div>    
             <!-- Content Sections -->
             <div class="form-section">
               <h3>Content Sections</h3>
               <div id="sections-container">
                 {% for section in project.sections %}
+                <input type="hidden" name="section_id[]" value="{{ section.id }}">
+
                 <div class="section-item" data-id="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
                     <option value="full-text" {% if section.layout_type=='full-text' %}selected{% endif %}>Full Text</option>
@@ -76,7 +81,7 @@
                     <div class="cover-button general">
                       <button>
                         <label for="section_image_{{ section.id }}">{% if section.image_url %}Change image{% else %}Upload image{% endif %}</label>
-                          <input type="file" name="new_section_image[]" accept="image/*">
+                        <input type="file" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
                       </button>
                     </div>
                   </div>
@@ -241,11 +246,12 @@
     <label class="plain_label" for="title">Project Title</label>
     <input class="plain_input" type="text" name="title" value="{{ project.title or '' }}" required>
 
-    <input type="hidden" name="section_id[]" value="{{ section.id }}">
 
     <label class="plain_label" style="font-size: 1.5em;">Content</label>
               <div id="sections-container">
                 {% for section in project.sections %}
+                <input type="hidden" name="section_id[]" value="{{ section.id }}">
+
                 <div class="section-item" style="gap:0" data-id="{{ section.id }}">
                   <select class="section-button" name="section_layout[]">
                     <option value="full-text" {% if section.layout_type=='full-text' %}selected{% endif %}>Full Text</option>
@@ -264,7 +270,7 @@
                     <div class="cover-button general">
                       <button>
                         <label for="section_image_{{ section.id }}">{% if section.image_url %}Change image{% else %}Upload image{% endif %}</label>
-                          <input type="file" name="new_section_image[]" accept="image/*">
+                        <input type="file" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
                       </button>
 
                     </div>
@@ -581,11 +587,12 @@ document.addEventListener('click', (e) => {
     
     if (e.target.closest('#plain-view')) {
       // Plain view section template
-      
+        
         newSection.className = 'section-item plain-section-item' ;
               newSection.innerHTML =
 
  `
+      <input type="hidden" name="section_id[]" value="">
 
 
         <select  name="section_layout[]">
@@ -611,6 +618,8 @@ document.addEventListener('click', (e) => {
     } else {
       // Styled view section template
       newSection.innerHTML = `
+      <input type="hidden" name="section_id[]" value="">
+
         <select name="section_layout[]">
           <option value="full-text">Full Text</option>
           <option value="text-image">Text + Image</option>
