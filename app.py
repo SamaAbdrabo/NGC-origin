@@ -330,7 +330,8 @@ def edit_project_full(id):
         project.cover_image_url = f"/static/uploads/{filename}"
 
     # Handle feature status 
-    feature_status = request.form.get('feature') == 'true'
+    feature_value = request.form.get('feature')
+    feature_status = str(feature_value).lower() in ('true', 'on', '1', 'yes')
     project.feature = feature_status
 
     # Update other fields

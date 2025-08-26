@@ -34,7 +34,7 @@
 
   <!-- Styled View -->
   <main id="styled-view">
-    <form action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
+    <form id="styled-form" action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="feature" id="feature-input" value="{{ 'true' if project.feature else 'false' }}">
       
       <!-- Cover Section -->
@@ -345,6 +345,123 @@
 
   <!-- JavaScript -->
   <script>
+   // Helpers to sync between forms
+    function getFormEls() {
+      return {
+        styledForm: document.getElementById('styled-form'),
+        plainForm: document.getElementById('plain-view'),
+        styledSections: document.querySelector('#styled-view #sections-container'),
+        plainSections: document.querySelector('#plain-view #sections-container'),
+        styledStats: document.querySelector('#styled-view #statistics-container'),
+        plainStats: document.querySelector('#plain-view #statistics-container'),
+      };
+    }
+
+    function serializeSections(container) {
+      const items = Array.from(container.querySelectorAll('.section-item'));
+      return items.map(item => ({
+        id: (item.querySelector('input[name="section_id[]"]')?.value || '').trim(),
+        layout: item.querySelector('select[name="section_layout[]"]')?.value || 'full-text',
+        title: item.querySelector('[name="section_title[]"]')?.value || '',
+        description: item.querySelector('[name="section_description[]"]')?.value || '',
+        order: item.querySelector('[name="section_order[]"]')?.value || ''
+      }));
+    }
+      function renderSections(container, sections, isPlain) {
+      container.innerHTML = '';
+      sections.forEach(sec => {
+        const div = document.createElement('div');
+        div.className = isPlain ? 'section-item plain-section-item' : 'section-item';
+        const imgUploadBlock = isPlain
+          ? `<div class="section-image-upload" style="display:${(sec.layout === 'text-image' || sec.layout === 'image-text') ? 'block' : 'none'}; ">
+               <div class="section-image-upload-controls ">
+                 <label>Section Image:</label>
+                 <input type="file" name="new_section_image[]" accept="image/*">
+               </div>
+             </div>`
+          : `<div class="section-image-upload" style="display:${(sec.layout === 'text-image' || sec.layout === 'image-text') ? 'block' : 'none'};">
+               <div class="section-image-upload-controls">
+                 <label>Section Image:</label>
+                 <input type="file" name="new_section_image[]" accept="image/*">
+               </div>
+             </div>`;
+        div.innerHTML = isPlain ? `
+                  <input type="hidden" name="section_id[]" value="${sec.id}">
+          <select class="section-button" name="section_layout[]" value="${sec.layout}">
+            <option value="full-text">Full Text</option>
+            <option value="text-image">Text + Image</option>
+            <option value="image-text">Image + Text</option>
+            <option value="stats">Statistics</option>
+          </select>
+          <label class="plain_label" for="subtitle">Subtitle</label>
+          <input type="text" class="plain_input" name="section_title[]" placeholder="Section title" value="${sec.title}">
+          <label class="plain_label" for="description">Description</label>
+          <textarea name="section_description[]" class="plain_input" placeholder="Section content">${sec.description}</textarea>
+          ${imgUploadBlock}
+          <label class="plain_label" for="order">Order</label>
+          <input type="number" class="plain_input" name="section_order[]" placeholder="Order" value="${sec.order}">
+          <button type="button" style="margin-top:1.2em" class="remove-section admin_button">Remove</button>
+        ` : `
+                  <input type="hidden" name="section_id[]" value="${sec.id}">
+          <select name="section_layout[]" class="section-button">
+            <option value="full-text">Full Text</option>
+            <option value="text-image">Text + Image</option>
+            <option value="image-text">Image + Text</option>
+            <option value="stats">Statistics</option>
+          </select>
+          <div class="project-info-description">
+            <h1><input type="text" name="section_title[]" class="editable-input" placeholder="Section title" value="${sec.title}"></h1>
+          </div>
+          <div class="project-info-description-p">
+            <textarea name="section_description[]" class="editable-textarea" placeholder="description">${sec.description}</textarea>
+          </div>
+          ${imgUploadBlock}
+          <input type="number" name="section_order[]" placeholder="Order" value="${sec.order}">
+          <button type="button" class="remove-section admin_button">Remove</button>
+        `;
+                container.appendChild(div);
+        // set select value after insertion
+        const sel = div.querySelector('select[name="section_layout[]"]');
+        if (sel) sel.value = sec.layout;
+      });
+    }
+        function serializeStats(container) {
+      const items = Array.from(container.querySelectorAll('.statistic-item'));
+      return items.map(item => ({
+        value: item.querySelector('[name="stat_value[]"]')?.value || '',
+        unit: item.querySelector('[name="stat_unit[]"]')?.value || '',
+        title: item.querySelector('[name="stat_title[]"]')?.value || '',
+        order: item.querySelector('[name="stat_order[]"]')?.value || ''
+      }));
+    }
+    function renderStats(container, stats, isPlain) {
+      container.innerHTML = '';
+      stats.forEach(st => {
+        const div = document.createElement('div');
+        div.className = isPlain ? 'statistic-item plain-stat-item' : 'statistic-item';
+        div.innerHTML = isPlain ? `
+          <div>
+            <input type="text" class=" plain_input" name="stat_value[]" value="${st.value}" placeholder="Value">
+            <input type="text" class=" plain_input" name="stat_unit[]" value="${st.unit}"  placeholder="Unit (optional)">
+          </div>
+          <input type="text" class=" plain_input" name="stat_title[]" value="${st.title}" placeholder="Statistic title">
+          <input type="number" class=" plain_input" name="stat_order[]" value="${st.order}" placeholder="order displayed">
+          <button type="button" class="remove-statistic">Remove</button>
+        ` : `
+          <div>
+            <input type="text" class="stat_value editable-input" name="stat_value[]" value="${st.value}" placeholder="Value">
+            <input type="text" class="stat_unit editable-input" name="stat_unit[]" value="${st.unit}" placeholder="Unit (optional)">
+          </div>
+          <input type="text" class="stat_title editable-input" name="stat_title[]" value="${st.title}" placeholder="Statistic title">
+          <input type="number" class="stat_order" name="stat_order[]" value="${st.order}" placeholder="order displayed">
+          <button type="button" class="remove-statistic">Remove</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+
+
     // View Toggle
     const toggleBtn = document.getElementById('toggleViewBtn');
     const styledView = document.getElementById('styled-view');
@@ -352,11 +469,63 @@
 
     toggleBtn.addEventListener('click', () => {
       const isPlain = plainView.style.display === 'block';
+           const { styledSections, plainSections, styledStats, plainStats } = getFormEls();
+      if (isPlain) {
+        // switching to styled: mirror from plain -> styled
+        renderSections(styledSections, serializeSections(plainSections), false);
+        renderStats(styledStats, serializeStats(plainStats), false);
+      } else {
+        // switching to plain: mirror from styled -> plain
+        renderSections(plainSections, serializeSections(styledSections), true);
+        renderStats(plainStats, serializeStats(styledStats), true);
+      }
       styledView.style.display = isPlain ? 'block' : 'none';
       plainView.style.display = isPlain ? 'none' : 'block';
       toggleBtn.textContent = isPlain ? 'Plain View' : 'Styled View';
     });
 
+    
+    // Cross-view add/remove mirroring
+    document.addEventListener('click', (e) => {
+      const { styledSections, plainSections, styledStats, plainStats } = getFormEls();
+      // Add section
+      if (e.target && e.target.id === 'add-section') {
+        if (e.target.closest('#plain-view')) {
+          renderSections(styledSections, serializeSections(plainSections), false);
+        } else {
+          renderSections(plainSections, serializeSections(styledSections), true);
+        }
+      }
+            // Remove section
+      if (e.target && e.target.classList.contains('remove-section')) {
+        // Small delay so the DOM removal completes first
+        setTimeout(() => {
+          if (document.getElementById('plain-view').contains(e.target)) {
+            renderSections(styledSections, serializeSections(plainSections), false);
+          } else {
+            renderSections(plainSections, serializeSections(styledSections), true);
+          }
+        }, 0);
+      }
+            // Add statistic
+      if (e.target && e.target.id === 'add-statistic') {
+        if (e.target.closest('#plain-view')) {
+          renderStats(styledStats, serializeStats(plainStats), false);
+        } else {
+          renderStats(plainStats, serializeStats(styledStats), true);
+        }
+      }
+      // Remove statistic
+      if (e.target && e.target.classList.contains('remove-statistic')) {
+        setTimeout(() => {
+          if (document.getElementById('plain-view').contains(e.target)) {
+            renderStats(styledStats, serializeStats(plainStats), false);
+          } else {
+            renderStats(plainStats, serializeStats(styledStats), true);
+          }
+        }, 0);
+      }
+    });
     // Add Panel Field
     function addPanelField() {
       const panel = document.querySelector('.project-info-panel');
@@ -709,6 +878,34 @@ document.addEventListener('click', (e) => {
         starElement.style.pointerEvents = 'auto';
       });
     }
+       // Real-time sync between views for sections and statistics
+    function bindRealtimeSync() {
+      const { styledSections, plainSections, styledStats, plainStats } = getFormEls();
+
+      function onSectionInput(e) {
+        if (!e.target.closest('.section-item')) return;
+        if (document.getElementById('plain-view').contains(e.target)) {
+          renderSections(styledSections, serializeSections(plainSections), false);
+        } else {
+          renderSections(plainSections, serializeSections(styledSections), true);
+        }
+      }
+           document.addEventListener('input', (e) => {
+        if (e.target.matches('[name="section_title[]"], [name="section_description[]"], [name="section_order[]"]')) {
+          onSectionInput(e);
+        }
+        if (e.target.matches('[name="stat_value[]"], [name="stat_unit[]"], [name="stat_title[]"], [name="stat_order[]"]')) {
+          onStatsInput(e);
+        }
+      });
+
+      document.addEventListener('change', (e) => {
+        if (e.target.matches('select[name="section_layout[]"]')) {
+          onSectionInput(e);
+        }
+      });
+    }
+ bindRealtimeSync();
   </script>
   
 </body>
