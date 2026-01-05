@@ -103,6 +103,16 @@ p a:hover {
     flex-direction: column;
     gap:2em;
  }
+ .layout-image-text, .layout-text-image{
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    
+ }
+  .layout-image-text .image-part img, .layout-text-image .image-part img{
+
+    width:100%;
+  }
 @media screen and (max-width: 1200px ) {
     .project-info-section{
     width:100%;
@@ -189,12 +199,11 @@ p a:hover {
 /* Content sections */
 .content-section {
     margin: 2em 0;
+    max-width:100%;
 }
 
 .layout-full-text {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    width:100%;
 }
 
 .layout-text-image, .layout-image-text {
@@ -241,7 +250,6 @@ p a:hover {
 
 .statistic{
   display: flex;
-  align-items: center;
   flex-direction: column;
   flex-wrap:wrap;
   flex:0 0 30%;

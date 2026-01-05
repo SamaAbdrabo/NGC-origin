@@ -390,15 +390,29 @@ def edit_project_full(id):
                 section.layout_type = layout
                 section.order = order_val
                 kept_section_ids.add(section.id)
+                
+                file_key = f'section_image_{section.id}'
+                img_file = request.files.get(file_key)
 
-                if layout in ['text-image', 'image-text']:
+                if img_file and img_file.filename and allowed_file(img_file.filename):
+                    filename = secure_filename(
+                        f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}"
+                    )
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    img_file.save(filepath)
+                    section.image_url = f"/static/uploads/{filename}"
+
+
+
+            '''testing
+                 if layout in ['text-image', 'image-text']:
                     file_key = f'section_image_{section.id}'
                     img_file = request.files.get(file_key)
                     if img_file and img_file.filename and allowed_file(img_file.filename):
                         filename = secure_filename(f"section_{section.id}_{datetime.now().timestamp()}_{img_file.filename}")
                         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                         img_file.save(filepath)
-                        section.image_url = f"/static/uploads/{filename}"
+                        section.image_url = f"/static/uploads/{filename}'''
         else:
             new_section = ProjectSection(
                 layout_type=layout,
@@ -423,13 +437,13 @@ def edit_project_full(id):
                 img_file.save(filepath)
                 section.image_url = f"/static/uploads/{filename}"
 
-    # Delete sections removed from the form
-    existing_ids = {s.id for s in project.sections}
-    new_ids = {s.id for s in new_sections_uncommitted}
-    to_delete = existing_ids - kept_section_ids - new_ids
-    if to_delete:
-        ProjectSection.query.filter(ProjectSection.id.in_(to_delete)).delete(synchronize_session=False)
-        
+# Only delete sections explicitly removed in the form
+            form_section_ids = {int(sid) for sid in section_ids if sid.strip().isdigit()}
+            to_delete = {s.id for s in project.sections} - form_section_ids
+            if to_delete:
+                ProjectSection.query.filter(ProjectSection.id.in_(to_delete)).delete(synchronize_session=False)
+
+    
     db.session.commit()
     return redirect(f"/admin/projects/{project.id}")
 

@@ -188,7 +188,6 @@
     <!-- JS files -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-    <!-- Inline Scripts (optional: can be moved to separate JS file) -->
     <script>
         // Reset filters
         document.getElementById('resetBtn').addEventListener('click', () => {
@@ -243,7 +242,7 @@
                 }
             });
 
-            // Sort cards by date if needed
+            // Sort cards by date 
             if (selectedDateOrder !== 'all') {
                 const visibleCards = cards.filter(card => card.style.display !== 'none');
                 

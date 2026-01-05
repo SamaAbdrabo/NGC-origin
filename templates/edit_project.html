@@ -50,11 +50,14 @@
         <div class="project-info-main">
           <div class="project-info-description">
             
-            <div class="section-image-upload" style="display:none;">
-            <div class="section-image-upload-controls">
+            <div class="section-image-upload general" style="display:none;">
+            <button>
+              <div class="section-image-upload-controls" >
               <label>Section Image:</label>
-              <input type="file" name="new_section_image[]" accept="image/*">
+              <input type="file" name="section_image[]" accept="image/*">
+
             </div>
+            
           </div>    
             <!-- Content Sections -->
             <div class="form-section">
@@ -70,22 +73,30 @@
                     <option value="image-text" {% if section.layout_type=='image-text' %}selected{% endif %}>Image + Text</option>
                     <option value="stats" {% if section.layout_type=='stats' %}selected{% endif %}>Statistics</option>
                   </select>
+                  {% if section.layout_type in ['full-text'] %}
                   <div class="project-info-description">
-                    <h1><textarea type="text" name="section_title[]" class="editable-textarea auto-resize"  placeholder="Section title">{{ section.title }}</textarea></h1>
+                    <h1><textarea type="text" name="section_title[]" style="text-transform: capitalize;" class="editable-textarea auto-resize"  placeholder="Section title">{{ section.title }}</textarea></h1>
                   </div>
                   <div class="project-info-description-p">
                     <textarea name="section_description[]" class="editable-textarea auto-resize" placeholder="description">{{ section.description or '' }}</textarea>
                   </div>
+                  {%endif%}
                   {% if section.layout_type in ['text-image', 'image-text'] %}
-                  <div class="card-visual" style="background-image: url('{{ section.image_url }}'); position: relative;">
-                    <div class="cover-button general">
-                      <button>
-                        <label for="section_image_{{ section.id }}">{% if section.image_url %}Change image{% else %}Upload image{% endif %}</label>
-                        <input type="file" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
-                      </button>
+                    <div class="content-section {% if section.layout_type in ['text-image'] %} layout-text-image {%endif%}{% if section.layout_type in ['image-text']%} layout-image-text {%endif%}">
+
+                      <div class="text-part">
+                    <h1><textarea type="text" name="section_title[]" style="text-transform: capitalize;" class="editable-textarea auto-resize"  placeholder="Section title">{{ section.title }}</textarea></h1>
+                        <textarea name="section_description[]" class="editable-textarea auto-resize" placeholder="description">{{ section.description or '' }}</textarea>
+                      </div>
+                      <div class="image-part" >
+                          <img src="{{ section.image_url}}" alt="Section Image">
+                          <h6>{{ section.image_url }}</h6>
+                              <input  type="file" class="editable-input" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
+
+                      </div>
                     </div>
-                  </div>
                   {% endif %}
+
                   <input type="number" name="section_order[]" value="{{ section.order }}" placeholder="Order">
                   <button type="button" class="remove-section admin_button">Remove</button>
                 </div>
@@ -228,8 +239,7 @@
           <input name="date" id="preview-date" type="date" placeholder="Date" class="editable-input" value="{{ project.date.strftime('%Y-%m-%d') if project.date else '' }}" />
         </h6>
         <div class="card-actions">
-          <i class="feature-star {% if project.feature %}featured{% endif %}"                       
-            onclick="toggleFeature('{{ project.id }}', this)">
+          <i class="feature-star {% if project.feature %}featured{% endif %}"                       >
             {% if project.feature %}★{% else %}☆{% endif %}
           </i>
         </div>
@@ -240,7 +250,7 @@
   </main>
 
   <!-- Plain View Form -->
-  <form id="plain-view" action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data" style="display:none; max-width: 900px; margin: auto; padding: 3em; background: #f7f7f7; border-radius: 10px;">
+  <form id="plain-view" action="/admin/projects/{{ project.id }}/edit" method="POST" enctype="multipart/form-data" style="display:none; max-width: 900px;width:100%; align-self:center;padding: 3em; background: #f7f7f7; border-radius: 10px;">
     <h1>Edit Project (Plain View)</h1>
 
     <label class="plain_label" for="title">Project Title</label>
@@ -268,10 +278,13 @@
 
                   {% if section.layout_type in ['text-image', 'image-text'] %}
                   <div class="card-visual section-img-visual" style="background-image: url('{{ section.image_url }}'); position: relative;">
-                    <div class="cover-button general">
+                    <div class="cover-button general" >
                       <button>
-                        <label for="section_image_{{ section.id }}">{% if section.image_url %}Change image{% else %}Upload image{% endif %}</label>
+                        <label for="section_image_{{ section.id }}">Section image</label>
+                        <img src="{{ section.image_url }}" alt="Section Image">
+                        <p>{{ section.image_url }}</p>
                         <input type="file" name="section_image_{{ section.id }}" id="section_image_{{ section.id }}" accept="image/*">
+
                       </button>
 
                     </div>
@@ -331,18 +344,14 @@
     <label class="plain_label" style="font-size: 1.5em;" for="cover_image">Change Cover Image</label>
     <input class="plain_input" type="file" name="cover_image" accept="image/*">
 
-    <label class="plain_label" for="feature">
-      Feature Project
-      
-      <input class="plain_input" type="checkbox" name="feature" value="true" {% if project.feature %}checked{% endif %}>
-    </label>
+
 
     <label class="plain_label">Featured Description (visible only in homepage)</label>
     <textarea name="featured_description" placeholder="limit to a few lines" class="plain_input auto-resize">{{ project.featured_description or '' }}</textarea>
 
     <button class="admin_button" style="margin-top:2em; width:100%; align-items: center;" type="submit">Save Changes</button>
   </form>
-
+</div>
   <!-- JavaScript -->
   <script>
    // Helpers to sync between forms
@@ -375,15 +384,15 @@
         const imgUploadBlock = isPlain
           ? `<div class="section-image-upload" style="display:${(sec.layout === 'text-image' || sec.layout === 'image-text') ? 'block' : 'none'}; ">
                <div class="section-image-upload-controls ">
-                 <label>Section Image:</label>
+                 <label>Section Image: </label>
                  <input type="file" name="new_section_image[]" accept="image/*">
                </div>
              </div>`
           : `<div class="section-image-upload" style="display:${(sec.layout === 'text-image' || sec.layout === 'image-text') ? 'block' : 'none'};">
                <div class="section-image-upload-controls">
                  <label>Section Image:</label>
-                 <input type="file" name="new_section_image[]" accept="image/*">
-               </div>
+                <input type="file" name="new_section_image[]" accept="image/*">
+              </div>
              </div>`;
         div.innerHTML = isPlain ? `
                   <input type="hidden" name="section_id[]" value="${sec.id}">
@@ -526,7 +535,7 @@
         }, 0);
       }
     });
-    // Add Panel Field
+    // Add Panel Field -not working 
     function addPanelField() {
       const panel = document.querySelector('.project-info-panel');
       
@@ -550,7 +559,7 @@
       panel.insertBefore(fieldWrapper, addBtnWrapper);
     }
 
-    // Input Sync
+    // Input Sync - preview+plain view + style view in typing sync
     function syncTriple(fieldName) {
       const styled = document.querySelector(`#styled-view [name="${fieldName}"]`);
       const plain = document.querySelector(`#plain-view [name="${fieldName}"]`);
@@ -586,7 +595,7 @@
       'title', 'subtitle', 'description',
       'service', 'market', 'location',
       'client', 'collaboration', 'date',
-      'completion_date','feature','featured_description', 'stat_value[]', 'stat_unit[]','stat_title[]','stat_order[]'
+      'completion_date','featured_description', 'stat_value[]', 'stat_unit[]','stat_title[]','stat_order[]'
     ].forEach(syncTriple);
 
     // Cover Image Sync
@@ -617,50 +626,28 @@
     if (styledCover) syncCoverImage(styledCover);
     if (plainCover) syncCoverImage(plainCover);
 
-    // Feature Toggle
-    
-  
+    //feature projects option (the star)
+const featureInput = document.getElementById('feature-input');
+const featureStar = document.querySelector('.feature-star');
 
-    const styledFeature = document.querySelector('#styled-view input[name="feature"]');
-    const plainFeature = document.querySelector('#plain-view input[name="feature"]');
-    const previewStar = document.querySelector('.feature-star');
-    const featureInput = document.getElementById('feature-input');
-
-    function setFeatureState(checked) {
-        const isFeatured = featureInput.value === 'true';
-
-      if (styledFeature) styledFeature.checked = checked;
-      if (plainFeature) plainFeature.checked = checked;
-      if (featureInput) featureInput.value = checked ? 'true' : 'false';
-
-      if (previewStar) {
-        previewStar.classList.toggle('featured', checked);
-        previewStar.textContent = checked ? '★' : '☆';
-      }
-    }
-    
-    // Listen to all feature checkboxes
-document.addEventListener('change', (e) => {
-  if (e.target && e.target.name === 'feature') {
-    setFeatureState(e.target.checked);
-  }
+function setFeature(isFeatured) {
+  featureInput.value = isFeatured ? 'true' : 'false';
+  featureStar.textContent = isFeatured ? '★' : '☆';
+  featureStar.classList.toggle('featured', isFeatured);
+  featureStar.setAttribute('aria-pressed', isFeatured);
+}
+// click star → update hidden input
+featureStar.addEventListener('click', () => {
+  setFeature(featureInput.value !== 'true');
 });
-// On load: sync initial value
-window.addEventListener('DOMContentLoaded', () => {
-  const initialState = styledFeature?.checked || plainFeature?.checked || false;
-  setFeatureState(initialState);
-});
-    if (styledFeature) styledFeature.addEventListener('change', () => setFeatureState(styledFeature.checked));
-    if (plainFeature) plainFeature.addEventListener('change', () => setFeatureState(plainFeature.checked));
 
-    if (previewStar) {
-      previewStar.addEventListener('click', () => {
-        const newState = !previewStar.classList.contains('featured');
-        setFeatureState(newState);
-      });
-    }
-    
-    // Floating Card Drag
+// initial sync from backend
+document.addEventListener('DOMContentLoaded', () => {
+  setFeature(featureInput.value === 'true');
+});
+
+
+  // Floating Card Drag
     const floatingCard = document.getElementById("floating-card");
     let isDragging = false, offsetX = 0, offsetY = 0;
 
@@ -670,6 +657,7 @@ window.addEventListener('DOMContentLoaded', () => {
       offsetY = e.clientY - floatingCard.getBoundingClientRect().top;
     });
 
+    //makes card draggable 
     document.addEventListener("mousemove", e => {
       if (isDragging) {
         floatingCard.style.left = `${e.clientX - offsetX}px`;
@@ -681,7 +669,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener("mouseup", () => isDragging = false);
 
-    // Collapse Functionality
+    // makes card collapsable if it gets in the way
     const collapseBtn = document.getElementById("collapse-btn");
     let collapsed = false;
     collapseBtn.addEventListener("click", () => {
@@ -708,7 +696,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Statistics Management
-// Replace the existing Statistics Management code with this:
 document.addEventListener('click', (e) => {
   if (e.target && e.target.id === 'add-statistic') {
     const container = e.target.closest('form').querySelector('#statistics-container');
@@ -806,8 +793,8 @@ document.addEventListener('click', (e) => {
         </div>
         <div class="section-image-upload" style="display:none;">
           <div class="section-image-upload-controls">
-            <label>Section Image:</label>
-            <input type="file" name="new_section_image[]" accept="image/*">
+              <label>Section Image:</label>
+              <input type="file" name="new_section_image[]" accept="image/*">
           </div>
         </div>
         <input type="number" name="section_order[]" placeholder="Order">
@@ -846,38 +833,9 @@ document.addEventListener('click', (e) => {
 }
     });
 
-    // Toggle Feature
-    function toggleFeature(projectId, starElement) {
-      const isCurrentlyFeatured = starElement.textContent === '★';
-      const action = isCurrentlyFeatured ? 'unfeature' : 'feature';
-      const featureInput = document.getElementById('feature-input');
-      
-      starElement.style.pointerEvents = 'none';
+
     
-      fetch(`/admin/projects/${projectId}/feature`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ action: action })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === 'success') {
-          starElement.textContent = action === 'feature' ? '★' : '☆';
-          starElement.classList.toggle('featured', action === 'feature');
-          featureInput.value = action === 'feature' ? 'true' : 'false';
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch(err => {
-        alert('Error: ' + err.message);
-      })
-      .finally(() => {
-        starElement.style.pointerEvents = 'auto';
-      });
-    }
+  
        // Real-time sync between views for sections and statistics
     function bindRealtimeSync() {
       const { styledSections, plainSections, styledStats, plainStats } = getFormEls();

@@ -12,6 +12,7 @@
 
 </head>
 <body>
+  <a href="/admin/projects"><button class="admin_button" id="toggleViewBtn" style="position: fixed; top: 1em; left: 1em; z-index: 999;">Discard</button></a>
   <main>
     <form action="/admin/projects/new" method="POST" enctype="multipart/form-data">
       <h1>Add New Project</h1>
@@ -52,7 +53,7 @@
       <label for="feature"> Feature Project
   <input type="checkbox" id="feature" name="feature" value="true">
         </label>
-      <button type="submit">Add Project</button>
+    <button class="admin_button" style="margin-top:2em; width:100%; align-items: center;" type="submit">Save Changes</button>
     </form>
   </main>
 

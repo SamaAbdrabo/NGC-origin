@@ -67,13 +67,12 @@
               <p>
               <a href="/">Home</a> ❯ <a href="/projects">Projects</a>
               </p>
-              <h1>{{project.title or ''}} </h1>
+              <h1 style="text-transform: uppercase;">{{project.title or ''}} </h1>
           </div>
       </section>
       <section class="project-info-section">
           <div class="project-info-main">
 
-                  <!-- Featured description at top if it exists -->
 
   
 <!-- Main content sections -->
@@ -82,7 +81,7 @@
     {% if section.layout_type == 'full-text' %}
     
         <div class="project-info-description">
-        {% if section.title %}<h1>{{ section.title }}</h1 >{% endif %}
+        {% if section.title %}<h1 style="text-transform: capitalize;">{{ section.title }}</h1 >{% endif %}
         </div>
         <div class="project-info-description-p">
 
@@ -91,7 +90,7 @@
     
     {% elif section.layout_type == 'text-image' %}
     <div class="text-part">
-        {% if section.title %}<h1 style="font-size: 2.5em;">{{ section.title }}</h1>{% endif %}
+        {% if section.title %}<h1 style="text-transform: capitalize;font-size: 2.5em;">{{ section.title }}</h1>{% endif %}
         <p>{{ section.description }}</p>
     </div>
     <div class="image-part">
@@ -102,7 +101,7 @@
         <img src="{{ section.image_url }}" alt="{{ section.title }}">
     </div>
     <div class="text-part">
-        {% if section.title %}<h1 style="font-size: 2.5em;">{{ section.title }}</h1>{% endif %}
+        {% if section.title %}<h1 style="text-transform: capitalize;font-size: 2.5em;">{{ section.title }}</h1>{% endif %}
         <p>{{ section.description }}</p>
     </div>
     {% elif section.layout_type == 'stats' %}
